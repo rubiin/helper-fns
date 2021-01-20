@@ -1,6 +1,6 @@
 {
   "name": "@rubiin/js-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Some common utils by rubin",
   "main": "index.js",
   "scripts": {
