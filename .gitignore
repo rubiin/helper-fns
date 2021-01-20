@@ -1,7 +1,6 @@
 # compiled output
 /node_modules
 /dist
-*.js
 *.d.ts
 .eslintcache
 # Logs
