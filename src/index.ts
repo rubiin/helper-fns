@@ -1,11 +1,28 @@
-// check if object is empty
+import { sub } from 'date-fns';
 
-export const isObjectEmpty = (obj: any): boolean => {
+/**
+ *
+ *
+ * @export
+ * @param {*} obj
+ * @returns {boolean}
+ *
+ * check if object is empty
+ */
+export function isObjectEmpty(obj: unknown): boolean {
 	return Object.keys(obj).length === 0;
-};
+}
 
-// remove empty
-
+/**
+ *
+ *
+ * @export
+ * @param {({ [s: string]: unknown } | ArrayLike<unknown>)} obj
+ * @returns
+ *
+ * remove empty
+ *
+ */
 export function removeEmpty(
 	obj: { [s: string]: unknown } | ArrayLike<unknown>,
 ) {
@@ -15,8 +32,18 @@ export function removeEmpty(
 	);
 }
 
-// loadsh pick implementation
-
+/**
+ *
+ *
+ * @export
+ * @template T
+ * @template K
+ * @param {T} obj
+ * @param {K[]} keys
+ * @returns {Pick<T, K>}
+ *
+ * loadsh pick implementation
+ */
 export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
 	const ret: any = {};
 
@@ -33,20 +60,36 @@ export function resolverArgs(...args: any[]): string {
 	return JSON.stringify(args);
 }
 
-// sum of array
-
+/**
+ *
+ *
+ * @export
+ * @param {number[]} arr
+ * @param {number} [initialValue=0]
+ * @returns {number}
+ */
 export function sumOfAnArray(arr: number[], initialValue = 0): number {
 	return arr.reduce((a, b) => a + b, initialValue);
 }
 
-// unique
-
+/**
+ *
+ *
+ * @export
+ * @param {Iterable<unknown>} values
+ * @returns {Iterable<unknown>}
+ */
 export function unique(values: Iterable<unknown>): Iterable<unknown> {
 	return [...new Set(values)];
 }
 
-// memoize a function
-
+/**
+ *
+ *
+ * @export
+ * @param {{ call: (arg0: any, arg1: any) => any }} fn
+ * @returns
+ */
 export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
 	const cache = new Map();
 	const cached = function (val: any) {
@@ -58,16 +101,33 @@ export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
 	return cached;
 }
 
-// omit keys from object
-
+/**
+ *
+ *
+ * @export
+ * @param {{ [x: string]: any }} obj
+ * @param {(string | string[])} arr
+ *
+ * omit keys from object
+ *
+ */
 export function omit(obj: { [x: string]: any }, arr: string | string[]) {
 	Object.keys(obj)
 		.filter(k => !arr.includes(k))
 		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
 }
 
-// order by a key
-
+/**
+ *
+ *
+ * @export
+ * @param {*} arr
+ * @param {any[]} props
+ * @param {{ [x: string]: string }} orders
+ *
+ * order by a key
+ *
+ */
 export function orderBy(
 	arr: any,
 	props: any[],
@@ -87,18 +147,40 @@ export function orderBy(
 	);
 }
 
-// pipe functions
+/**
+ *
+ *
+ * @export
+ * @param {...any[]} fns
+ */
 export function pipeFunctions(...fns: any[]) {
 	fns.reduce((f, g) => (...args: any) => g(f(...args)));
 }
 
-// pluck
-export function pluck(arr: any[], key: string | number) {
+
+/**
+ *
+ *
+ * @export
+ * @param {Array<any>} arr
+ * @param {(string | number)} key
+ * @returns {Array<any>}
+ */
+export function pluck(arr: Array<any>, key: string | number): Array<any> {
 	return arr.map(i => i[key]);
 }
 
-// rename object keys
+//
 
+/**
+ *
+ *
+ * @export
+ * @param {{ [x: string]: any }} keysMap
+ * @param {{ [x: string]: any }} obj
+ *
+ * rename object keys
+ */
 export function renameKeys(
 	keysMap: { [x: string]: any },
 	obj: { [x: string]: any },
@@ -110,4 +192,54 @@ export function renameKeys(
 		}),
 		{},
 	);
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {Array<unknown>} objectArray
+ * @param {string} attr
+ * @returns {Array<unknown>}
+ */
+export function objectArrayToArray(
+	objectArray: Array<unknown>,
+	attr: string,
+): Array<unknown> {
+	return objectArray.map((el: { [x: string]: any }) => {
+		return el[attr];
+	});
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {string} from
+ * @param {string} unit
+ * @param {number} interval
+ * @returns {Date}
+ */
+export function subtractDate(
+	from: string,
+	unit: string,
+	interval: number,
+): Date {
+	return new Date(sub(new Date(from), { [unit]: interval }));
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {number} num
+ * @param {number} [fixed=2]
+ * @returns {number}
+ *
+ *  truncates a decimal number
+ */
+export function fixedDecimal(num: number, fixed: number = 2): number {
+	const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
+
+	return parseFloat(num.toString().match(re)[0]);
 }
