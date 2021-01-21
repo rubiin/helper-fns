@@ -1,5 +1,5 @@
 import { sub } from 'date-fns';
-import * as validator from 'validator'
+import validator from 'validator'
 
 /**
  *
@@ -55,8 +55,16 @@ export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
 	return ret;
 }
 
-// this is for lodash memoize function
 
+/**
+ *
+ *
+ * @export
+ * @param {...any[]} args
+ * @returns {string}
+ * 
+ * this is for lodash memoize function
+ */
 export function resolverArgs(...args: any[]): string {
 	return JSON.stringify(args);
 }
