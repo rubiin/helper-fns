@@ -1,14 +1,21 @@
 {
   "name": "@rubiin/js-utils",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Some common utils by rubin",
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
     "build": "rimraf dist && tsc -p tsconfig.build.json"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Rubin Bhandari <roobin.bhandari@gmail.com>",
+  "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/rubiin/js-utils"
+    },
+    "bugs": {
+      "url": "https://github.com/rubiin/js-utils/issues"
+    },
   "devDependencies": {
     "@types/node": "^14.14.22",
     "prettier": "^2.2.1",
