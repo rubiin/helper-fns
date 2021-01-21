@@ -1,4 +1,5 @@
 import { sub } from 'date-fns';
+import * as validator from 'validator'
 
 /**
  *
@@ -242,4 +243,16 @@ export function fixedDecimal(num: number, fixed: number = 2): number {
 	const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
 
 	return parseFloat(num.toString().match(re)[0]);
+}
+
+
+export function autoParseValues(val: string): string | number | boolean {
+	if (validator.isBoolean(val)) {
+		return JSON.parse(val.toLowerCase());
+	} else if (validator.isNumeric(val)) {
+		return parseFloat(val);
+	}
+	// for string no parsing required
+
+	return val;
 }

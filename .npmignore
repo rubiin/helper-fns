@@ -18,3 +18,5 @@ package-lock.json
 nest-cli.json
 _config.yml
 .eslint*
+tsconfig*
+.editorconfig
