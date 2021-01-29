@@ -77,7 +77,7 @@ export function resolverArgs(...args: any[]): string {
  * @param {number} [initialValue=0]
  * @returns {number}
  */
-export function sumOfAnArray(arr: number[], initialValue = 0): number {
+export function sumOfAnArray(arr: number[], initialValue: number = 0): number {
 	return arr.reduce((a, b) => a + b, initialValue);
 }
 
@@ -121,7 +121,7 @@ export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
  *
  */
 export function omit(obj: { [x: string]: any }, arr: string | string[]) {
-	Object.keys(obj)
+	return Object.keys(obj)
 		.filter(k => !arr.includes(k))
 		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
 }
