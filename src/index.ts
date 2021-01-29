@@ -1,5 +1,5 @@
 import { sub } from 'date-fns';
-import validator from 'validator'
+import validator from 'validator';
 
 /**
  *
@@ -10,23 +10,24 @@ import validator from 'validator'
  *
  * check if object is empty
  */
-export function isObjectEmpty(obj: unknown): boolean {
-	return Object.keys(obj).length === 0;
+export function isEmpty(obj: any): boolean {
+	return (
+		[Object, Array].includes((obj || {}).constructor) &&
+		!Object.entries(obj || {}).length
+	);
 }
 
 /**
  *
  *
  * @export
- * @param {({ [s: string]: unknown } | ArrayLike<unknown>)} obj
+ * @param {( Record<string, any> | ArrayLike<unknown>)} obj
  * @returns
  *
  * remove empty
  *
  */
-export function removeEmpty(
-	obj: { [s: string]: unknown } | ArrayLike<unknown>,
-) {
+export function removeEmpty(obj: Record<string, any> | ArrayLike<unknown>) {
 	return Object.entries(obj).reduce(
 		(a, [k, v]) => (v === null ? a : { ...a, [k]: v }),
 		{},
@@ -55,17 +56,16 @@ export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
 	return ret;
 }
 
-
 /**
  *
  *
  * @export
- * @param {...any[]} args
+ * @param {...Array<any>} args
  * @returns {string}
- * 
+ *
  * this is for lodash memoize function
  */
-export function resolverArgs(...args: any[]): string {
+export function resolverArgs(...args: Array<any>): string {
 	return JSON.stringify(args);
 }
 
@@ -73,11 +73,15 @@ export function resolverArgs(...args: any[]): string {
  *
  *
  * @export
- * @param {number[]} arr
+ * @param {Array<number>} arr
  * @param {number} [initialValue=0]
  * @returns {number}
  */
-export function sumOfAnArray(arr: number[], initialValue: number = 0): number {
+
+export function sumOfAnArray(
+	arr: Array<number>,
+	initialValue: number = 0,
+): number {
 	return arr.reduce((a, b) => a + b, initialValue);
 }
 
@@ -112,15 +116,17 @@ export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
 
 /**
  *
- *
- * @export
- * @param {{ [x: string]: any }} obj
- * @param {(string | string[])} arr
- *
  * omit keys from object
  *
+ * @export
+ * @param {Record<string, any>} obj
+ * @param {string[]} arr
+ * @returns {Record<string, any>}
  */
-export function omit(obj: { [x: string]: any }, arr: string[]) {
+export function omit(
+	obj: Record<string, any>,
+	arr: string[],
+): Record<string, any> {
 	return Object.keys(obj)
 		.filter(k => !arr.includes(k))
 		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
@@ -131,7 +137,7 @@ export function omit(obj: { [x: string]: any }, arr: string[]) {
  *
  * @export
  * @param {*} arr
- * @param {any[]} props
+ * @param {Array<any>} props
  * @param {{ [x: string]: string }} orders
  *
  * order by a key
@@ -139,8 +145,8 @@ export function omit(obj: { [x: string]: any }, arr: string[]) {
  */
 export function orderBy(
 	arr: any,
-	props: any[],
-	orders: { [x: string]: string },
+	props: Array<any>,
+	orders: Record<string, string>,
 ) {
 	[...arr].sort((a, b) =>
 		props.reduce((acc, prop, i) => {
@@ -160,12 +166,11 @@ export function orderBy(
  *
  *
  * @export
- * @param {...any[]} fns
+ * @param {...Array<any>} fns
  */
-export function pipeFunctions(...fns: any[]) {
+export function pipeFunctions(...fns: Array<any>) {
 	fns.reduce((f, g) => (...args: any) => g(f(...args)));
 }
-
 
 /**
  *
@@ -179,20 +184,17 @@ export function pluck(arr: Array<any>, key: string | number): Array<any> {
 	return arr.map(i => i[key]);
 }
 
-//
-
 /**
  *
+ * rename object keys
  *
  * @export
- * @param {{ [x: string]: any }} keysMap
- * @param {{ [x: string]: any }} obj
- *
- * rename object keys
+ * @param {Record<string, any>} keysMap
+ * @param {Record<string, any>} obj
  */
 export function renameKeys(
-	keysMap: { [x: string]: any },
-	obj: { [x: string]: any },
+	keysMap: Record<string, any>,
+	obj: Record<string, any>,
 ) {
 	Object.keys(obj).reduce(
 		(acc, key) => ({
@@ -222,6 +224,7 @@ export function objectArrayToArray(
 
 /**
  *
+ * subtract date
  *
  * @export
  * @param {string} from
@@ -253,7 +256,13 @@ export function fixedDecimal(num: number, fixed: number = 2): number {
 	return parseFloat(num.toString().match(re)[0]);
 }
 
-
+/**
+ *
+ *
+ * @export
+ * @param {string} val
+ * @returns {(string | number | boolean)}
+ */
 export function autoParseValues(val: string): string | number | boolean {
 	if (validator.isBoolean(val)) {
 		return JSON.parse(val.toLowerCase());
@@ -265,4 +274,35 @@ export function autoParseValues(val: string): string | number | boolean {
 	return val;
 }
 
+/**
+ *
+ * difference between array A and B , returns a - b
+ *
+ * @export
+ * @param {Array<any>} a
+ * @param {Array<any>} b
+ * @returns {Array<any>}
+ */
+export function difference(a: Array<any>, b: Array<any>): Array<any> {
+	return a.filter(c => !b.includes(c));
+}
 
+/**
+ *
+ *
+ * @param {Array<unknown>} a
+ * @param {Array<unknown>} b
+ * @param {boolean} [duplicates=true]
+ * @returns {Array<unknown>}
+ */
+export function union(
+	a: Array<unknown>,
+	b: Array<unknown>,
+	duplicates: boolean = true,
+): Array<unknown> {
+	if (!duplicates) {
+		return Array.from(new Set([...a, ...b]));
+	}
+
+	return Array.from([...a, ...b]);
+}
