@@ -120,7 +120,7 @@ export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
  * omit keys from object
  *
  */
-export function omit(obj: { [x: string]: any }, arr: string | string[]) {
+export function omit(obj: { [x: string]: any }, arr: string[]) {
 	return Object.keys(obj)
 		.filter(k => !arr.includes(k))
 		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
@@ -264,3 +264,5 @@ export function autoParseValues(val: string): string | number | boolean {
 
 	return val;
 }
+
+
