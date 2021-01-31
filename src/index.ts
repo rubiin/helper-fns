@@ -1,5 +1,8 @@
 import { sub } from 'date-fns';
 import validator from 'validator';
+import { ValidateIf, ValidationOptions } from 'class-validator';
+import * as crypto from 'crypto';
+import * as fs from 'fs';
 
 /**
  *
@@ -289,6 +292,19 @@ export function difference(a: Array<any>, b: Array<any>): Array<any> {
 
 /**
  *
+ * common between array A and B , returns a includes b
+ *
+ * @export
+ * @param {Array<any>} a
+ * @param {Array<any>} b
+ * @returns {Array<any>}
+ */
+export function common(a: Array<any>, b: Array<any>): Array<any> {
+	return a.filter(c => b.includes(c));
+}
+
+/**
+ *
  *
  * @param {Array<unknown>} a
  * @param {Array<unknown>} b
@@ -306,3 +322,76 @@ export function union(
 
 	return Array.from([...a, ...b]);
 }
+
+/**
+ *
+ * checks if a date in a format is valid or not
+ *
+ * @export
+ * @param {string} dateString
+ * @returns {boolean}
+ */
+export function isDate(dateString: string): boolean {
+	return new Date(dateString) instanceof Date;
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {ValidationOptions} [validationOptions]
+ * @returns
+ */
+export function IsOptional(validationOptions?: ValidationOptions) {
+	return ValidateIf((_, value) => {
+		return value !== null && value !== undefined && value !== '';
+	}, validationOptions);
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {string} text
+ * @param {{ key: string; iv: string }} config
+ * @returns
+ */
+export function encrypt(text: string, config: { key: string; iv: string }) {
+	let cipher = crypto.createCipheriv('aes-256-cbc', config.key, config.iv);
+	let encrypted = cipher.update(text, 'utf8', 'base64');
+	encrypted += cipher.final('base64');
+	return encrypted;
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {string} encrypted
+ * @param {{ key: string; iv: string }} config
+ * @returns
+ */
+export function decrypt(
+	encrypted: string,
+	config: { key: string; iv: string },
+) {
+	let decipher = crypto.createDecipheriv(
+		'aes-256-cbc',
+		config.key,
+		config.iv,
+	);
+	let decrypted = decipher.update(encrypted, 'base64', 'utf8');
+	return decrypted + decipher.final('utf8');
+}
+
+export const readFile = function (path: string) {
+	return new Promise((resolve, reject) => {
+		fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(html);
+			}
+		});
+	});
+};
