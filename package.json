@@ -1,6 +1,6 @@
 {
   "name": "@rubiin/js-utils",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Some common utils functions for everyday backend usage",
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
@@ -31,6 +31,5 @@
     "validator": "^13.5.2"
   },
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "dependencies": {}
 }

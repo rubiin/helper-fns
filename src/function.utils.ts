@@ -1,6 +1,5 @@
 import { sub } from 'date-fns';
 import validator from 'validator';
-import { ValidateIf, ValidationOptions } from 'class-validator';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 
@@ -335,18 +334,7 @@ export function isDate(dateString: string): boolean {
 	return new Date(dateString) instanceof Date;
 }
 
-/**
- *
- *
- * @export
- * @param {ValidationOptions} [validationOptions]
- * @returns
- */
-export function IsOptional(validationOptions?: ValidationOptions) {
-	return ValidateIf((_, value) => {
-		return value !== null && value !== undefined && value !== '';
-	}, validationOptions);
-}
+
 
 /**
  *
