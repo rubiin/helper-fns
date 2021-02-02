@@ -372,7 +372,15 @@ export function decrypt(
 	return decrypted + decipher.final('utf8');
 }
 
-export const readFile = function (path: string) {
+
+/**
+ *
+ *
+ * @export
+ * @param {string} path
+ * @returns
+ */
+export function readFile(path: string) {
 	return new Promise((resolve, reject) => {
 		fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
 			if (err) {
