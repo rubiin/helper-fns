@@ -334,8 +334,6 @@ export function isDate(dateString: string): boolean {
 	return new Date(dateString) instanceof Date;
 }
 
-
-
 /**
  *
  *
@@ -372,7 +370,6 @@ export function decrypt(
 	return decrypted + decipher.final('utf8');
 }
 
-
 /**
  *
  *
@@ -390,4 +387,4 @@ export function readFile(path: string) {
 			}
 		});
 	});
-};
+}

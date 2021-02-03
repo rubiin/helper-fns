@@ -1,7 +1,5 @@
 import { classToPlain } from 'class-transformer';
 
-
-
 /**
  *
  *
@@ -16,7 +14,6 @@ interface Ipagination {
 	current_page: number;
 	items: any;
 }
-
 
 /**
  *
@@ -34,7 +31,6 @@ export function hasNext(page: number, totalPages: number): string {
 	}
 }
 
-
 /**
  *
  *
@@ -49,8 +45,6 @@ export function hasPrevious(page: number): string {
 		return `${page - 1}`;
 	}
 }
-
-
 
 /**
  *

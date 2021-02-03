@@ -1,4 +1,3 @@
-
 import { ValidateIf, ValidationOptions } from 'class-validator';
 
 /**
@@ -9,7 +8,7 @@ import { ValidateIf, ValidationOptions } from 'class-validator';
  * @returns
  */
 export function IsOptional(validationOptions?: ValidationOptions) {
-  return ValidateIf((_, value) => {
-    return value !== null && value !== undefined && value !== '';
-  }, validationOptions);
+	return ValidateIf((_, value) => {
+		return value !== null && value !== undefined && value !== '';
+	}, validationOptions);
 }
