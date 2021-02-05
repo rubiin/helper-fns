@@ -4,11 +4,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "target": "es2017",
     "declaration": true,
     "outDir": "./dist",
-    "removeComments": true
+    "removeComments": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*"
