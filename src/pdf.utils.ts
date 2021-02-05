@@ -1,7 +1,13 @@
-import * as puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
 
 let instance = null;
 
+
+/**
+ * Gets a reusable puppeteer instance
+ *
+ * @returns
+ */
 async function getBrowserInstance() {
 	if (!instance) {
 		instance = await puppeteer.launch({
