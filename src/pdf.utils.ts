@@ -2,7 +2,6 @@ import puppeteer from 'puppeteer';
 
 let instance = null;
 
-
 /**
  * Gets a reusable puppeteer instance
  *
