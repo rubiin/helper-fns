@@ -46,7 +46,10 @@ export function removeEmpty(obj: Record<string, any> | ArrayLike<unknown>) {
  * @param {K[]} keys
  * @returns {Pick<T, K>}
  *
- * loadsh pick implementation
+ * 
+ * Pick only specified keys from any object
+ *
+ * 
  */
 export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
 	const ret: any = {};
@@ -118,7 +121,7 @@ export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
 
 /**
  *
- * omit keys from object
+ * Pick all keys except explicitly mentioned from any object
  *
  * @export
  * @param {Record<string, any>} obj
@@ -387,4 +390,194 @@ export function readFile(path: string) {
 			}
 		});
 	});
+}
+
+
+
+/**
+ *
+ * Helper to generate random number of n length
+ * @export
+ * @param {number} n pass it to generate random numer of particular length
+ * @returns {string}
+ */
+export function randomNumber(n: number): string {
+	const add = 1;
+	let max = 12 - add;
+
+	if (n > max) {
+		return randomNumber(max) + randomNumber(n - max);
+	}
+
+	max = Math.pow(10, n + add);
+	const min = max / 10; // Math.pow(10, n) basically
+	const num = Math.floor(Math.random() * (max - min + 1)) + min;
+
+	return ('' + num).substring(add);
+}
+
+/**
+ *
+ * Helper to generate random string
+ * 
+ * @export
+ * @param {number} [length=0]
+ * @returns
+ */
+export function randomString(length = 0) {
+	if (!length) return Math.random().toString(36).substr(2);
+
+	let str = '';
+
+	while (length > 0) {
+		const tempStr = randomString().substring(0, length);
+
+		length -= length >= tempStr.length ? tempStr.length : 0;
+		str = str + tempStr;
+	}
+
+	return str;
+}
+
+
+
+/**
+ *
+ * Helper to generate random token
+ * @export
+ * @returns
+ */
+export function randomToken() {
+	return randomString() + randomString();
+}
+
+/**
+ *
+ * Get string after a substring
+ * 
+ * @export
+ * @param {string} str
+ * @param {string} substr
+ * @returns
+ */
+export function strAfter(str: string, substr: string) {
+	return str.split(substr)[1];
+}
+
+/**
+ * Get string before a substring
+ * @param str
+ * @param substr
+ */
+export function strBefore(str: string, substr: string) {
+	return str.split(substr)[0];
+}
+
+/**
+ *
+* Check if value is of type object.
+ * @export
+ * @param {*} value
+ * @returns {boolean}
+ */
+export function isObject(value: any): boolean {
+	if (typeof value === 'object' && value !== null) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ *
+ * Check if value is not empty
+ * @export
+ * @param {*} value
+ * @returns {boolean}
+ */
+export function isNotEmpty(value: any): boolean {
+	return !isEmpty(value);
+}
+
+
+/**
+ * Clone class instance
+ *
+ * @export
+ * @template T
+ * @param {T} instance
+ * @returns {T}
+ */
+export function clone<T>(instance: T): T {
+	const copy = new (instance.constructor as { new(): T })();
+
+	Object.assign(copy, instance);
+
+	return copy;
+}
+
+
+/**
+ *
+ *
+ * @export
+ * @param {Array<Record<string, any>>} arr
+ * @param {string} key
+ * @returns {Record<string, any>}
+ */
+export function groupBy(
+	arr: Array<Record<string, any>>,
+	key: string,
+): Record<string, any> {
+	const obj = {};
+
+	arr.forEach(o => {
+		obj[o[key]] = o;
+	});
+
+	return obj;
+}
+
+
+/**
+ *
+ * Check if passed variable if a type of Function
+ * @export
+ * @param {unknown} value
+ * @returns {Boolean}
+ */
+export function isFunction(value: unknown): Boolean {
+	return typeof value === 'function';
+}
+
+/**
+ * Run if function,
+ * else return undefined
+ * @param value
+ */
+export function runIfFunction(value: any, defaultVal: any) {
+	if (isFunction(value)) return value();
+
+	return defaultVal || null;
+}
+
+
+
+/**
+ *
+ *
+ * @export
+ * @param {Record<string, any>} obj
+ * @returns {Record<string, any>}
+ */
+export function invertObj(obj: Record<string, any>): Record<string, any> {
+	const newObj = {};
+
+	for (const prop in obj) {
+		if (obj.hasOwnProperty(prop)) {
+			newObj[obj[prop]] = prop;
+		}
+	}
+
+	return newObj;
 }

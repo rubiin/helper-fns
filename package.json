@@ -1,6 +1,6 @@
 {
   "name": "@rubiin/js-utils",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Some common utils functions for everyday backend usage",
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
@@ -20,8 +20,7 @@
     "url": "https://github.com/rubiin/js-utils/issues"
   },
   "dependencies": {
-    "date-fns": "^2.17.0",
-    "puppeteer": "^7.0.1"
+    "date-fns": "^2.17.0"
   },
   "main": "dist/index.js",
   "devDependencies": {
@@ -32,7 +31,7 @@
     "prettier": "^2.2.1",
     "class-transformer": "^0.3.2",
     "validator": "^13.5.2",
-     "class-validator": "^0.13.1"
+    "class-validator": "^0.13.1"
   },
   "publishConfig": {
     "access": "public"
