@@ -2,6 +2,7 @@ import { sub } from 'date-fns';
 import validator from 'validator';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
+import * as queryString from 'querystring'
 
 /**
  *
@@ -46,10 +47,10 @@ export function removeEmpty(obj: Record<string, any> | ArrayLike<unknown>) {
  * @param {K[]} keys
  * @returns {Pick<T, K>}
  *
- * 
+ *
  * Pick only specified keys from any object
  *
- * 
+ *
  */
 export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
 	const ret: any = {};
@@ -344,9 +345,13 @@ export function isDate(dateString: string): boolean {
  * @param {string} text
  * @param {{ key: string; iv: string }} config
  * @returns
+ *
+ *  ENC_KEY and IV can be generated as crypto.randomBytes(32).toString('hex');
  */
 export function encrypt(text: string, config: { key: string; iv: string }) {
-	let cipher = crypto.createCipheriv('aes-256-cbc', config.key, config.iv);
+	const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
+	const IV = Buffer.from(config.iv, 'hex'); //
+	let cipher = crypto.createCipheriv('aes-256-cbc', ENC_KEY, IV);
 	let encrypted = cipher.update(text, 'utf8', 'base64');
 	encrypted += cipher.final('base64');
 	return encrypted;
@@ -359,16 +364,17 @@ export function encrypt(text: string, config: { key: string; iv: string }) {
  * @param {string} encrypted
  * @param {{ key: string; iv: string }} config
  * @returns
+ *
+ *
  */
 export function decrypt(
 	encrypted: string,
 	config: { key: string; iv: string },
 ) {
-	let decipher = crypto.createDecipheriv(
-		'aes-256-cbc',
-		config.key,
-		config.iv,
-	);
+	const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
+	const IV = Buffer.from(config.iv, 'hex'); // set random initialisation vector
+
+	let decipher = crypto.createDecipheriv('aes-256-cbc', ENC_KEY, IV);
 	let decrypted = decipher.update(encrypted, 'base64', 'utf8');
 	return decrypted + decipher.final('utf8');
 }
@@ -391,8 +397,6 @@ export function readFile(path: string) {
 		});
 	});
 }
-
-
 
 /**
  *
@@ -419,7 +423,7 @@ export function randomNumber(n: number): string {
 /**
  *
  * Helper to generate random string
- * 
+ *
  * @export
  * @param {number} [length=0]
  * @returns
@@ -439,8 +443,6 @@ export function randomString(length = 0) {
 	return str;
 }
 
-
-
 /**
  *
  * Helper to generate random token
@@ -454,7 +456,7 @@ export function randomToken() {
 /**
  *
  * Get string after a substring
- * 
+ *
  * @export
  * @param {string} str
  * @param {string} substr
@@ -475,7 +477,7 @@ export function strBefore(str: string, substr: string) {
 
 /**
  *
-* Check if value is of type object.
+ * Check if value is of type object.
  * @export
  * @param {*} value
  * @returns {boolean}
@@ -499,7 +501,6 @@ export function isNotEmpty(value: any): boolean {
 	return !isEmpty(value);
 }
 
-
 /**
  * Clone class instance
  *
@@ -509,13 +510,12 @@ export function isNotEmpty(value: any): boolean {
  * @returns {T}
  */
 export function clone<T>(instance: T): T {
-	const copy = new (instance.constructor as { new(): T })();
+	const copy = new (instance.constructor as { new (): T })();
 
 	Object.assign(copy, instance);
 
 	return copy;
 }
-
 
 /**
  *
@@ -537,7 +537,6 @@ export function groupBy(
 
 	return obj;
 }
-
 
 /**
  *
@@ -561,8 +560,6 @@ export function runIfFunction(value: any, defaultVal: any) {
 	return defaultVal || null;
 }
 
-
-
 /**
  *
  *
@@ -580,4 +577,17 @@ export function invertObj(obj: Record<string, any>): Record<string, any> {
 	}
 
 	return newObj;
+}
+
+
+
+/**
+ *
+ *
+ * @export
+ * @param {*} [params={}]
+ * @returns
+ */
+export function stringifyQueryParams(params = {}) {
+	return queryString.stringify(params);
 }
