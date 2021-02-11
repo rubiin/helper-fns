@@ -2,7 +2,7 @@ import { sub } from 'date-fns';
 import validator from 'validator';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
-import * as queryString from 'querystring'
+import * as queryString from 'querystring';
 
 /**
  *
@@ -428,7 +428,7 @@ export function randomNumber(n: number): string {
  * @param {number} [length=0]
  * @returns
  */
-export function randomString(length = 0) {
+export function randomString(length = 0): string {
 	if (!length) return Math.random().toString(36).substr(2);
 
 	let str = '';
@@ -462,7 +462,7 @@ export function randomToken() {
  * @param {string} substr
  * @returns
  */
-export function strAfter(str: string, substr: string) {
+export function strAfter(str: string, substr: string): string {
 	return str.split(substr)[1];
 }
 
@@ -471,7 +471,7 @@ export function strAfter(str: string, substr: string) {
  * @param str
  * @param substr
  */
-export function strBefore(str: string, substr: string) {
+export function strBefore(str: string, substr: string): string {
 	return str.split(substr)[0];
 }
 
@@ -517,25 +517,23 @@ export function clone<T>(instance: T): T {
 	return copy;
 }
 
+
+
 /**
  *
  *
  * @export
- * @param {Array<Record<string, any>>} arr
- * @param {string} key
- * @returns {Record<string, any>}
+ * @param {any[]} arr
+ * @param {(string | number)} fn
+ * @returns
  */
-export function groupBy(
-	arr: Array<Record<string, any>>,
-	key: string,
-): Record<string, any> {
-	const obj = {};
-
-	arr.forEach(o => {
-		obj[o[key]] = o;
-	});
-
-	return obj;
+export function groupBy(arr: any[], fn: string | number) {
+	return arr
+		.map(typeof fn === 'function' ? fn : val => val[fn])
+		.reduce((acc: { [x: string]: any; }, val: string | number, i: string | number) => {
+			acc[val] = (acc[val] || []).concat(arr[i]);
+			return acc;
+		}, {});
 }
 
 /**
@@ -578,8 +576,6 @@ export function invertObj(obj: Record<string, any>): Record<string, any> {
 
 	return newObj;
 }
-
-
 
 /**
  *

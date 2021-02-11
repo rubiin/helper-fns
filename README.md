@@ -103,6 +103,16 @@ objectToEntries({ a: 1, b: 2 }); // [ ['a', 1], ['b', 2] ]
 
 # clone
 
+Creates a shallow clone of value.
+
+```js
+var objects = [{ 'a': 1 }, { 'b': 2 }];
+ 
+var shallow = clone(objects);
+console.log(shallow[0] === objects[0]);
+
+```
+
 # subtractDate
 Subtract the following duration from 15 June 2017 15:29:20
 
@@ -120,6 +130,7 @@ Calculates the difference between two arrays, without filtering duplicate values
 ```js
 difference([1, 2, 3, 3], [1, 2, 4]); // [3, 3]
 ```
+
 
 # union
 
@@ -140,6 +151,34 @@ Checks if gicen string is date
 
 ```
 
+# groupBy
+
+
+Groups the elements of an array based on the given function.
+
+
+```js
+groupBy([6.1, 4.2, 6.3], Math.floor); // {4: [4.2], 6: [6.1, 6.3]}
+groupBy(['one', 'two', 'three'], 'length'); // {3: ['one', 'two'], 5: ['three']}
+```
+
+
+# orderBy
+
+Sorts an array of objects, ordered by properties and orders.
+
+
+```js
+const users = [
+  { name: 'fred', age: 48 },
+  { name: 'barney', age: 36 },
+  { name: 'fred', age: 40 },
+];
+orderBy(users, ['name', 'age'], ['asc', 'desc']);
+// [{name: 'barney', age: 36}, {name: 'fred', age: 48}, {name: 'fred', age: 40}]
+orderBy(users, ['name', 'age']);
+// [{name: 'barney', age: 36}, {name: 'fred', age: 40}, {name: 'fred', age: 48}]
+```
 
 
 # randomNumber
