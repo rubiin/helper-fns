@@ -1,6 +1,6 @@
 {
   "name": "@rubiin/js-utils",
-  "version": "1.8.5",
+  "version": "1.9.0",
   "description": "Some common utils functions for everyday backend usage",
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",

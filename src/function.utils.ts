@@ -517,8 +517,6 @@ export function clone<T>(instance: T): T {
 	return copy;
 }
 
-
-
 /**
  *
  *
@@ -530,10 +528,17 @@ export function clone<T>(instance: T): T {
 export function groupBy(arr: any[], fn: string | number) {
 	return arr
 		.map(typeof fn === 'function' ? fn : val => val[fn])
-		.reduce((acc: { [x: string]: any; }, val: string | number, i: string | number) => {
-			acc[val] = (acc[val] || []).concat(arr[i]);
-			return acc;
-		}, {});
+		.reduce(
+			(
+				acc: { [x: string]: any },
+				val: string | number,
+				i: string | number,
+			) => {
+				acc[val] = (acc[val] || []).concat(arr[i]);
+				return acc;
+			},
+			{},
+		);
 }
 
 /**
