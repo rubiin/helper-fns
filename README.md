@@ -104,6 +104,13 @@ objectToEntries({ a: 1, b: 2 }); // [ ['a', 1], ['b', 2] ]
 # clone
 
 # subtractDate
+Subtract the following duration from 15 June 2017 15:29:20
+
+```js
+const result = subtractDate(new Date('2017-01-01),'years',2)
+// Mon Sep 1 2015 10:19:50
+
+```
 
 # difference
 
