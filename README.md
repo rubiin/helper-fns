@@ -263,7 +263,7 @@ fixedDecimal(3.141525,3); // 3.141
 
 # generateRandomString
 
-Get a number after truncating it from the decimal point. No round off is done
+Get a random string of defined length
 
 ```js
 generateRandomString(6); // fd84bg
