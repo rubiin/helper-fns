@@ -1,5 +1,3 @@
-import { classToPlain } from 'class-transformer';
-
 /**
  *
  *
@@ -70,6 +68,6 @@ export function paginate(
 		next: hasNext(page, pages),
 		previous: hasPrevious(page),
 		current_page: page,
-		items: classToPlain(result),
+		items: result,
 	};
 }
