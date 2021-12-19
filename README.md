@@ -261,6 +261,16 @@ fixedDecimal(3.141525,3); // 3.141
 ```
 
 
+# generateRandomString
+
+Get a number after truncating it from the decimal point. No round off is done
+
+```js
+generateRandomString(6); // fd84bg
+
+```
+
+
 
 # encrypt and decrypt
 

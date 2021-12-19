@@ -1,4 +1,4 @@
-import { sub } from 'date-fns';
+import {sub } from 'date-fns';
 import validator from 'validator';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
@@ -175,7 +175,11 @@ export function orderBy(
  * @param {...Array<any>} fns
  */
 export function pipeFunctions(...fns: Array<any>) {
-	fns.reduce((f, g) => (...args: any) => g(f(...args)));
+	fns.reduce(
+		(f, g) =>
+			(...args: any) =>
+				g(f(...args)),
+	);
 }
 
 /**
@@ -591,4 +595,18 @@ export function invertObj(obj: Record<string, any>): Record<string, any> {
  */
 export function stringifyQueryParams(params = {}) {
 	return queryString.stringify(params);
+}
+
+
+
+
+/**
+ *
+ *
+ * @export
+ * @param {number} [length=6]
+ * @return {*}  {String}
+ */
+export function generateRandomString(length: number = 6): String {
+	return Math.random().toString(20).substr(2, length);
 }
