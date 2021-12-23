@@ -20,16 +20,16 @@
     "url": "https://github.com/rubiin/js-utils/issues"
   },
   "dependencies": {
-    "date-fns": "^2.27.0"
+    "date-fns": "^2.27.0",
+    "validator": "^13.7.0"
   },
   "main": "dist/index.js",
   "devDependencies": {
-    "@types/node": "^17.0.0",
+    "@types/node": "^17.0.4",
     "@types/validator": "^13.7.0",
     "typescript": "^4.5.4",
     "rimraf": "^3.0.2",
-    "prettier": "^2.5.1",
-    "validator": "^13.7.0"
+    "prettier": "^2.5.1"
   },
   "publishConfig": {
     "access": "public"

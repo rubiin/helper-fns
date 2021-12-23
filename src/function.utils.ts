@@ -1,4 +1,4 @@
-import {sub } from 'date-fns';
+import { sub } from 'date-fns';
 import validator from 'validator';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
@@ -597,9 +597,6 @@ export function stringifyQueryParams(params = {}) {
 	return queryString.stringify(params);
 }
 
-
-
-
 /**
  *
  *
@@ -609,4 +606,26 @@ export function stringifyQueryParams(params = {}) {
  */
 export function generateRandomString(length: number = 6): String {
 	return Math.random().toString(20).substr(2, length);
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {*} str
+ * @param {Record<string,any>} mix
+ * @return {*}
+ */
+export  function template(str: any, mix: Record<string, any>): any {
+	const RGX = /{{(.*?)}}/g;
+
+	return str.replace(RGX, (x: number, key: any, y: Record<string, any>) => {
+		x = 0;
+		y = mix;
+		key = key.trim().split('.');
+		while (y && x < key.length) {
+			y = y[key[x++]];
+		}
+		return y != null ? y : '';
+	});
 }

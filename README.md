@@ -270,7 +270,33 @@ generateRandomString(6); // fd84bg
 
 ```
 
+# template
+```js
+template('Hello, {{name}}!', { name: 'world' });
+//=> Hello, world!
 
+template('Howdy, {{0}}! {{1}}', ['partner', '🤠']);
+//=> Howdy, partner! 🤠
+
+template('foo: "{{foo}}"; bar: "{{bar}}";', { foo: 123 });
+//=> foo: "123"; bar: "";
+
+template(`
+  Name: {{name.last}}, {{name.first}}
+  Location: {{address.city}} ({{address.country}})
+  Hobbies: {{hobbies.0}}, {{hobbies.1}}, {{hobbies.2}}
+`, {
+  name: {
+    first: 'Luke',
+    last: 'Edwards'
+  },
+  address: {
+    city: 'Los Angeles',
+    country: 'USA'
+  },
+  hobbies: ['eat', 'sleep', 'repeat']
+});
+```
 
 # encrypt and decrypt
 
