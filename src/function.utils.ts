@@ -616,7 +616,7 @@ export function generateRandomString(length: number = 6): String {
  * @param {Record<string,any>} mix
  * @return {*}
  */
-export  function template(str: any, mix: Record<string, any>): any {
+export function template(str: any, mix: Record<string, any>): any {
 	const RGX = /{{(.*?)}}/g;
 
 	return str.replace(RGX, (x: number, key: any, y: Record<string, any>) => {
