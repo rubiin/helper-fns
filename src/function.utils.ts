@@ -1,5 +1,4 @@
 import { sub } from 'date-fns';
-import validator from 'validator';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as queryString from 'querystring';
@@ -14,10 +13,10 @@ import * as queryString from 'querystring';
  * check if object is empty
  */
 export function isEmpty(obj: any): boolean {
-	return (
-		[Object, Array].includes((obj || {}).constructor) &&
-		!Object.entries(obj || {}).length
-	);
+  return (
+    [Object, Array].includes((obj || {}).constructor) &&
+    !Object.entries(obj || {}).length
+  );
 }
 
 /**
@@ -31,10 +30,10 @@ export function isEmpty(obj: any): boolean {
  *
  */
 export function removeEmpty(obj: Record<string, any> | ArrayLike<unknown>) {
-	return Object.entries(obj).reduce(
-		(a, [k, v]) => (v === null ? a : { ...a, [k]: v }),
-		{},
-	);
+  return Object.entries(obj).reduce(
+    (a, [k, v]) => (v === null ? a : { ...a, [k]: v }),
+    {},
+  );
 }
 
 /**
@@ -53,13 +52,13 @@ export function removeEmpty(obj: Record<string, any> | ArrayLike<unknown>) {
  *
  */
 export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
-	const ret: any = {};
+  const ret: any = {};
 
-	keys.forEach(key => {
-		ret[key] = obj[key];
-	});
+  keys.forEach(key => {
+    ret[key] = obj[key];
+  });
 
-	return ret;
+  return ret;
 }
 
 /**
@@ -72,7 +71,7 @@ export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
  * this is for lodash memoize function
  */
 export function resolverArgs(...args: Array<any>): string {
-	return JSON.stringify(args);
+  return JSON.stringify(args);
 }
 
 /**
@@ -85,10 +84,10 @@ export function resolverArgs(...args: Array<any>): string {
  */
 
 export function sumOfAnArray(
-	arr: Array<number>,
-	initialValue: number = 0,
+  arr: Array<number>,
+  initialValue: number = 0,
 ): number {
-	return arr.reduce((a, b) => a + b, initialValue);
+  return arr.reduce((a, b) => a + b, initialValue);
 }
 
 /**
@@ -99,7 +98,7 @@ export function sumOfAnArray(
  * @returns {Iterable<unknown>}
  */
 export function unique(values: Iterable<unknown>): Iterable<unknown> {
-	return [...new Set(values)];
+  return [...new Set(values)];
 }
 
 /**
@@ -110,14 +109,14 @@ export function unique(values: Iterable<unknown>): Iterable<unknown> {
  * @returns
  */
 export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
-	const cache = new Map();
-	const cached = function (val: any) {
-		return cache.has(val)
-			? cache.get(val)
-			: cache.set(val, fn.call(this, val)) && cache.get(val);
-	};
-	cached.cache = cache;
-	return cached;
+  const cache = new Map();
+  const cached = function (val: any) {
+    return cache.has(val)
+      ? cache.get(val)
+      : cache.set(val, fn.call(this, val)) && cache.get(val);
+  };
+  cached.cache = cache;
+  return cached;
 }
 
 /**
@@ -130,12 +129,12 @@ export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
  * @returns {Record<string, any>}
  */
 export function omit(
-	obj: Record<string, any>,
-	arr: string[],
+  obj: Record<string, any>,
+  arr: string[],
 ): Record<string, any> {
-	return Object.keys(obj)
-		.filter(k => !arr.includes(k))
-		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
+  return Object.keys(obj)
+    .filter(k => !arr.includes(k))
+    .reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
 }
 
 /**
@@ -150,22 +149,22 @@ export function omit(
  *
  */
 export function orderBy(
-	arr: any,
-	props: Array<any>,
-	orders: Record<string, string>,
+  arr: any,
+  props: Array<any>,
+  orders: Record<string, string>,
 ) {
-	[...arr].sort((a, b) =>
-		props.reduce((acc, prop, i) => {
-			if (acc === 0) {
-				const [p1, p2] =
-					orders && orders[i] === 'desc'
-						? [b[prop], a[prop]]
-						: [a[prop], b[prop]];
-				acc = p1 > p2 ? 1 : p1 < p2 ? -1 : 0;
-			}
-			return acc;
-		}, 0),
-	);
+  [...arr].sort((a, b) =>
+    props.reduce((acc, prop, i) => {
+      if (acc === 0) {
+        const [p1, p2] =
+          orders && orders[i] === 'desc'
+            ? [b[prop], a[prop]]
+            : [a[prop], b[prop]];
+        acc = p1 > p2 ? 1 : p1 < p2 ? -1 : 0;
+      }
+      return acc;
+    }, 0),
+  );
 }
 
 /**
@@ -175,11 +174,11 @@ export function orderBy(
  * @param {...Array<any>} fns
  */
 export function pipeFunctions(...fns: Array<any>) {
-	fns.reduce(
-		(f, g) =>
-			(...args: any) =>
-				g(f(...args)),
-	);
+  fns.reduce(
+    (f, g) =>
+      (...args: any) =>
+        g(f(...args)),
+  );
 }
 
 /**
@@ -191,7 +190,7 @@ export function pipeFunctions(...fns: Array<any>) {
  * @returns {Array<any>}
  */
 export function pluck(arr: Array<any>, key: string | number): Array<any> {
-	return arr.map(i => i[key]);
+  return arr.map(i => i[key]);
 }
 
 /**
@@ -203,16 +202,16 @@ export function pluck(arr: Array<any>, key: string | number): Array<any> {
  * @param {Record<string, any>} obj
  */
 export function renameKeys(
-	keysMap: Record<string, any>,
-	obj: Record<string, any>,
+  keysMap: Record<string, any>,
+  obj: Record<string, any>,
 ) {
-	Object.keys(obj).reduce(
-		(acc, key) => ({
-			...acc,
-			...{ [keysMap[key] || key]: obj[key] },
-		}),
-		{},
-	);
+  Object.keys(obj).reduce(
+    (acc, key) => ({
+      ...acc,
+      ...{ [keysMap[key] || key]: obj[key] },
+    }),
+    {},
+  );
 }
 
 /**
@@ -224,12 +223,12 @@ export function renameKeys(
  * @returns {Array<unknown>}
  */
 export function objectArrayToArray(
-	objectArray: Array<unknown>,
-	attr: string,
+  objectArray: Array<unknown>,
+  attr: string,
 ): Array<unknown> {
-	return objectArray.map((el: { [x: string]: any }) => {
-		return el[attr];
-	});
+  return objectArray.map((el: { [x: string]: any }) => {
+    return el[attr];
+  });
 }
 
 /**
@@ -243,11 +242,11 @@ export function objectArrayToArray(
  * @returns {Date}
  */
 export function subtractDate(
-	from: string,
-	unit: string,
-	interval: number,
+  from: string,
+  unit: string,
+  interval: number,
 ): Date {
-	return new Date(sub(new Date(from), { [unit]: interval }));
+  return new Date(sub(new Date(from), { [unit]: interval }));
 }
 
 /**
@@ -261,9 +260,9 @@ export function subtractDate(
  *  truncates a decimal number
  */
 export function fixedDecimal(num: number, fixed: number = 2): number {
-	const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
+  const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
 
-	return parseFloat(num.toString().match(re)[0]);
+  return parseFloat(num.toString().match(re)[0]);
 }
 
 /**
@@ -274,14 +273,15 @@ export function fixedDecimal(num: number, fixed: number = 2): number {
  * @returns {(string | number | boolean)}
  */
 export function autoParseValues(val: string): string | number | boolean {
-	if (validator.isBoolean(val)) {
-		return JSON.parse(val.toLowerCase());
-	} else if (validator.isNumeric(val)) {
-		return parseFloat(val);
-	}
-	// for string no parsing required
+  //check for boolean
+  if (!!JSON.parse(val) === JSON.parse(val)) {
+    return JSON.parse(val.toLowerCase());
+  } else if (!isNaN(Number(val))) {
+    return parseFloat(val);
+  }
+  // for string no parsing required
 
-	return val;
+  return val;
 }
 
 /**
@@ -294,7 +294,7 @@ export function autoParseValues(val: string): string | number | boolean {
  * @returns {Array<any>}
  */
 export function difference(a: Array<any>, b: Array<any>): Array<any> {
-	return a.filter(c => !b.includes(c));
+  return a.filter(c => !b.includes(c));
 }
 
 /**
@@ -307,7 +307,7 @@ export function difference(a: Array<any>, b: Array<any>): Array<any> {
  * @returns {Array<any>}
  */
 export function common(a: Array<any>, b: Array<any>): Array<any> {
-	return a.filter(c => b.includes(c));
+  return a.filter(c => b.includes(c));
 }
 
 /**
@@ -319,15 +319,15 @@ export function common(a: Array<any>, b: Array<any>): Array<any> {
  * @returns {Array<unknown>}
  */
 export function union(
-	a: Array<unknown>,
-	b: Array<unknown>,
-	duplicates: boolean = true,
+  a: Array<unknown>,
+  b: Array<unknown>,
+  duplicates: boolean = true,
 ): Array<unknown> {
-	if (!duplicates) {
-		return Array.from(new Set([...a, ...b]));
-	}
+  if (!duplicates) {
+    return Array.from(new Set([...a, ...b]));
+  }
 
-	return Array.from([...a, ...b]);
+  return Array.from([...a, ...b]);
 }
 
 /**
@@ -339,7 +339,7 @@ export function union(
  * @returns {boolean}
  */
 export function isDate(dateString: string): boolean {
-	return new Date(dateString) instanceof Date;
+  return new Date(dateString) instanceof Date;
 }
 
 /**
@@ -353,12 +353,12 @@ export function isDate(dateString: string): boolean {
  *  ENC_KEY and IV can be generated as crypto.randomBytes(32).toString('hex');
  */
 export function encrypt(text: string, config: { key: string; iv: string }) {
-	const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
-	const IV = Buffer.from(config.iv, 'hex'); //
-	let cipher = crypto.createCipheriv('aes-256-cbc', ENC_KEY, IV);
-	let encrypted = cipher.update(text, 'utf8', 'base64');
-	encrypted += cipher.final('base64');
-	return encrypted;
+  const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
+  const IV = Buffer.from(config.iv, 'hex'); //
+  let cipher = crypto.createCipheriv('aes-256-cbc', ENC_KEY, IV);
+  let encrypted = cipher.update(text, 'utf8', 'base64');
+  encrypted += cipher.final('base64');
+  return encrypted;
 }
 
 /**
@@ -372,15 +372,15 @@ export function encrypt(text: string, config: { key: string; iv: string }) {
  *
  */
 export function decrypt(
-	encrypted: string,
-	config: { key: string; iv: string },
+  encrypted: string,
+  config: { key: string; iv: string },
 ) {
-	const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
-	const IV = Buffer.from(config.iv, 'hex'); // set random initialisation vector
+  const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
+  const IV = Buffer.from(config.iv, 'hex'); // set random initialisation vector
 
-	let decipher = crypto.createDecipheriv('aes-256-cbc', ENC_KEY, IV);
-	let decrypted = decipher.update(encrypted, 'base64', 'utf8');
-	return decrypted + decipher.final('utf8');
+  let decipher = crypto.createDecipheriv('aes-256-cbc', ENC_KEY, IV);
+  let decrypted = decipher.update(encrypted, 'base64', 'utf8');
+  return decrypted + decipher.final('utf8');
 }
 
 /**
@@ -391,15 +391,15 @@ export function decrypt(
  * @returns
  */
 export function readFile(path: string) {
-	return new Promise((resolve, reject) => {
-		fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(html);
-			}
-		});
-	});
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(html);
+      }
+    });
+  });
 }
 
 /**
@@ -410,18 +410,18 @@ export function readFile(path: string) {
  * @returns {string}
  */
 export function randomNumber(n: number): string {
-	const add = 1;
-	let max = 12 - add;
+  const add = 1;
+  let max = 12 - add;
 
-	if (n > max) {
-		return randomNumber(max) + randomNumber(n - max);
-	}
+  if (n > max) {
+    return randomNumber(max) + randomNumber(n - max);
+  }
 
-	max = Math.pow(10, n + add);
-	const min = max / 10; // Math.pow(10, n) basically
-	const num = Math.floor(Math.random() * (max - min + 1)) + min;
+  max = Math.pow(10, n + add);
+  const min = max / 10; // Math.pow(10, n) basically
+  const num = Math.floor(Math.random() * (max - min + 1)) + min;
 
-	return ('' + num).substring(add);
+  return ('' + num).substring(add);
 }
 
 /**
@@ -433,18 +433,18 @@ export function randomNumber(n: number): string {
  * @returns
  */
 export function randomString(length = 0): string {
-	if (!length) return Math.random().toString(36).substr(2);
+  if (!length) return Math.random().toString(36).substr(2);
 
-	let str = '';
+  let str = '';
 
-	while (length > 0) {
-		const tempStr = randomString().substring(0, length);
+  while (length > 0) {
+    const tempStr = randomString().substring(0, length);
 
-		length -= length >= tempStr.length ? tempStr.length : 0;
-		str = str + tempStr;
-	}
+    length -= length >= tempStr.length ? tempStr.length : 0;
+    str = str + tempStr;
+  }
 
-	return str;
+  return str;
 }
 
 /**
@@ -454,7 +454,7 @@ export function randomString(length = 0): string {
  * @returns
  */
 export function randomToken() {
-	return randomString() + randomString();
+  return randomString() + randomString();
 }
 
 /**
@@ -467,7 +467,7 @@ export function randomToken() {
  * @returns
  */
 export function strAfter(str: string, substr: string): string {
-	return str.split(substr)[1];
+  return str.split(substr)[1];
 }
 
 /**
@@ -476,7 +476,7 @@ export function strAfter(str: string, substr: string): string {
  * @param substr
  */
 export function strBefore(str: string, substr: string): string {
-	return str.split(substr)[0];
+  return str.split(substr)[0];
 }
 
 /**
@@ -487,11 +487,11 @@ export function strBefore(str: string, substr: string): string {
  * @returns {boolean}
  */
 export function isObject(value: any): boolean {
-	if (typeof value === 'object' && value !== null) {
-		return true;
-	}
+  if (typeof value === 'object' && value !== null) {
+    return true;
+  }
 
-	return false;
+  return false;
 }
 
 /**
@@ -502,7 +502,7 @@ export function isObject(value: any): boolean {
  * @returns {boolean}
  */
 export function isNotEmpty(value: any): boolean {
-	return !isEmpty(value);
+  return !isEmpty(value);
 }
 
 /**
@@ -514,11 +514,11 @@ export function isNotEmpty(value: any): boolean {
  * @returns {T}
  */
 export function clone<T>(instance: T): T {
-	const copy = new (instance.constructor as { new (): T })();
+  const copy = new (instance.constructor as { new(): T })();
 
-	Object.assign(copy, instance);
+  Object.assign(copy, instance);
 
-	return copy;
+  return copy;
 }
 
 /**
@@ -530,19 +530,19 @@ export function clone<T>(instance: T): T {
  * @returns
  */
 export function groupBy(arr: any[], fn: string | number) {
-	return arr
-		.map(typeof fn === 'function' ? fn : val => val[fn])
-		.reduce(
-			(
-				acc: { [x: string]: any },
-				val: string | number,
-				i: string | number,
-			) => {
-				acc[val] = (acc[val] || []).concat(arr[i]);
-				return acc;
-			},
-			{},
-		);
+  return arr
+    .map(typeof fn === 'function' ? fn : val => val[fn])
+    .reduce(
+      (
+        acc: { [x: string]: any },
+        val: string | number,
+        i: string | number,
+      ) => {
+        acc[val] = (acc[val] || []).concat(arr[i]);
+        return acc;
+      },
+      {},
+    );
 }
 
 /**
@@ -553,7 +553,7 @@ export function groupBy(arr: any[], fn: string | number) {
  * @returns {Boolean}
  */
 export function isFunction(value: unknown): Boolean {
-	return typeof value === 'function';
+  return typeof value === 'function';
 }
 
 /**
@@ -562,9 +562,9 @@ export function isFunction(value: unknown): Boolean {
  * @param value
  */
 export function runIfFunction(value: any, defaultVal: any) {
-	if (isFunction(value)) return value();
+  if (isFunction(value)) return value();
 
-	return defaultVal || null;
+  return defaultVal || null;
 }
 
 /**
@@ -575,26 +575,28 @@ export function runIfFunction(value: any, defaultVal: any) {
  * @returns {Record<string, any>}
  */
 export function invertObj(obj: Record<string, any>): Record<string, any> {
-	const newObj = {};
+  const newObj = {};
 
-	for (const prop in obj) {
-		if (obj.hasOwnProperty(prop)) {
-			newObj[obj[prop]] = prop;
-		}
-	}
+  for (const prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      newObj[obj[prop]] = prop;
+    }
+  }
 
-	return newObj;
+  return newObj;
 }
+
+
 
 /**
  *
  *
  * @export
- * @param {*} [params={}]
- * @returns
+ * @param {*} [params={} || '']
+ * @return {*}  {string}
  */
-export function stringifyQueryParams(params = {}) {
-	return queryString.stringify(params);
+export function stringifyQueryParams(params: any = {} || ''): string {
+  return new URLSearchParams(params).toString();
 }
 
 /**
@@ -605,7 +607,7 @@ export function stringifyQueryParams(params = {}) {
  * @return {*}  {String}
  */
 export function generateRandomString(length: number = 6): String {
-	return Math.random().toString(20).substr(2, length);
+  return Math.random().toString(20).substr(2, length);
 }
 
 /**
@@ -617,15 +619,15 @@ export function generateRandomString(length: number = 6): String {
  * @return {*}
  */
 export function template(str: any, mix: Record<string, any>): any {
-	const RGX = /{{(.*?)}}/g;
+  const RGX = /{{(.*?)}}/g;
 
-	return str.replace(RGX, (x: number, key: any, y: Record<string, any>) => {
-		x = 0;
-		y = mix;
-		key = key.trim().split('.');
-		while (y && x < key.length) {
-			y = y[key[x++]];
-		}
-		return y != null ? y : '';
-	});
+  return str.replace(RGX, (x: number, key: any, y: Record<string, any>) => {
+    x = 0;
+    y = mix;
+    key = key.trim().split('.');
+    while (y && x < key.length) {
+      y = y[key[x++]];
+    }
+    return y != null ? y : '';
+  });
 }
