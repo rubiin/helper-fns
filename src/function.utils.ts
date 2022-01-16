@@ -545,6 +545,28 @@ export function groupBy(arr: any[], fn: string | number) {
     );
 }
 
+
+
+/**
+ *
+ *
+ * @export
+ * @param {string} str
+ * @param {string} [separator="-"]
+ * @return {*}  {string}
+ */
+export function slugify(str: string,separator: string = "-"): string {
+  return str
+    .toString()
+    .normalize('NFD')                   // split an accented letter in the base letter and the acent
+    .replace(/[\u0300-\u036f]/g, '')   // remove all previously split accents
+    .toLowerCase()
+    .replace(/[^a-z0-9 -]/g, '')   // remove all chars not letters, numbers and spaces (to be replaced)
+    .trim()
+    .replace(/\s+/g, separator);
+};
+
+
 /**
  *
  * Check if passed variable if a type of Function
