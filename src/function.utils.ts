@@ -578,23 +578,36 @@ export function groupBy(arr: any[], fn: string | number) {
 		);
 }
 
+interface ISlugifyOptions {
+	lowercase?: boolean;
+	trim?: boolean;
+	separator?: string;
+}
+
 /**
  *
  *
  * @export
  * @param {string} str
- * @param {string} [separator="-"]
+ * @param {ISlugifyOptions} [options={ lowercase: true, separator: '-', trim: true }]
  * @return {*}  {string}
  */
-export function slugify(str: string, separator: string = '-'): string {
-	return str
+export function slugify(
+	str: string,
+	options: ISlugifyOptions = { lowercase: true, separator: '-', trim: true },
+): string {
+	const value = str
 		.toString()
 		.normalize('NFD') // split an accented letter in the base letter and the acent
-		.replace(/[\u0300-\u036f]/g, '') // remove all previously split accents
-		.toLowerCase()
+		.replace(/[\u0300-\u036f]/g, ''); // remove all previously split accents
+	if (options.lowercase) value.toLowerCase();
+	if (options.trim) value.trim();
+
+	return value
 		.replace(/[^a-z0-9 -]/g, '') // remove all chars not letters, numbers and spaces (to be replaced)
+		.toLowerCase()
 		.trim()
-		.replace(/\s+/g, separator);
+		.replace(/\s+/g, options.separator);
 }
 
 /**
