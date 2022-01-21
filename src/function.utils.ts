@@ -2,6 +2,7 @@ import { sub } from 'date-fns';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as queryString from 'querystring';
+import { isFunction } from './types.validator';
 
 /**
  *
@@ -336,6 +337,124 @@ export function capitalize(str: string): string {
  *
  *
  * @export
+ * @param {Function} fn
+ * @param {number} [ms=0]
+ * @return {*}
+ */
+export function debounce(
+	fn: Function,
+	ms: number = 0,
+): (...args: any[]) => void {
+	let timeoutId: NodeJS.Timeout;
+	return function (...args: any[]) {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => fn.apply(this, args), ms);
+	};
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {Function} callback
+ * @return {*}  {number}
+ */
+export function timeTaken(callback: Function): number {
+	console.time('timeTaken');
+	const r = callback();
+	console.timeEnd('timeTaken');
+	return r;
+}
+
+
+
+/**
+ *
+ *
+ * @export
+ * @param {string} str
+ * @return {*}  {string}
+ */
+export function unescapeHTML(str: string): string {
+	return str.replace(
+		/&amp;|&lt;|&gt;|&#39;|&quot;/g,
+		tag =>
+			({
+				'&amp;': '&',
+				'&lt;': '<',
+				'&gt;': '>',
+				'&#39;': "'",
+				'&quot;': '"',
+			}[tag] || tag),
+	);
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {Function} fn
+ * @param {number} wait
+ * @return {*}  {*}
+ */
+export function throttle(fn: Function, wait: number): any {
+	let inThrottle: boolean, lastFn: NodeJS.Timeout, lastTime: number;
+	return function () {
+		const context = this,
+			args = arguments;
+		if (!inThrottle) {
+			fn.apply(context, args);
+			lastTime = Date.now();
+			inThrottle = true;
+		} else {
+			clearTimeout(lastFn);
+			lastFn = setTimeout(function () {
+				if (Date.now() - lastTime >= wait) {
+					fn.apply(context, args);
+					lastTime = Date.now();
+				}
+			}, Math.max(wait - (Date.now() - lastTime), 0));
+		}
+	};
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {number} ms
+ * @return {*}  {string}
+ */
+export function formatDuration(ms: number): string {
+	if (ms < 0) ms = -ms;
+	const time = {
+		day: Math.floor(ms / 86400000),
+		hour: Math.floor(ms / 3600000) % 24,
+		minute: Math.floor(ms / 60000) % 60,
+		second: Math.floor(ms / 1000) % 60,
+		millisecond: Math.floor(ms) % 1000,
+	};
+	return Object.entries(time)
+		.filter(val => val[1] !== 0)
+		.map(([key, val]) => `${val} ${key}${val !== 1 ? 's' : ''}`)
+		.join(', ');
+}
+
+/**
+ *
+ *
+ * @export
+ * @param {string} str
+ * @return {*}  {string}
+ */
+export function capitalizeEveryWord(str: string): string {
+	return str.replace(/\b[a-z]/g, char => char.toUpperCase());
+}
+
+/**
+ *
+ *
+ * @export
  * @param {string} str
  * @return {*}  {string}
  */
@@ -465,7 +584,7 @@ export function randomNumber(n: number): string {
  * @param {number} [length=0]
  * @returns
  */
-export function randomString(length = 0): string {
+export function randomString(length: number = 0): string {
 	if (!length) return Math.random().toString(36).substr(2);
 
 	let str = '';
@@ -510,21 +629,6 @@ export function strAfter(str: string, substr: string): string {
  */
 export function strBefore(str: string, substr: string): string {
 	return str.split(substr)[0];
-}
-
-/**
- *
- * Check if value is of type object.
- * @export
- * @param {*} value
- * @returns {boolean}
- */
-export function isObject(value: any): boolean {
-	if (typeof value === 'object' && value !== null) {
-		return true;
-	}
-
-	return false;
 }
 
 /**
@@ -611,17 +715,6 @@ export function slugify(
 }
 
 /**
- *
- * Check if passed variable if a type of Function
- * @export
- * @param {unknown} value
- * @returns {Boolean}
- */
-export function isFunction(value: unknown): Boolean {
-	return typeof value === 'function';
-}
-
-/**
  * Run if function,
  * else return undefined
  * @param value
@@ -630,6 +723,41 @@ export function runIfFunction(value: any, defaultVal: any) {
 	if (isFunction(value)) return value();
 
 	return defaultVal || null;
+}
+
+/**
+ *
+ * Clear undefined fields from an object. It mutates the object
+ *
+ * @export
+ * @template T
+ * @param {T} obj
+ * @return {*}  {T}
+ */
+export function clearUndefined<T extends object>(obj: T): T {
+	Object.keys(obj).forEach((key: string) =>
+		obj[key] === undefined ? delete obj[key] : {},
+	);
+	return obj;
+}
+
+/**
+ * Replace backslash to slash
+ *
+ * @category String
+ */
+export function slash(str: string) {
+	return str.replace(/\\/g, '/');
+}
+
+/**
+ * Ensure prefix of a string
+ *
+ * @category String
+ */
+export function ensurePrefix(prefix: string, str: string) {
+	if (!str.startsWith(prefix)) return prefix + str;
+	return str;
 }
 
 /**
@@ -694,3 +822,11 @@ export function template(str: any, mix: Record<string, any>): any {
 		return y != null ? y : '';
 	});
 }
+
+// export function template(str: string, ...args: any[]): string {
+// 	return str.replace(/{(\d+)}/g, (match, key) => {
+// 		const index = Number(key);
+// 		if (Number.isNaN(index)) return match;
+// 		return args[index];
+// 	});
+// }

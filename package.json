@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Some common utils functions for everyday backend usage",
   "scripts": {
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.{ts,md}\"",
     "build": "rimraf dist && tsc -p tsconfig.build.json"
   },
   "keywords": [

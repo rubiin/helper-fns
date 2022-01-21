@@ -251,7 +251,45 @@ Generate a slug from a string
 
 ```js
 slugify('i love javascript'); // i-love
+```
 
+# capitalizeEveryWord
+
+```js
+capitalizeEveryWord('hello world!'); // 'Hello World!'
+```
+
+# throttle
+
+```js
+window.addEventListener(
+	'resize',
+	throttle(function (evt) {
+		console.log(window.innerWidth);
+		console.log(window.innerHeight);
+	}, 250),
+); // Will log the window dimensions at most every 250ms
+```
+
+# timeTaken
+
+```js
+unescapeHTML('&lt;a href=&quot;#&quot;&gt;Me &amp; you&lt;/a&gt;');
+// '<a href="#">Me & you</a>'
+```
+
+# timeTaken
+
+```js
+timeTaken(() => Math.pow(2, 10)); // 1024, (logged): timeTaken: 0.02099609375ms
+```
+
+# formatDuration
+
+```js
+formatDuration(1001); // '1 second, 1 millisecond'
+formatDuration(34325055574);
+// '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
 ```
 
 # template

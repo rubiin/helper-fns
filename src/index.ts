@@ -1,2 +1,2 @@
 export * from './function.utils';
-export * from './paginate.utils';
+export * from './types.validator';
