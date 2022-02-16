@@ -104,16 +104,6 @@ var shallow = clone(objects);
 console.log(shallow[0] === objects[0]);
 ```
 
-# subtractDate
-
-Subtract the following duration from 15 June 2017 15:29:20
-
-```js
-const result = subtractDate(new Date('2017-01-01),'years',2)
-// Mon Sep 1 2015 10:19:50
-
-```
-
 # difference
 
 Calculates the difference between two arrays, without filtering duplicate values.
@@ -184,8 +174,6 @@ Generates random string of giben length
 console.log(randomString(6));
 // a1t4ry
 ```
-
-# randomToken
 
 # strAfter
 
@@ -271,7 +259,7 @@ window.addEventListener(
 ); // Will log the window dimensions at most every 250ms
 ```
 
-# timeTaken
+# unescapeHTML
 
 ```js
 unescapeHTML('&lt;a href=&quot;#&quot;&gt;Me &amp; you&lt;/a&gt;');

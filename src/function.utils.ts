@@ -1,8 +1,14 @@
-import { sub } from 'date-fns';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
-import * as queryString from 'querystring';
 import { isFunction } from './types.validator';
+
+interface ISlugifyOptions {
+	lowercase?: boolean;
+	trim?: boolean;
+	separator?: string;
+}
+
+const DOT_REG = /\./g;
 
 /**
  *
@@ -232,23 +238,23 @@ export function objectArrayToArray(
 	});
 }
 
-/**
- *
- * subtract date
- *
- * @export
- * @param {string} from
- * @param {string} unit
- * @param {number} interval
- * @returns {Date}
- */
-export function subtractDate(
-	from: string,
-	unit: string,
-	interval: number,
-): Date {
-	return new Date(sub(new Date(from), { [unit]: interval }));
-}
+// /**
+//  *
+//  * subtract date
+//  *
+//  * @export
+//  * @param {string} from
+//  * @param {string} unit
+//  * @param {number} interval
+//  * @returns {Date}
+//  */
+// export function subtractDate(
+// 	from: string,
+// 	unit: string,
+// 	interval: number,
+// ): Date {
+// 	return new Date(sub(new Date(from), { [unit]: interval }));
+// }
 
 /**
  *
@@ -365,8 +371,6 @@ export function timeTaken(callback: Function): number {
 	console.timeEnd('timeTaken');
 	return r;
 }
-
-
 
 /**
  *
@@ -682,10 +686,20 @@ export function groupBy(arr: any[], fn: string | number) {
 		);
 }
 
-interface ISlugifyOptions {
-	lowercase?: boolean;
-	trim?: boolean;
-	separator?: string;
+/**
+ *
+ *
+ * @export
+ * @param {string} email
+ * @return {*}
+ */
+export function normalizeEmail(email: string): any {
+	const [name, host] = email.split('@');
+	let [beforePlus] = name.split('+');
+	beforePlus = beforePlus.replace(DOT_REG, '');
+	const result = beforePlus.toLowerCase() + '@' + host.toLowerCase();
+	Number(result);
+	return result;
 }
 
 /**
