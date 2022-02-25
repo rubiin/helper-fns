@@ -57,7 +57,6 @@ Calculates the sum of two or more numbers/arrays.
 
 ```js
 sumOfAnArray(1, 2, 3, 4); // 10
-sumOfAnArray(...[1, 2, 3, 4]); // 10
 ```
 
 # memoize
@@ -246,7 +245,7 @@ generateRandomString(6); // fd84bg
 Generate a slug from a string
 
 ```js
-slugify('i love javascript'); // i-love
+slugify('i love javascript'); // i-love-javascript
 ```
 
 # capitalizeEveryWord

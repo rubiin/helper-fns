@@ -181,7 +181,7 @@ export function orderBy(
  * @param {...Array<any>} fns
  */
 export function pipeFunctions(...fns: Array<any>) {
-	fns.reduce(
+	return fns.reduce(
 		(f, g) =>
 			(...args: any) =>
 				g(f(...args)),
@@ -723,8 +723,6 @@ export function slugify(
 
 	return value
 		.replace(/[^a-z0-9 -]/g, '') // remove all chars not letters, numbers and spaces (to be replaced)
-		.toLowerCase()
-		.trim()
 		.replace(/\s+/g, options.separator);
 }
 
