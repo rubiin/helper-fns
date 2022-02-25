@@ -30,8 +30,8 @@ isEmpty(''); // true
 isEmpty([1, 2]); // false
 isEmpty({ a: 1, b: 2 }); // false
 isEmpty('text'); // false
-isEmpty(123); // true - type is not considered a collection
-isEmpty(true); // true - type is not considered a collection
+isEmpty(123); // false - type is not considered a collection
+isEmpty(true); // false
 ```
 
 # pick
