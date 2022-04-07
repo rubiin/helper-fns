@@ -166,11 +166,13 @@ orderBy(users, ['name', 'age']);
 
 # randomNumber
 
-Generates random mnumber of giben length
+Generates random number of between a min number and a max number.
 
 ```js
-console.log(randomNumber(6));
-// 195315
+
+```js
+console.log(randomNumber(0,6)); // integer between 0 and 6
+// 5
 ```
 
 # randomString

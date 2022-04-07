@@ -498,6 +498,21 @@ export function isDate(dateString: string): boolean {
 	return new Date(dateString) instanceof Date;
 }
 
+
+
+/**
+ *
+ *
+ * @export
+ * @param {any[]} arr
+ * @param {number} [n=1]
+ * @return {*}  {any[]}
+ */
+export function dropRight(arr: any[], n: number = 1): any[] {
+	return arr.slice(0, -n);
+}
+
+
 /**
  *
  *
@@ -532,7 +547,7 @@ export function decrypt(
 	config: { key: string; iv: string },
 ) {
 	const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
-	const IV = Buffer.from(config.iv, 'hex'); // set random initialisation vector
+	const IV = Buffer.from(config.iv, 'hex'); // set random initialization vector
 
 	let decipher = crypto.createDecipheriv('aes-256-cbc', ENC_KEY, IV);
 	let decrypted = decipher.update(encrypted, 'base64', 'utf8');
@@ -561,23 +576,16 @@ export function readFile(path: string) {
 /**
  *
  * Helper to generate random number of n length
+ * 
  * @export
- * @param {number} n pass it to generate random numer of particular length
- * @returns {string}
+ * @param {number} [a=1]
+ * @param {number} [b=0]
+ * @return {*}  {number}
  */
-export function randomNumber(n: number): string {
-	const add = 1;
-	let max = 12 - add;
-
-	if (n > max) {
-		return randomNumber(max) + randomNumber(n - max);
-	}
-
-	max = Math.pow(10, n + add);
-	const min = max / 10; // Math.pow(10, n) basically
-	const num = Math.floor(Math.random() * (max - min + 1)) + min;
-
-	return ('' + num).substring(add);
+export function randomNumber(a: number = 1, b: number = 0): number {
+	  const lower = Math.ceil(Math.min(a, b));
+    const upper = Math.floor(Math.max(a, b));
+    return Math.floor(lower + Math.random() * (upper - lower + 1))
 }
 
 /**
