@@ -168,11 +168,27 @@ orderBy(users, ['name', 'age']);
 
 Generates random number of between a min number and a max number.
 
-```js
 
 ```js
 console.log(randomNumber(0,6)); // integer between 0 and 6
 // 5
+```
+
+
+# enumToString
+
+Generates random number of between a min number and a max number.
+
+```ts
+
+export enum AppRoles {
+	AUTHOR = "AUTHOR",
+	ADMIN = "ADMIN"
+}
+
+
+console.log(enumToString(AppRoles)); 
+// ["AUTHOR", "ADMIN"]
 ```
 
 # randomString

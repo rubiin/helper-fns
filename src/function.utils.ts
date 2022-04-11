@@ -532,6 +532,21 @@ export function encrypt(text: string, config: { key: string; iv: string }) {
 	return encrypted;
 }
 
+
+/**
+ *
+ *  converts enum to string array
+ *
+ * @export
+ * @param {object} _enum
+ */
+
+	export function enumToString(_enum: object){
+		Object.keys(_enum)
+			.map(key => _enum[key])
+			.filter(value => typeof value === "string") as string[];
+	}
+
 /**
  *
  *

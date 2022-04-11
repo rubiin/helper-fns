@@ -1,6 +1,6 @@
 {
   "name": "@rubiin/js-utils",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "Some common utilities functions for everyday backend usage with zero dependencies",
   "scripts": {
     "format": "prettier --write \"src/**/*.{ts,md}\"",
@@ -30,7 +30,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
-    "prettier": "^2.6.1",
+    "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.4",
     "typescript": "^4.6.3"
