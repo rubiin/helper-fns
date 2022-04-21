@@ -1,20 +1,20 @@
-# js-utils
+# helper-fns
 
 > JavaScript Utilities
 
 
 <p align="center">
 <a href="https://github.com/rubiin/js-utils/actions/workflows/release.yml"><img src="https://github.com/rubiin/js-utils/actions/workflows/release.yml/badge.svg" alt="Build" /></a>
-<a href="https://img.shields.io/npm/v/nestjs-pgpromise"><img src="https://img.shields.io/npm/v/@rubiin/js-utils" alt="NPM Version" /></a>
-<a href="https://img.shields.io/npm/l/nestjs-pgpromise"><img src="https://img.shields.io/npm/l/@rubiin/js-utils" alt="Package License" /></a>
-<a href="https://www.npmjs.com/package/nestjs-pgpromise"><img src="https://img.shields.io/npm/dm/@rubiin/js-utils" alt="NPM Downloads" /></a>
+<a href="https://img.shields.io/npm/v/helper-fns"><img src="https://img.shields.io/npm/v/helper-fns" alt="NPM Version" /></a>
+<a href="https://img.shields.io/npm/l/helper-fns"><img src="https://img.shields.io/npm/l/helper-fns" alt="Package License" /></a>
+<a href="https://www.npmjs.com/package/helper-fns"><img src="https://img.shields.io/npm/dm/helper-fns" alt="NPM Downloads" /></a>
   
 
 # INSTALLAION
 
 ```
-npm i @rubiin/js-utils
-yarn add @rubiin/js-utils
+npm i helper-fns
+yarn add helper-fns
 
 ```
 
