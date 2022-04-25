@@ -5,7 +5,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "sourceMap": false,
-    "target": "es2017",
+    "target": "es2020",
     "declaration": true,
     "outDir": "./dist",
     "removeComments": true,

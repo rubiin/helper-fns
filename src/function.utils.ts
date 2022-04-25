@@ -1,6 +1,5 @@
 import * as crypto from 'crypto';
 import * as fs from 'fs';
-import { isFunction } from './types.validator';
 
 interface ISlugifyOptions {
 	lowercase?: boolean;
@@ -19,7 +18,7 @@ const DOT_REG = /\./g;
  *
  * check if object is empty
  */
-export function isEmpty(obj: any): boolean {
+export const isEmpty = (obj: any): boolean => {
 	return (
 		[Object, Array].includes((obj || {}).constructor) &&
 		!Object.entries(obj || {}).length
@@ -36,7 +35,7 @@ export function isEmpty(obj: any): boolean {
  * remove empty
  *
  */
-export function removeEmpty(obj: Record<string, any> | ArrayLike<unknown>) {
+export const removeEmpty = (obj: Record<string, any> | ArrayLike<unknown>) =>{
 	return Object.entries(obj).reduce(
 		(a, [k, v]) => (v === null ? a : { ...a, [k]: v }),
 		{},
@@ -58,7 +57,7 @@ export function removeEmpty(obj: Record<string, any> | ArrayLike<unknown>) {
  *
  *
  */
-export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
+export const pick = <T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> =>{
 	const ret: any = {};
 
 	keys.forEach(key => {
@@ -72,12 +71,12 @@ export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
  *
  *
  * @export
- * @param {...Array<any>} args
+ * @param {...any[]} args
  * @returns {string}
  *
- * this is for lodash memoize function
+ * this is for lodash memoize 
  */
-export function resolverArgs(...args: Array<any>): string {
+export const resolverArgs = (...args: any[]): string =>{
 	return JSON.stringify(args);
 }
 
@@ -90,10 +89,10 @@ export function resolverArgs(...args: Array<any>): string {
  * @returns {number}
  */
 
-export function sumOfAnArray(
+export const sumOfAnArray = (
 	arr: Array<number>,
 	initialValue: number = 0,
-): number {
+): number => {
 	return arr.reduce((a, b) => a + b, initialValue);
 }
 
@@ -104,7 +103,7 @@ export function sumOfAnArray(
  * @param {Iterable<unknown>} values
  * @returns {Iterable<unknown>}
  */
-export function unique(values: Iterable<unknown>): Iterable<unknown> {
+export const unique = (values: Iterable<unknown>): Iterable<unknown>=> {
 	return [...new Set(values)];
 }
 
@@ -115,9 +114,9 @@ export function unique(values: Iterable<unknown>): Iterable<unknown> {
  * @param {{ call: (arg0: any, arg1: any) => any }} fn
  * @returns
  */
-export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
+export const memoize = (fn: { call: (arg0: any, arg1: any) => any }) => {
 	const cache = new Map();
-	const cached = function (val: any) {
+	const cached =  (val: any) =>{
 		return cache.has(val)
 			? cache.get(val)
 			: cache.set(val, fn.call(this, val)) && cache.get(val);
@@ -135,10 +134,10 @@ export function memoize(fn: { call: (arg0: any, arg1: any) => any }) {
  * @param {string[]} arr
  * @returns {Record<string, any>}
  */
-export function omit(
+export const omit=(
 	obj: Record<string, any>,
 	arr: string[],
-): Record<string, any> {
+): Record<string, any> =>{
 	return Object.keys(obj)
 		.filter(k => !arr.includes(k))
 		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
@@ -149,17 +148,17 @@ export function omit(
  *
  * @export
  * @param {*} arr
- * @param {Array<any>} props
+ * @param {any[]} props
  * @param {{ [x: string]: string }} orders
  *
  * order by a key
  *
  */
-export function orderBy(
+export const orderBy = (
 	arr: any,
-	props: Array<any>,
+	props: any[],
 	orders: Record<string, string>,
-) {
+) =>{
 	[...arr].sort((a, b) =>
 		props.reduce((acc, prop, i) => {
 			if (acc === 0) {
@@ -178,9 +177,9 @@ export function orderBy(
  *
  *
  * @export
- * @param {...Array<any>} fns
+ * @param {...any[]} fns
  */
-export function pipeFunctions(...fns: Array<any>) {
+export const pipes=(...fns: any[]) =>{
 	return fns.reduce(
 		(f, g) =>
 			(...args: any) =>
@@ -192,11 +191,11 @@ export function pipeFunctions(...fns: Array<any>) {
  *
  *
  * @export
- * @param {Array<any>} arr
+ * @param {any[]} arr
  * @param {(string | number)} key
- * @returns {Array<any>}
+ * @returns {any[]}
  */
-export function pluck(arr: Array<any>, key: string | number): Array<any> {
+export const pluck=(arr: any[], key: string | number): any[] =>{
 	return arr.map(i => i[key]);
 }
 
@@ -208,10 +207,10 @@ export function pluck(arr: Array<any>, key: string | number): Array<any> {
  * @param {Record<string, any>} keysMap
  * @param {Record<string, any>} obj
  */
-export function renameKeys(
+export const renameKeys = (
 	keysMap: Record<string, any>,
 	obj: Record<string, any>,
-) {
+)=> {
 	Object.keys(obj).reduce(
 		(acc, key) => ({
 			...acc,
@@ -229,32 +228,16 @@ export function renameKeys(
  * @param {string} attr
  * @returns {Array<unknown>}
  */
-export function objectArrayToArray(
+export const objectArrayToArray = (
 	objectArray: Array<unknown>,
 	attr: string,
-): Array<unknown> {
+): Array<unknown> =>{
 	return objectArray.map((el: { [x: string]: any }) => {
 		return el[attr];
 	});
 }
 
-// /**
-//  *
-//  * subtract date
-//  *
-//  * @export
-//  * @param {string} from
-//  * @param {string} unit
-//  * @param {number} interval
-//  * @returns {Date}
-//  */
-// export function subtractDate(
-// 	from: string,
-// 	unit: string,
-// 	interval: number,
-// ): Date {
-// 	return new Date(sub(new Date(from), { [unit]: interval }));
-// }
+
 
 /**
  *
@@ -266,7 +249,7 @@ export function objectArrayToArray(
  *
  *  truncates a decimal number
  */
-export function fixedDecimal(num: number, fixed: number = 2): number {
+export const fixedDecimal = (num: number, fixed: number = 2): number  =>{
 	const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
 
 	return parseFloat(num.toString().match(re)[0]);
@@ -279,7 +262,7 @@ export function fixedDecimal(num: number, fixed: number = 2): number {
  * @param {string} val
  * @returns {(string | number | boolean)}
  */
-export function autoParseValues(val: string): string | number | boolean {
+export const autoParseValues =(val: string): string | number | boolean=> {
 	//check for boolean
 	if (!!JSON.parse(val) === JSON.parse(val)) {
 		return JSON.parse(val.toLowerCase());
@@ -295,10 +278,10 @@ export function autoParseValues(val: string): string | number | boolean {
  *
  *
  * @export
- * @param {Array<any>} arr
- * @return {*}  {Array<any>}
+ * @param {any[]} arr
+ * @return {*}  {any[]}
  */
-export function flattenDeep(arr: Array<any>): Array<any> {
+export const flattenDeep= (arr: any[]): any[] => {
 	return arr.flat(Infinity);
 }
 
@@ -307,11 +290,11 @@ export function flattenDeep(arr: Array<any>): Array<any> {
  * difference between array A and B , returns a - b
  *
  * @export
- * @param {Array<any>} a
- * @param {Array<any>} b
- * @returns {Array<any>}
+ * @param {any[]} a
+ * @param {any[]} b
+ * @returns {any[]}
  */
-export function difference(a: Array<any>, b: Array<any>): Array<any> {
+export const difference = (a: any[], b: any[]): any[]=> {
 	return a.filter(c => !b.includes(c));
 }
 
@@ -320,11 +303,11 @@ export function difference(a: Array<any>, b: Array<any>): Array<any> {
  * common between array A and B , returns a includes b
  *
  * @export
- * @param {Array<any>} a
- * @param {Array<any>} b
- * @returns {Array<any>}
+ * @param {any[]} a
+ * @param {any[]} b
+ * @returns {any[]}
  */
-export function common(a: Array<any>, b: Array<any>): Array<any> {
+export const common = (a: any[], b: any[]): any[] =>{
 	return a.filter(c => b.includes(c));
 }
 
@@ -335,37 +318,48 @@ export function common(a: Array<any>, b: Array<any>): Array<any> {
  * @param {string} str
  * @return {*}  {string}
  */
-export function capitalize(str: string): string {
+export const capitalize=(str: string): string=> {
 	return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
 }
 
-/**
- *
- *
- * @export
- * @param {Function} fn
- * @param {number} [ms=0]
- * @return {*}
- */
-export function debounce(
-	fn: Function,
-	ms: number = 0,
-): (...args: any[]) => void {
-	let timeoutId: NodeJS.Timeout;
-	return function (...args: any[]) {
-		clearTimeout(timeoutId);
-		timeoutId = setTimeout(() => fn.apply(this, args), ms);
-	};
-}
 
 /**
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing.
+ *
+ * @param func a function
+ * @param wait time to wait
+ * @param immediate should it be called immediately
+ */
+ export const debounce = (func: Function, wait: number, immediate?: boolean) => {
+  let timeout: any;
+  return function(this: any) {
+    const context = this,
+      args = arguments;
+    const later = function() {
+      timeout = null;
+      if (!immediate) {
+        func.apply(context, args);
+      }
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) {
+      func.apply(context, args);
+    }
+  };
+};
+/**
  *
  *
  * @export
- * @param {Function} callback
+ * @param {} callback
  * @return {*}  {number}
  */
-export function timeTaken(callback: Function): number {
+export const timeTaken = (callback:Function ): number=> {
 	console.time('timeTaken');
 	const r = callback();
 	console.timeEnd('timeTaken');
@@ -379,7 +373,7 @@ export function timeTaken(callback: Function): number {
  * @param {string} str
  * @return {*}  {string}
  */
-export function unescapeHTML(str: string): string {
+export const unescapeHTML= (str: string): string =>{
 	return str.replace(
 		/&amp;|&lt;|&gt;|&#39;|&quot;/g,
 		tag =>
@@ -394,32 +388,28 @@ export function unescapeHTML(str: string): string {
 }
 
 /**
+ * Throttling enforces a maximum number of times a function
+ * can be called over time.
  *
- *
- * @export
- * @param {Function} fn
- * @param {number} wait
- * @return {*}  {*}
+ * @param func a function
+ * @param wait time
  */
-export function throttle(fn: Function, wait: number): any {
-	let inThrottle: boolean, lastFn: NodeJS.Timeout, lastTime: number;
-	return function () {
-		const context = this,
-			args = arguments;
-		if (!inThrottle) {
-			fn.apply(context, args);
-			lastTime = Date.now();
-			inThrottle = true;
-		} else {
-			clearTimeout(lastFn);
-			lastFn = setTimeout(function () {
-				if (Date.now() - lastTime >= wait) {
-					fn.apply(context, args);
-					lastTime = Date.now();
-				}
-			}, Math.max(wait - (Date.now() - lastTime), 0));
-		}
-	};
+ export  const throttle = (func: Function, wait: number) =>{
+  let timeout: NodeJS.Timer | number | null = null;
+  let callbackArgs: IArguments | null = null;
+  const context = this;
+
+  const later = () => {
+    func.apply(context, callbackArgs);
+    timeout = null;
+  };
+
+  return function() {
+    if (!timeout) {
+      callbackArgs = arguments;
+      timeout = setTimeout(later, wait);
+    }
+  };
 }
 
 /**
@@ -429,7 +419,7 @@ export function throttle(fn: Function, wait: number): any {
  * @param {number} ms
  * @return {*}  {string}
  */
-export function formatDuration(ms: number): string {
+export const formatDuration=(ms: number): string =>{
 	if (ms < 0) ms = -ms;
 	const time = {
 		day: Math.floor(ms / 86400000),
@@ -451,7 +441,7 @@ export function formatDuration(ms: number): string {
  * @param {string} str
  * @return {*}  {string}
  */
-export function capitalizeEveryWord(str: string): string {
+export const capitalizeEveryWord=(str: string): string =>{
 	return str.replace(/\b[a-z]/g, char => char.toUpperCase());
 }
 
@@ -462,7 +452,7 @@ export function capitalizeEveryWord(str: string): string {
  * @param {string} str
  * @return {*}  {string}
  */
-export function lowerFirst(str: string): string {
+export const lowerFirst=(str: string): string =>{
 	return str ? str.charAt(0).toLowerCase() + str.slice(1) : '';
 }
 
@@ -474,11 +464,11 @@ export function lowerFirst(str: string): string {
  * @param {boolean} [duplicates=true]
  * @returns {Array<unknown>}
  */
-export function union(
+export const union=(
 	a: Array<unknown>,
 	b: Array<unknown>,
 	duplicates: boolean = true,
-): Array<unknown> {
+): Array<unknown>=> {
 	if (!duplicates) {
 		return Array.from(new Set([...a, ...b]));
 	}
@@ -494,7 +484,7 @@ export function union(
  * @param {string} dateString
  * @returns {boolean}
  */
-export function isDate(dateString: string): boolean {
+export const isDate=(dateString: string): boolean =>{
 	return new Date(dateString) instanceof Date;
 }
 
@@ -508,7 +498,7 @@ export function isDate(dateString: string): boolean {
  * @param {number} [n=1]
  * @return {*}  {any[]}
  */
-export function dropRight(arr: any[], n: number = 1): any[] {
+export const dropRight=(arr: any[], n: number = 1): any[] =>{
 	return arr.slice(0, -n);
 }
 
@@ -523,7 +513,7 @@ export function dropRight(arr: any[], n: number = 1): any[] {
  *
  *  ENC_KEY and IV can be generated as crypto.randomBytes(32).toString('hex');
  */
-export function encrypt(text: string, config: { key: string; iv: string }) {
+export const encrypt=(text: string, config: { key: string; iv: string })=> {
 	const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
 	const IV = Buffer.from(config.iv, 'hex'); //
 	let cipher = crypto.createCipheriv('aes-256-cbc', ENC_KEY, IV);
@@ -541,7 +531,7 @@ export function encrypt(text: string, config: { key: string; iv: string }) {
  * @param {object} _enum
  */
 
-	export function enumToString(_enum: object){
+	export const enumToString=(_enum: object)=>{
 		Object.keys(_enum)
 			.map(key => _enum[key])
 			.filter(value => typeof value === "string") as string[];
@@ -557,10 +547,10 @@ export function encrypt(text: string, config: { key: string; iv: string }) {
  *
  *
  */
-export function decrypt(
+export const decrypt=(
 	encrypted: string,
 	config: { key: string; iv: string },
-) {
+)=> {
 	const ENC_KEY = Buffer.from(config.key, 'hex'); // set random encryption key
 	const IV = Buffer.from(config.iv, 'hex'); // set random initialization vector
 
@@ -576,9 +566,9 @@ export function decrypt(
  * @param {string} path
  * @returns
  */
-export function readFile(path: string) {
+export const readFile=(path: string) =>{
 	return new Promise((resolve, reject) => {
-		fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+		fs.readFile(path, { encoding: 'utf-8' },  (err, html)=> {
 			if (err) {
 				reject(err);
 			} else {
@@ -597,7 +587,7 @@ export function readFile(path: string) {
  * @param {number} [b=0]
  * @return {*}  {number}
  */
-export function randomNumber(a: number = 1, b: number = 0): number {
+export const randomNumber=(a: number = 1, b: number = 0): number=> {
 	  const lower = Math.ceil(Math.min(a, b));
     const upper = Math.floor(Math.max(a, b));
     return Math.floor(lower + Math.random() * (upper - lower + 1))
@@ -611,7 +601,7 @@ export function randomNumber(a: number = 1, b: number = 0): number {
  * @param {number} [length=0]
  * @returns
  */
-export function randomString(length: number = 0): string {
+export const randomString=(length: number = 0): string =>{
 	if (!length) return Math.random().toString(36).substr(2);
 
 	let str = '';
@@ -632,7 +622,7 @@ export function randomString(length: number = 0): string {
  * @export
  * @returns
  */
-export function randomToken() {
+export const randomToken=() =>{
 	return randomString() + randomString();
 }
 
@@ -645,7 +635,7 @@ export function randomToken() {
  * @param {string} substr
  * @returns
  */
-export function strAfter(str: string, substr: string): string {
+export const strAfter=(str: string, substr: string): string =>{
 	return str.split(substr)[1];
 }
 
@@ -654,7 +644,7 @@ export function strAfter(str: string, substr: string): string {
  * @param str
  * @param substr
  */
-export function strBefore(str: string, substr: string): string {
+export const strBefore=(str: string, substr: string): string =>{
 	return str.split(substr)[0];
 }
 
@@ -665,7 +655,7 @@ export function strBefore(str: string, substr: string): string {
  * @param {*} value
  * @returns {boolean}
  */
-export function isNotEmpty(value: any): boolean {
+export const isNotEmpty=(value: any): boolean=> {
 	return !isEmpty(value);
 }
 
@@ -677,7 +667,7 @@ export function isNotEmpty(value: any): boolean {
  * @param {T} instance
  * @returns {T}
  */
-export function clone<T>(instance: T): T {
+export const clone=<T>(instance: T): T=> {
 	const copy = new (instance.constructor as { new (): T })();
 
 	Object.assign(copy, instance);
@@ -691,23 +681,40 @@ export function clone<T>(instance: T): T {
  * @export
  * @param {any[]} arr
  * @param {(string | number)} fn
- * @returns
+ * @returns any[]
  */
-export function groupBy(arr: any[], fn: string | number) {
-	return arr
-		.map(typeof fn === 'function' ? fn : val => val[fn])
-		.reduce(
-			(
-				acc: { [x: string]: any },
-				val: string | number,
-				i: string | number,
-			) => {
-				acc[val] = (acc[val] || []).concat(arr[i]);
-				return acc;
-			},
-			{},
-		);
+
+export const groupBy=(arr: any[], prop: string): any[] =>{
+	return arr.reduce((acc, curr) => {
+		if (!acc[curr[prop]]) {
+			acc[curr[prop]] = [];
+		}
+		acc[curr[prop]].push(curr);
+		return acc;
+	}, {});
 }
+
+
+/**
+ * Shuffle the elements array and return it. (mutative)
+ * 
+ */
+export const shuffle = <T>(array: T[]) :T[] => {
+  let m = array.length;
+  // While there remain elements to shuffle…
+  while (m > 0) {
+    // Pick a remaining element…
+    let i = Math.floor(Math.random() * m--);
+    // And swap it with the current element.
+    let t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+  return array;
+}
+
+
+
 
 /**
  *
@@ -716,7 +723,7 @@ export function groupBy(arr: any[], fn: string | number) {
  * @param {string} email
  * @return {*}
  */
-export function normalizeEmail(email: string): any {
+export const normalizeEmail=(email: string): any =>{
 	const [name, host] = email.split('@');
 	let [beforePlus] = name.split('+');
 	beforePlus = beforePlus.replace(DOT_REG, '');
@@ -733,10 +740,10 @@ export function normalizeEmail(email: string): any {
  * @param {ISlugifyOptions} [options={ lowercase: true, separator: '-', trim: true }]
  * @return {*}  {string}
  */
-export function slugify(
+export const slugify=(
 	str: string,
 	options: ISlugifyOptions = { lowercase: true, separator: '-', trim: true },
-): string {
+): string =>{
 	const value = str
 		.toString()
 		.normalize('NFD') // split an accented letter in the base letter and the acent
@@ -749,16 +756,6 @@ export function slugify(
 		.replace(/\s+/g, options.separator);
 }
 
-/**
- * Run if function,
- * else return undefined
- * @param value
- */
-export function runIfFunction(value: any, defaultVal: any) {
-	if (isFunction(value)) return value();
-
-	return defaultVal || null;
-}
 
 /**
  *
@@ -769,7 +766,7 @@ export function runIfFunction(value: any, defaultVal: any) {
  * @param {T} obj
  * @return {*}  {T}
  */
-export function clearUndefined<T extends object>(obj: T): T {
+export const clearUndefined=<T extends object>(obj: T): T =>{
 	Object.keys(obj).forEach((key: string) =>
 		obj[key] === undefined ? delete obj[key] : {},
 	);
@@ -781,7 +778,7 @@ export function clearUndefined<T extends object>(obj: T): T {
  *
  * @category String
  */
-export function slash(str: string) {
+export const slash=(str: string) =>{
 	return str.replace(/\\/g, '/');
 }
 
@@ -790,7 +787,7 @@ export function slash(str: string) {
  *
  * @category String
  */
-export function ensurePrefix(prefix: string, str: string) {
+export const ensurePrefix=(prefix: string, str: string)=> {
 	if (!str.startsWith(prefix)) return prefix + str;
 	return str;
 }
@@ -802,7 +799,7 @@ export function ensurePrefix(prefix: string, str: string) {
  * @param {Record<string, any>} obj
  * @returns {Record<string, any>}
  */
-export function invertObj(obj: Record<string, any>): Record<string, any> {
+export const invertObj=(obj: Record<string, any>): Record<string, any> =>{
 	const newObj = {};
 
 	for (const prop in obj) {
@@ -821,7 +818,7 @@ export function invertObj(obj: Record<string, any>): Record<string, any> {
  * @param {*} [params={} || '']
  * @return {*}  {string}
  */
-export function stringifyQueryParams(params: any = {} || ''): string {
+export const stringifyQueryParams=(params: any = {} || ''): string=> {
 	return new URLSearchParams(params).toString();
 }
 
@@ -832,7 +829,7 @@ export function stringifyQueryParams(params: any = {} || ''): string {
  * @param {number} [length=6]
  * @return {*}  {String}
  */
-export function generateRandomString(length: number = 6): String {
+export const generateRandomString=(length: number = 6): String =>{
 	return Math.random().toString(20).substr(2, length);
 }
 
@@ -844,7 +841,7 @@ export function generateRandomString(length: number = 6): String {
  * @param {Record<string,any>} mix
  * @return {*}
  */
-export function template(str: any, mix: Record<string, any>): any {
+export const template=(str: any, mix: Record<string, any>): any=> {
 	const RGX = /{{(.*?)}}/g;
 
 	return str.replace(RGX, (x: number, key: any, y: Record<string, any>) => {
@@ -858,7 +855,7 @@ export function template(str: any, mix: Record<string, any>): any {
 	});
 }
 
-// export function template(str: string, ...args: any[]): string {
+// export const template(str: string, ...args: any[]): string {
 // 	return str.replace(/{(\d+)}/g, (match, key) => {
 // 		const index = Number(key);
 // 		if (Number.isNaN(index)) return match;
