@@ -10,6 +10,7 @@ CONTRIBUTING.md
 .all-contributorsrc
 /index.ts
 yarn.lock
+pnpm-lock.yaml
 yarn-error.log
 package-lock.json
 .git/
