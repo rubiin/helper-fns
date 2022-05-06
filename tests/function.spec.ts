@@ -4,7 +4,7 @@ import {
 	pick,
 	omit,
 	sumOfAnArray,
-	pipeFunctions,
+	pipes as pipeFunctions,
 	fixedDecimal,
 	generateRandomString,
 	slugify,
