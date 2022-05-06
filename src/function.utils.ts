@@ -140,12 +140,13 @@ export const omit=<T, K extends keyof T>(
 ): Omit<T, K> =>{
 	const ret: any = {};
 
-	Object.keys(obj).forEach(key => {
-		if(!key){
-			ret[key] = obj[key];
-		}
-	})
+  (Object.keys(obj)).forEach((key) => {
+    if (!keys.includes(key as K)) {
+      ret[key] = obj[key];
+    }
+  })
 
+	
 	return ret;
 }
 
