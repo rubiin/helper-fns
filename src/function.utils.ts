@@ -35,7 +35,7 @@ export const isEmpty = (obj: any): boolean => {
  * remove empty
  *
  */
-export const removeEmpty = (obj: Record<string, any> | ArrayLike<unknown>) =>{
+export const removeEmpty = (obj:  Record<string, any> | ArrayLike<unknown>) =>{
 	return Object.entries(obj).reduce(
 		(a, [k, v]) => (v === null ? a : { ...a, [k]: v }),
 		{},
@@ -134,14 +134,21 @@ export const memoize = (fn: { call: (arg0: any, arg1: any) => any }) => {
  * @param {string[]} arr
  * @returns {Record<string, any>}
  */
-export const omit=(
-	obj: Record<string, any>,
-	arr: string[],
-): Record<string, any> =>{
-	return Object.keys(obj)
-		.filter(k => !arr.includes(k))
-		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
+export const omit=<T, K extends keyof T>(
+	obj: T,
+	keys: K[],
+): Omit<T, K> =>{
+	const ret: any = {};
+
+	Object.keys(obj).forEach(key => {
+		if(!key){
+			ret[key] = obj[key];
+		}
+	})
+
+	return ret;
 }
+
 
 /**
  *
