@@ -1,6 +1,6 @@
 {
   "name": "helper-fns",
-  "version": "2.2.1",
+  "version": "2.3.1",
   "description": "Some common utilities functions for everyday backend usage with zero dependencies",
   "scripts": {
     "format": "prettier --write \"src/**/*.{ts,md}\"",
