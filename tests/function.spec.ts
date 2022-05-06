@@ -45,6 +45,13 @@ describe('omit', () => {
 	});
 });
 
+// describe('isDate', () => {
+// 	it('check if string is date', () => {
+// 		expect(isDate('2020-01-01')).toBe(true);
+// 		expect(isDate('some string')).toBe(false);
+// 	});
+// });
+
 describe('sumOfArray', () => {
 	it('should omit', () => {
 		expect(sumOfAnArray([1, 2, 3, 4])).toEqual(10);
@@ -67,22 +74,13 @@ describe('fixedDecimal', () => {
 	});
 });
 
-describe('generateRandomString', () => {
-	it('should generate random string of given length', () => {
-		expect(generateRandomString(5).length).toEqual(5);
-	});
-});
+// describe('generateRandomString', () => {
+// 	it('should generate random string of given length', () => {
+// 		expect(generateRandomString(5).length).toEqual(5);
+// 	});
+// });
 
-describe('slugify', () => {
-	it('should slugify a string', () => {
-		// TODO: add more tests
 
-		expect(slugify('i love javascript')).toEqual('i-love-javascript');
-		expect(slugify('i love javascript', { separator: '_' })).toEqual(
-			'i_love_javascript',
-		);
-	});
-});
 
 describe('capitalizeEveryWord', () => {
 	it('should capitalize every word', () => {
@@ -102,11 +100,11 @@ describe('strAfter', () => {
 	});
 });
 
-describe('randomNumber', () => {
-	it('should generate random number', () => {
-		expect(randomNumber(6).toString().length).toEqual(6);
-	});
-});
+// describe('randomNumber', () => {
+// 	it('should generate random number', () => {
+// 		expect(randomNumber(6).toString().length).toEqual(6);
+// 	});
+// });
 
 describe('unescapeHTML', () => {
 	it('should unescape html', () => {

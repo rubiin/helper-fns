@@ -134,13 +134,10 @@ export const memoize = (fn: { call: (arg0: any, arg1: any) => any }) => {
  * @param {string[]} arr
  * @returns {Record<string, any>}
  */
-export const omit=(
-	obj: Record<string, any>,
-	arr: string[],
-): Record<string, any> =>{
-	return Object.keys(obj)
-		.filter(k => !arr.includes(k))
-		.reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
+ export const omit = <T extends object, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
+  const _ = { ...obj }
+  keys.forEach((key) => delete _[key])
+  return _
 }
 
 /**
