@@ -125,14 +125,12 @@ export const memoize = (fn: { call: (arg0: any, arg1: any) => any }) => {
 	return cached;
 }
 
+
 /**
- *
- * Pick all keys except explicitly mentioned from any object
- *
- * @export
- * @param {Record<string, any>} obj
- * @param {string[]} arr
- * @returns {Record<string, any>}
+ * It takes an object and an array of keys, and returns a new object with the keys omitted
+ * @param {T} obj - T - the object to omit keys from
+ * @param {K[]} keys - K[]
+ * @returns A function that takes a string and returns a string.
  */
  export const omit = <T extends object, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
   const _ = { ...obj }
