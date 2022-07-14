@@ -1,6 +1,5 @@
 import * as crypto from 'crypto'
 import * as fs from 'fs'
-import { StringMappingType } from 'typescript'
 
 interface ISlugifyOptions {
   lowercase?: boolean
@@ -108,23 +107,7 @@ export const unique = (values: Iterable<unknown>): Iterable<unknown> => {
   return [...new Set(values)]
 }
 
-/**
- *
- *
- * @export
- * @param {{ call: (arg0: any, arg1: any) => any }} fn
- * @returns
- */
-export const memoize = (fn: { call: (arg0: any, arg1: any) => any }) => {
-  const cache = new Map()
-  const cached = (val: any) => {
-    return cache.has(val)
-      ? cache.get(val)
-      : cache.set(val, fn.call(this, val)) && cache.get(val)
-  }
-  cached.cache = cache
-  return cached
-}
+
 
 /**
  * It takes an object and an array of keys, and returns a new object with the keys omitted
@@ -537,6 +520,7 @@ export const decrypt = (
   encrypted: string,
   config: { key: string; iv: string },
 ) => {
+  
   const ENC_KEY = Buffer.from(config.key, 'hex') // set random encryption key
   const IV = Buffer.from(config.iv, 'hex') // set random initialization vector
 
@@ -569,10 +553,10 @@ export const readFile = (path: string) => {
  *
  * @export
  * @param {number} [a=1]
- * @param {number} [b=0]
+ * @param {number} [b=9]
  * @return {*}  {number}
  */
-export const randomNumber = (a = 1, b = 0): number => {
+export const randomNumber = (a = 1, b = 9): number => {
 	  const lower = Math.ceil(Math.min(a, b))
   const upper = Math.floor(Math.max(a, b))
   return Math.floor(lower + Math.random() * (upper - lower + 1))
@@ -583,10 +567,11 @@ export const randomNumber = (a = 1, b = 0): number => {
  * Helper to generate random string
  *
  * @export
- * @param {number} [length=0]
+ * @param {number} [length=4]
  * @returns
  */
-export const randomString = (length = 0): string => {
+
+export const randomString = (length = 4): string => {
   if (!length)
     return Math.random().toString(36).substr(2)
 
@@ -602,15 +587,31 @@ export const randomString = (length = 0): string => {
   return str
 }
 
+
 /**
- *
- * Helper to generate random token
- * @export
- * @returns
+ * It returns a random string of characters, concatenated with another random string of characters
+ * @returns A function that returns a string of random characters.
  */
 export const randomToken = () => {
   return randomString() + randomString()
 }
+
+
+
+/**
+ * It replaces all instances of the identifier with a random number.
+ * @param {string} str - The string  format you want to replace the tokens in.
+ * @param [identifier=X] - The identifier that will be replaced with a random number.
+ * @returns A string with all instances of the identifier replaced with a random number.
+ */
+ export const orderedToken = (str: string,identifier="X") => {
+    while (str.includes(identifier)){
+      str = str.replace(identifier, String(randomNumber()))
+    }
+    return str
+  }
+  
+
 
 /**
  *

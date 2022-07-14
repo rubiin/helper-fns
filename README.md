@@ -35,6 +35,15 @@ isEmpty(123) // false - type is not considered a collection
 isEmpty(true) // false
 ```
 
+# orderedToken
+
+Generates token based on user defined format
+
+```js
+orderedToken("RU-XXXXX") // RU-16891
+```
+
+
 # pick
 
 Picks the key-value pairs corresponding to the given keys from an object.
@@ -57,18 +66,6 @@ Calculates the sum of two or more numbers/arrays.
 
 ```js
 sumOfAnArray(1, 2, 3, 4) // 10
-```
-
-# memoize
-
-Returns the memoized (cached) function.
-
-```js
-// See the `anagrams` snippet.
-const anagramsCached = memoize(anagrams)
-anagramsCached('javascript') // takes a long time
-anagramsCached('javascript') // returns virtually instantly since it's cached
-console.log(anagramsCached.cache) // The cached anagrams map
 ```
 
 # pipeFunctions
