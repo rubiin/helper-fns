@@ -1,6 +1,7 @@
 import * as crypto from 'crypto'
 import * as fs from 'fs'
 
+
 interface ISlugifyOptions {
   lowercase?: boolean
   trim?: boolean
@@ -10,30 +11,22 @@ interface ISlugifyOptions {
 const DOT_REG = /\./g
 
 /**
- *
- *
- * @export
- * @param {*} obj
- * @returns {boolean}
- *
- * check if object is empty
+ * It returns true if the object is empty, false if it's not
+ * @param {any} obj - any
+ * @returns A function that takes in an object and returns a boolean.
  */
 export const isEmpty = (obj: any): boolean => {
   return (
     [Object, Array].includes((obj || {}).constructor)
-		&& !Object.entries(obj || {}).length
+    && !Object.entries(obj || {}).length
   )
 }
 
+
 /**
- *
- *
- * @export
- * @param {( Record<string, any> | ArrayLike<unknown>)} obj
- * @returns
- *
- * remove empty
- *
+ * It takes an object and returns a new object with all the null values removed
+ * @param {Record<string, any> | ArrayLike<unknown>} obj - Record<string, any> | ArrayLike<unknown>
+ * @returns An object with all the keys and values that are not null.
  */
 export const removeEmpty = (obj: Record<string, any> | ArrayLike<unknown>) => {
   return Object.entries(obj).reduce(
@@ -42,20 +35,12 @@ export const removeEmpty = (obj: Record<string, any> | ArrayLike<unknown>) => {
   )
 }
 
+
 /**
- *
- *
- * @export
- * @template T
- * @template K
- * @param {T} obj
- * @param {K[]} keys
- * @returns {Pick<T, K>}
- *
- *
- * Pick only specified keys from any object
- *
- *
+ * It takes an object and an array of keys, and returns a new object with only those keys
+ * @param {T} obj - T - the object to pick properties from
+ * @param {K[]} keys - K[]
+ * @returns Pick<T, K>
  */
 export const pick = <T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> => {
   const ret: any = {}
@@ -68,27 +53,21 @@ export const pick = <T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> => {
 }
 
 /**
- *
- *
- * @export
- * @param {...any[]} args
- * @returns {string}
- *
- * this is for lodash memoize
+ * It takes any number of arguments, and returns a stringified version of those arguments
+ * @param {any[]} args - The arguments passed to the resolver.
+ * @returns A stringified version of the arguments passed in.
  */
 export const resolverArgs = (...args: any[]): string => {
   return JSON.stringify(args)
 }
 
-/**
- *
- *
- * @export
- * @param {Array<number>} arr
- * @param {number} [initialValue=0]
- * @returns {number}
- */
 
+/**
+ * It takes an array of numbers and an optional initial value, and returns the sum of the array
+ * @param arr - The array to be reduced.
+ * @param [initialValue=0] - The initial value of the accumulator.
+ * @returns [1, 2, 3, 4, 5]
+ */
 export const sumOfAnArray = (
   arr: Array<number>,
   initialValue = 0,
@@ -96,12 +75,11 @@ export const sumOfAnArray = (
   return arr.reduce((a, b) => a + b, initialValue)
 }
 
+
 /**
- *
- *
- * @export
- * @param {Iterable<unknown>} values
- * @returns {Iterable<unknown>}
+ * Return an iterable of unique values from the given iterable.
+ * @param values - Iterable<unknown>
+ * @returns [...new Set(values)]
  */
 export const unique = (values: Iterable<unknown>): Iterable<unknown> => {
   return [...new Set(values)]
@@ -109,11 +87,12 @@ export const unique = (values: Iterable<unknown>): Iterable<unknown> => {
 
 
 
+
 /**
  * It takes an object and an array of keys, and returns a new object with the keys omitted
  * @param {T} obj - T - the object to omit keys from
  * @param {K[]} keys - K[]
- * @returns A function that takes a string and returns a string.
+ * @returns { a: 1, b: 2 }
  */
 export const omit = <T extends object, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
   const _ = { ...obj }
@@ -121,16 +100,12 @@ export const omit = <T extends object, K extends keyof T>(obj: T, keys: K[]): Om
   return _
 }
 
+
 /**
- *
- *
- * @export
- * @param {*} arr
- * @param {any[]} props
- * @param {{ [x: string]: string }} orders
- *
- * order by a key
- *
+ * It sorts an array of objects by a list of properties, in the order specified
+ * @param {any} arr - The array to sort
+ * @param {any[]} props - The properties to sort by.
+ * @param orders - An array of strings that specifies the order of sorting.
  */
 export const orderBy = (
   arr: any,
@@ -141,9 +116,9 @@ export const orderBy = (
     props.reduce((acc, prop, i) => {
       if (acc === 0) {
         const [p1, p2]
-					= orders && orders[i] === 'desc'
-					  ? [b[prop], a[prop]]
-					  : [a[prop], b[prop]]
+          = orders && orders[i] === 'desc'
+            ? [b[prop], a[prop]]
+            : [a[prop], b[prop]]
         acc = p1 > p2 ? 1 : p1 < p2 ? -1 : 0
       }
       return acc
@@ -151,11 +126,12 @@ export const orderBy = (
   )
 }
 
+
 /**
- *
- *
- * @export
- * @param {...any[]} fns
+ * Pipes takes a list of functions and returns a function that is the composition of those functions.
+ * @param {any[]} fns - an array of functions
+ * @returns A function that takes in a list of functions and returns a function that takes in a list of
+ * arguments.
  */
 export const pipes = (...fns: any[]) => {
   return fns.reduce(
@@ -166,24 +142,22 @@ export const pipes = (...fns: any[]) => {
 }
 
 /**
- *
- *
- * @export
- * @param {any[]} arr
- * @param {(string | number)} key
- * @returns {any[]}
+ * Pluck takes an array of objects and returns an array of the values of a certain property in each
+ * object
+ * @param {any[]} arr - any[] - the array we want to pluck from
+ * @param {string | number} key - string | number
+ * @returns [1, 2, 3]
  */
 export const pluck = (arr: any[], key: string | number): any[] => {
   return arr.map(i => i[key])
 }
 
+
 /**
- *
- * rename object keys
- *
- * @export
- * @param {Record<string, any>} keysMap
- * @param {Record<string, any>} obj
+ * It takes an object and a map of keys to new keys, and returns a new object with the keys renamed
+ * according to the map, while keeping the values intact
+ * @param keysMap - Record<string, any>
+ * @param obj - The object to be renamed
  */
 export const renameKeys = (
   keysMap: Record<string, any>,
@@ -198,13 +172,15 @@ export const renameKeys = (
   )
 }
 
+
 /**
- *
- *
- * @export
- * @param {Array<unknown>} objectArray
- * @param {string} attr
- * @returns {Array<unknown>}
+ * "It takes an array of objects and returns an array of the values of a specific attribute of those
+ * objects."
+ * 
+ * Here's an example of how to use it:
+ * @param objectArray - The array of objects you want to convert.
+ * @param {string} attr - The attribute of the object you want to extract.
+ * @returns An array of the values of the attribute passed in.
  */
 export const objectArrayToArray = (
   objectArray: Array<unknown>,
@@ -215,15 +191,12 @@ export const objectArrayToArray = (
   })
 }
 
+
 /**
- *
- *
- * @export
- * @param {number} num
- * @param {number} [fixed=2]
- * @returns {number}
- *
- *  truncates a decimal number
+ * It takes a number and returns a number with a fixed number of decimal places
+ * @param {number} num - The number to be fixed.
+ * @param [fixed=2] - The number of decimal places to round to.
+ * @returns A function that takes a number and a fixed number and returns a number.
  */
 export const fixedDecimal = (num: number, fixed = 2): number => {
   const re = new RegExp(`^-?\\d+(?:.\\d{0,${fixed || -1}})?`)
@@ -232,17 +205,15 @@ export const fixedDecimal = (num: number, fixed = 2): number => {
 }
 
 /**
- *
- *
- * @export
- * @param {string} val
- * @returns {(string | number | boolean)}
+ * It takes a string and returns a string, number, or boolean
+ * @param {string} val - string - the value to be parsed
  */
+
 export const autoParseValues = (val: string): string | number | boolean => {
   // check for boolean
   if (!!JSON.parse(val) === JSON.parse(val))
     return JSON.parse(val.toLowerCase())
-	 else if (!isNaN(Number(val)))
+  else if (!isNaN(Number(val)))
     return parseFloat(val)
 
   // for string no parsing required
@@ -250,49 +221,44 @@ export const autoParseValues = (val: string): string | number | boolean => {
   return val
 }
 
+
 /**
- *
- *
- * @export
- * @param {any[]} arr
- * @return {*}  {any[]}
+ * It takes an array of arrays and returns a new array with all the elements flattened
+ * @param {any[]} arr - The array to flatten.
+ * @returns [1, 2, 3, 4, 5, 6]
  */
 export const flattenDeep = (arr: any[]): any[] => {
   return arr.flat(Infinity)
 }
 
+
 /**
- *
- * difference between array A and B , returns a - b
- *
- * @export
- * @param {any[]} a
- * @param {any[]} b
- * @returns {any[]}
+ * It returns an array of all the elements in the first array that are not in the second array
+ * @param {any[]} a - any[] - The first array to compare
+ * @param {any[]} b - any[]
+ * @returns The difference between two arrays.
  */
 export const difference = (a: any[], b: any[]): any[] => {
   return a.filter(c => !b.includes(c))
 }
 
+
 /**
- *
- * common between array A and B , returns a includes b
- *
- * @export
- * @param {any[]} a
- * @param {any[]} b
- * @returns {any[]}
+ * It takes two arrays and returns an array of the elements that are common to both
+ * @param {any[]} a - any[] - The first array to compare
+ * @param {any[]} b - any[]
+ * @returns The common elements of the two arrays.
  */
 export const common = (a: any[], b: any[]): any[] => {
   return a.filter(c => b.includes(c))
 }
 
+
 /**
- *
- *
- * @export
- * @param {string} str
- * @return {*}  {string}
+ * If the string exists, return the first character capitalized and the rest of the string lowercase,
+ * otherwise return an empty string.
+ * @param {string} str - string - This is the string that we want to capitalize.
+ * @returns A function that takes a string and returns a string.
  */
 export const capitalize = (str: string): string => {
   return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : ''
@@ -325,13 +291,9 @@ export const debounce = (func: Function, wait: number, immediate?: boolean) => {
       func.apply(context, args)
   }
 }
-/**
- *
- *
- * @export
- * @param {} callback
- * @return {*}  {number}
- */
+
+
+
 export const timeTaken = (callback: Function): number => {
   console.time('timeTaken')
   const r = callback()
@@ -339,34 +301,22 @@ export const timeTaken = (callback: Function): number => {
   return r
 }
 
-/**
- *
- *
- * @export
- * @param {string} str
- * @return {*}  {string}
- */
+
 export const unescapeHTML = (str: string): string => {
   return str.replace(
     /&amp;|&lt;|&gt;|&#39;|&quot;/g,
     tag =>
-      ({
-        '&amp;': '&',
-        '&lt;': '<',
-        '&gt;': '>',
-        '&#39;': '\'',
-        '&quot;': '"',
-      }[tag] || tag),
+    ({
+      '&amp;': '&',
+      '&lt;': '<',
+      '&gt;': '>',
+      '&#39;': '\'',
+      '&quot;': '"',
+    }[tag] || tag),
   )
 }
 
-/**
- * Throttling enforces a maximum number of times a function
- * can be called over time.
- *
- * @param func a function
- * @param wait time
- */
+
 export const throttle = (func: Function, wait: number) => {
   let timeout: NodeJS.Timer | number | null = null
   let callbackArgs: IArguments | null = null
@@ -385,13 +335,7 @@ export const throttle = (func: Function, wait: number) => {
   }
 }
 
-/**
- *
- *
- * @export
- * @param {number} ms
- * @return {*}  {string}
- */
+
 export const formatDuration = (ms: number): string => {
   if (ms < 0)
     ms = -ms
@@ -408,36 +352,17 @@ export const formatDuration = (ms: number): string => {
     .join(', ')
 }
 
-/**
- *
- *
- * @export
- * @param {string} str
- * @return {*}  {string}
- */
+
 export const capitalizeEveryWord = (str: string): string => {
   return str.replace(/\b[a-z]/g, char => char.toUpperCase())
 }
 
-/**
- *
- *
- * @export
- * @param {string} str
- * @return {*}  {string}
- */
+
 export const lowerFirst = (str: string): string => {
   return str ? str.charAt(0).toLowerCase() + str.slice(1) : ''
 }
 
-/**
- *
- *
- * @param {Array<unknown>} a
- * @param {Array<unknown>} b
- * @param {boolean} [duplicates=true]
- * @returns {Array<unknown>}
- */
+
 export const union = (
   a: Array<unknown>,
   b: Array<unknown>,
@@ -449,40 +374,17 @@ export const union = (
   return Array.from([...a, ...b])
 }
 
-/**
- *
- * checks if a date in a format is valid or not
- *
- * @export
- * @param {string} dateString
- * @returns {boolean}
- */
+
 export const isDate = (dateString: string): boolean => {
   return new Date(dateString) instanceof Date
 }
 
-/**
- *
- *
- * @export
- * @param {any[]} arr
- * @param {number} [n=1]
- * @return {*}  {any[]}
- */
+
 export const dropRight = (arr: any[], n = 1): any[] => {
   return arr.slice(0, -n)
 }
 
-/**
- *
- *
- * @export
- * @param {string} text
- * @param {{ key: string; iv: string }} config
- * @returns
- *
- *  ENC_KEY and IV can be generated as crypto.randomBytes(32).toString('hex');
- */
+
 export const encrypt = (text: string, config: { key: string; iv: string }) => {
   const ENC_KEY = Buffer.from(config.key, 'hex') // set random encryption key
   const IV = Buffer.from(config.iv, 'hex') //
@@ -492,35 +394,20 @@ export const encrypt = (text: string, config: { key: string; iv: string }) => {
   return encrypted
 }
 
-/**
- *
- *  converts enum to string array
- *
- * @export
- * @param {object} _enum
- */
 
-export const enumToString = (_enum: Record<any,any>) => {
+
+export const enumToString = (_enum: Record<any, any>) => {
   Object.keys(_enum)
     .map(key => _enum[key])
     .filter(value => typeof value === 'string') as string[]
 }
 
-/**
- *
- *
- * @export
- * @param {string} encrypted
- * @param {{ key: string; iv: string }} config
- * @returns
- *
- *
- */
+
 export const decrypt = (
   encrypted: string,
   config: { key: string; iv: string },
 ) => {
-  
+
   const ENC_KEY = Buffer.from(config.key, 'hex') // set random encryption key
   const IV = Buffer.from(config.iv, 'hex') // set random initialization vector
 
@@ -529,133 +416,54 @@ export const decrypt = (
   return decrypted + decipher.final('utf8')
 }
 
-/**
- *
- *
- * @export
- * @param {string} path
- * @returns
- */
+
 export const readFile = (path: string) => {
   return new Promise((resolve, reject) => {
     fs.readFile(path, { encoding: 'utf-8' }, (err, html) => {
       if (err)
         reject(err)
-			 else
+      else
         resolve(html)
     })
   })
 }
 
-/**
- *
- * Helper to generate random number between two numbers
- *
- * @export
- * @param {number} [a=1]
- * @param {number} [b=9]
- * @return {*}  {number}
- */
+
 export const randomNumber = (a = 1, b = 9): number => {
-	  const lower = Math.ceil(Math.min(a, b))
+  const lower = Math.ceil(Math.min(a, b))
   const upper = Math.floor(Math.max(a, b))
   return Math.floor(lower + Math.random() * (upper - lower + 1))
 }
 
-/**
- *
- * Helper to generate random string
- *
- * @export
- * @param {number} [length=4]
- * @returns
- */
 
-export const randomString = (length = 4): string => {
-  if (!length)
-    return Math.random().toString(36).substr(2)
 
-  let str = ''
-
-  while (length > 0) {
-    const tempStr = randomString().substring(0, length)
-
-    length -= length >= tempStr.length ? tempStr.length : 0
-    str = str + tempStr
+export const orderedToken = (str: string, identifier = "X") => {
+  while (str.includes(identifier)) {
+    str = str.replace(identifier, String(randomNumber()))
   }
-
   return str
 }
 
 
-/**
- * It returns a random string of characters, concatenated with another random string of characters
- * @returns A function that returns a string of random characters.
- */
-export const randomToken = () => {
-  return randomString() + randomString()
-}
 
 
-
-/**
- * It replaces all instances of the identifier with a random number.
- * @param {string} str - The string  format you want to replace the tokens in.
- * @param [identifier=X] - The identifier that will be replaced with a random number.
- * @returns A string with all instances of the identifier replaced with a random number.
- */
- export const orderedToken = (str: string,identifier="X") => {
-    while (str.includes(identifier)){
-      str = str.replace(identifier, String(randomNumber()))
-    }
-    return str
-  }
-  
-
-
-/**
- *
- * Get string after a substring
- *
- * @export
- * @param {string} str
- * @param {string} substr
- * @returns
- */
 export const strAfter = (str: string, substr: string): string => {
   return str.split(substr)[1]
 }
 
-/**
- * Get string before a substring
- * @param str
- * @param substr
- */
+
 export const strBefore = (str: string, substr: string): string => {
   return str.split(substr)[0]
 }
 
-/**
- *
- * Check if value is not empty
- * @export
- * @param {*} value
- * @returns {boolean}
- */
+
 export const isNotEmpty = (value: any): boolean => {
   return !isEmpty(value)
 }
 
-/**
- * Clone class instance
- *
- * @export
- * @template T
- * @param {T} instance
- * @returns {T}
- */
-export const clone = <T extends {constructor: Function}>(instance: T): T => {
-  const copy = new (instance.constructor as { new (): T })()
+
+export const clone = <T extends { constructor: Function }>(instance: T): T => {
+  const copy = new (instance.constructor as { new(): T })()
 
   Object.assign(copy, instance)
 
@@ -750,7 +558,7 @@ export const slugify = (
  * @param {T} obj
  * @return {*}  {T}
  */
-export const clearUndefined = <T extends Record<string,any>>(obj: T): T => {
+export const clearUndefined = <T extends Record<string, any>>(obj: T): T => {
   Object.keys(obj).forEach((key: string) =>
     obj[key] === undefined ? delete obj[key] : {},
   )
@@ -785,7 +593,7 @@ export const ensurePrefix = (prefix: string, str: string) => {
  * @returns {Record<string, any>}
  */
 export const invertObj = (obj: Record<string, any>): Record<string, any> => {
-  const newObj: Record<string,any> = {}
+  const newObj: Record<string, any> = {}
 
   for (const prop in obj) {
     if (obj.hasOwnProperty(prop))
@@ -839,10 +647,32 @@ export const template = (str: any, mix: Record<string, any>): any => {
   })
 }
 
-// export const template(str: string, ...args: any[]): string {
-// 	return str.replace(/{(\d+)}/g, (match, key) => {
-// 		const index = Number(key);
-// 		if (Number.isNaN(index)) return match;
-// 		return args[index];
-// 	});
-// }
+/**
+ * It takes in a length, and two optional parameters, symbols and numbers, and returns a random
+ * string of the specified length
+ * @param {number} length - number - The length of the string you want to generate.
+ * @param {boolean} [symbols=false] - boolean = false
+ * @param {boolean} [numbers=false] - boolean = false
+ * @returns A random string of the length specified.
+ */
+export function randomString(length: number,symbols: boolean = false,numbers: boolean = false): string {
+  const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numbersList = "0123456789";
+  const symbolsList = "!@#$%^&*_-+=";
+
+
+  let characters = alpha;
+  numbers ? (characters += numbers) : "";
+  symbols ? (characters += numbers) : "";
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    password += characters.charAt(
+      Math.floor(Math.random() * characters.length)
+    );
+  }
+  return password;
+}
+
+ 
+

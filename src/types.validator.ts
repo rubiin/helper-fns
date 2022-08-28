@@ -9,3 +9,4 @@ export const isString = (val: unknown): val is string =>
   typeof val === 'string'
 export const isObject = (val: any): val is object =>
   toString(val) === '[object Object]'
+

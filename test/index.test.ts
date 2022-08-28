@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
-  capitalizeEveryWord, fixedDecimal, isEmpty, omit, pick, pipes as pipeFunctions, randomNumber, strAfter, strBefore, sumOfAnArray, unescapeHTML,orderedToken
+  capitalizeEveryWord, fixedDecimal, isEmpty, omit, pick, pipes as pipeFunctions, randomNumber, strAfter, strBefore, sumOfAnArray, unescapeHTML,orderedToken, randomString
 } from '../src/'
 
 
@@ -42,12 +42,6 @@ describe('omit', () => {
   })
 })
 
-// describe('isDate', () => {
-// 	it('check if string is date', () => {
-// 		expect(isDate('2020-01-01')).toBe(true);
-// 		expect(isDate('some string')).toBe(false);
-// 	});
-// });
 
 describe('sumOfArray', () => {
   it('should omit', () => {
@@ -92,6 +86,12 @@ describe('strAfter', () => {
 describe('randomNumber', () => {
   it('should generate random number between two numbers', () => {
     expect(randomNumber(0, 6)).toBeGreaterThan(0)
+  })
+})
+
+describe('randomString', () => {
+  it('should generate random string of given length', () => {
+    expect(randomString(9).length).equal(9)
   })
 })
 

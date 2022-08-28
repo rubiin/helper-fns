@@ -1,7 +1,7 @@
 {
   "name": "helper-fns",
   "type": "module",
-  "version": "2.5.10",
+  "version": "2.5.11",
   "packageManager": "pnpm@7.2.1",
   "description": "Some common utilities functions for everyday backend usage with zero dependencies",
   "author": "Rubin Bhandari <roobin.bhandari@gmail.com>",
@@ -36,7 +36,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "tsup",
     "dev": "unbuild --stub",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -47,16 +47,16 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.25.2",
+    "@antfu/eslint-config": "^0.26.1",
     "@antfu/ni": "^0.17.2",
-    "@types/node": "^18.6.3",
+    "@types/node": "^18.7.13",
     "bumpp": "^8.2.1",
-    "eslint": "^8.20.0",
+    "eslint": "^8.23.0",
     "esno": "^0.16.3",
     "rimraf": "^3.0.2",
+    "tsup": "^6.2.3",
     "typescript": "^4.7.4",
-    "unbuild": "^0.7.6",
-    "vite": "^3.0.4",
-    "vitest": "^0.20.2"
+    "vite": "^3.0.9",
+    "vitest": "^0.22.1"
   }
 }
