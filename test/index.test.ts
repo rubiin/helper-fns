@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { enumToString } from '../dist';
 import {
   capitalizeEveryWord, fixedDecimal, isEmpty, omit, pick, pipes as pipeFunctions, randomNumber, strAfter, strBefore, sumOfAnArray, unescapeHTML,orderedToken, randomString
 } from '../src/'
@@ -10,6 +11,20 @@ describe('orderedToken', () => {
   it('should generate ordered token ', () => {
     const tokenFormat = "PY-XXXX";
     expect(orderedToken(tokenFormat)).not.contains('X');
+    
+  })
+})
+
+describe('enumToString', () => {
+
+  it('should convert enum to string ', () => {
+    enum SomeEnum {
+      Yes,
+      No,
+      Maybe,
+    }
+    
+    expect(enumToString(SomeEnum)).toEqual(["Yes", "No", "Maybe"]);
     
   })
 })

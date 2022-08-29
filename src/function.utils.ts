@@ -397,7 +397,7 @@ export const encrypt = (text: string, config: { key: string; iv: string }) => {
 
 
 export const enumToString = (_enum: Record<any, any>) => {
-  Object.keys(_enum)
+  return Object.keys(_enum)
     .map(key => _enum[key])
     .filter(value => typeof value === 'string') as string[]
 }
