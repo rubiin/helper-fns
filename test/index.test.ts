@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { enumToString } from '../dist';
 import {
-  capitalizeEveryWord, fixedDecimal, isEmpty, omit, pick, pipes as pipeFunctions, randomNumber, strAfter, strBefore, sumOfAnArray, unescapeHTML,orderedToken, randomString
+  capitalizeEveryWord,enumToString,randomHex, fixedDecimal, isEmpty, omit, pick, pipes as pipeFunctions, randomNumber, strAfter, strBefore, sumOfAnArray, unescapeHTML,orderedToken, randomString
 } from '../src/'
 
 
@@ -47,6 +46,12 @@ describe('pick', () => {
   it('should pick', () => {
     expect(pick({ a: 1, b: 2 }, ['a'])).toEqual({ a: 1 })
     expect(pick({ a: false, b: 2 }, ['a'])).toEqual({ a: false })
+  })
+})
+
+describe('randomHex', () => {
+  it('should generate random hex', () => {
+    expect(randomHex(6)).toHaveLength(6)
   })
 })
 

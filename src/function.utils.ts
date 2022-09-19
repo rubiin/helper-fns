@@ -436,6 +436,10 @@ export const randomNumber = (a = 1, b = 9): number => {
 }
 
 
+export const randomHex =  (size:number): string => {
+return [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+}
+
 
 export const orderedToken = (str: string, identifier = "X") => {
   while (str.includes(identifier)) {
