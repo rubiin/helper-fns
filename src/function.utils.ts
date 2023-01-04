@@ -127,19 +127,13 @@ export const orderBy = (
 }
 
 
+
 /**
- * Pipes takes a list of functions and returns a function that is the composition of those functions.
- * @param {any[]} fns - an array of functions
- * @returns A function that takes in a list of functions and returns a function that takes in a list of
- * arguments.
+ * Pipe takes a list of functions and returns a function that takes an input and returns the input
+ * after it has been passed through all the functions in the list.
+ * @param {any[]} fns - any[] - an array of functions
  */
-export const pipes = (...fns: any[]) => {
-  return fns.reduce(
-    (f, g) =>
-      (...args: any) =>
-        g(f(...args)),
-  )
-}
+const pipe = (...fns: any[]) => (input: any) => fns.reduce((chain, func) => func(chain), input);
 
 /**
  * Pluck takes an array of objects and returns an array of the values of a certain property in each
@@ -176,7 +170,7 @@ export const renameKeys = (
 /**
  * "It takes an array of objects and returns an array of the values of a specific attribute of those
  * objects."
- * 
+ *
  * Here's an example of how to use it:
  * @param objectArray - The array of objects you want to convert.
  * @param {string} attr - The attribute of the object you want to extract.
@@ -678,5 +672,16 @@ export function randomString(length: number,symbols: boolean = false,numbers: bo
   return password;
 }
 
- 
 
+
+
+
+/**
+ * ComposeAsync takes a list of functions and returns a function that takes an input and returns a
+ * promise that resolves to the result of applying the input to the list of functions in reverse order
+ * @param {any[]} fns - an array of functions
+ */
+export const composeAsync =
+  (...fns: any[]) =>
+  (input: any) =>
+    fns.reduceRight((chain, func) => chain.then(func), Promise.resolve(input));
