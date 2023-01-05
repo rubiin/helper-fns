@@ -1,9 +1,8 @@
 export const assert = (
   condition: boolean,
-  message: string,
+  message: string
 ): asserts condition => {
-  if (!condition)
-    throw new Error(message)
-}
-export const toString = (v: any) => Object.prototype.toString.call(v)
-export const noop = () => {}
+  if (!condition) throw new Error(message);
+};
+export const toString = (v: any) => Object.prototype.toString.call(v);
+export const noop = () => {};
