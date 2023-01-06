@@ -13,4 +13,5 @@ export default defineConfig({
   splitting: true,
   minifyWhitespace: true,
   minifyIdentifiers: true,
+  minifySyntax: true,
 })

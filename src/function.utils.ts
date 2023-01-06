@@ -327,6 +327,13 @@ export const throttle = (func: Function, wait: number) => {
   };
 };
 
+/**
+ * It takes a number of milliseconds, converts it to an object with properties for days, hours,
+ * minutes, seconds, and milliseconds, filters out any values which are zero, then formats each time
+ * segment as a string
+ * @param {number} ms - The number of milliseconds to be formatted as a human readable string.
+ * @returns A function that takes a number and returns a string.
+ */
 export const formatDuration = (ms: number): string => {
   if (ms < 0) ms = -ms;
   const time = {
@@ -384,6 +391,11 @@ export const union = (
   return Array.from([...a, ...b]);
 };
 
+/**
+ * It returns true if the dateString parameter is a valid date, and false if it's not
+ * @param {string} dateString - The string to be tested.
+ * @returns A boolean value.
+ */
 export const isDate = (dateString: string): boolean => {
   return new Date(dateString) instanceof Date;
 };
@@ -751,3 +763,46 @@ export const composeAsync =
   (...fns: any[]) =>
   (input: any) =>
     fns.reduceRight((chain, func) => chain.then(func), Promise.resolve(input));
+
+
+/**
+ * It returns the difference between two arrays.
+ * @param {any[]} a - any[]
+ * @param {any[]} b - any[]
+ * @returns The difference between the two arrays.
+ */
+    export const intersection = (a: any[], b: any[]) => {
+      return difference(a,b);
+    }
+
+
+/**
+ * Given two dates, return true if they are the same date, false otherwise.
+ * @param {Date} dateA - The first date to compare.
+ * @param {Date} dateB - Date - The date to compare to.
+ */
+  export const isSameDate = (dateA: Date, dateB: Date) => dateA.toISOString() === dateB.toISOString();
+
+
+
+/**
+ * Drop the first element of an array while the function returns true.
+ * @param {string | any[]} arr - string | any[]
+ * @param func - (arg0: any) => any
+ * @returns The array after the first element that does not pass the test.
+ */
+  export const dropWhile = (arr: string | any[], func: (arg0: any) => any) => {
+    while (arr.length > 0 && !func(arr[0])) arr = arr.slice(1);
+    return arr;
+  };
+
+
+/**
+ * Drop() returns a copy of the array with n elements removed from the left.
+ * @param {string | any[]} arr - The array to query.
+ * @param [n=1] - The number of elements to drop from the beginning of the array.
+ * Also known as dropLeft.
+ */
+  export const drop = (arr: string | any[], n = 1) => arr.slice(n);
+
+
