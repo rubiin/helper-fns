@@ -690,16 +690,6 @@ export const stringifyQueryParams = (params: any = {} || ""): string => {
   return new URLSearchParams(params).toString();
 };
 
-/**
- *
- *
- * @export
- * @param {number} [length=6]
- * @return {*}  {String}
- */
-export const generateRandomString = (length = 6): string => {
-  return Math.random().toString(20).substr(2, length);
-};
 
 /**
  *

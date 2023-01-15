@@ -9,6 +9,7 @@ export default defineConfig({
     'cjs'
   ],
   dts: true,
+  target: 'es2017',
   clean: true,
   splitting: true,
   minifyWhitespace: true,
