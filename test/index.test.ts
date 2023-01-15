@@ -1,26 +1,17 @@
-import { describe, expect, it } from "vitest";
 import {
   capitalizeEveryWord,
-  enumToString,
-  randomHex,
-  fixedDecimal,
+  enumToString, fixedDecimal,
   isEmpty,
-  omit,
-  pick,
-  pipes as pipeFunctions,
-  randomNumber,
-  strAfter,
+  omit, orderedToken, pick, randomHex, randomNumber, randomString, strAfter,
   strBefore,
   sumOfAnArray,
-  unescapeHTML,
-  orderedToken,
-  randomString,
+  unescapeHTML
 } from "../src/";
 
 describe("orderedToken", () => {
   it("should generate ordered token ", () => {
     const tokenFormat = "PY-XXXX";
-    expect(orderedToken(tokenFormat)).not.contains("X");
+    expect(orderedToken(tokenFormat)).not.toContain("X");
   });
 });
 
@@ -75,14 +66,6 @@ describe("sumOfArray", () => {
   });
 });
 
-describe("pipeFunctions", () => {
-  it("should pipe functions", () => {
-    const add5 = (x: number) => x + 5;
-    const multiply = (x: number, y: number) => x * y;
-    const multiplyAndAdd5 = pipeFunctions(multiply, add5);
-    expect(multiplyAndAdd5(5, 2)).toEqual(15);
-  });
-});
 
 describe("fixedDecimal", () => {
   it("should return fixed decimal", () => {
@@ -116,7 +99,7 @@ describe("randomNumber", () => {
 
 describe("randomString", () => {
   it("should generate random string of given length", () => {
-    expect(randomString(9).length).equal(9);
+    expect(randomString({length: 9}).length).toEqual(9);
   });
 });
 

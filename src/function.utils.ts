@@ -1,11 +1,11 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
-
-interface ISlugifyOptions {
-  lowercase?: boolean;
-  trim?: boolean;
-  separator?: string;
-}
+import {
+  IDebounceOptions,
+  IEncryptOptions,
+  IRandomStringOptions,
+  ISlugifyOptions,
+} from "./interface";
 
 const DOT_REG = /\./g;
 
@@ -23,10 +23,10 @@ export const isEmpty = (obj: any): boolean => {
 
 /**
  * It takes an object and returns a new object with all the null values removed
- * @param {Record<string, any> | ArrayLike<unknown>} obj - Record<string, any> | ArrayLike<unknown>
+ * @param {Record<string, any> | Array<unknown>} obj - Record<string, any> | Array<unknown>
  * @returns An object with all the keys and values that are not null.
  */
-export const removeEmpty = (obj: Record<string, any> | ArrayLike<unknown>) => {
+export const removeEmpty = (obj: Record<string, any> | Array<unknown>) => {
   return Object.entries(obj).reduce(
     (a, [k, v]) => (v === null ? a : { ...a, [k]: v }),
     {}
@@ -98,9 +98,9 @@ export const omit = <T extends object, K extends keyof T>(
  * @param {any[]} props - The properties to sort by.
  * @param orders - An array of strings that specifies the order of sorting.
  */
-export const orderBy = (
-  arr: any,
-  props: any[],
+export const orderBy = <T extends Object, K extends keyof T>(
+  arr: Array<T>,
+  props: K[],
   orders: Record<string, string>
 ) => {
   [...arr].sort((a, b) =>
@@ -122,7 +122,7 @@ export const orderBy = (
  * after it has been passed through all the functions in the list.
  * @param {any[]} fns - any[] - an array of functions
  */
-const pipe =
+export const pipe =
   (...fns: any[]) =>
   (input: any) =>
     fns.reduce((chain, func) => func(chain), input);
@@ -134,7 +134,10 @@ const pipe =
  * @param {string | number} key - string | number
  * @returns [1, 2, 3]
  */
-export const pluck = (arr: any[], key: string | number): any[] => {
+export const pluck = <T, K extends keyof T>(
+  arr: any[],
+  key: keyof K
+): any[] => {
   return arr.map((i) => i[key]);
 };
 
@@ -205,30 +208,30 @@ export const autoParseValues = (val: string): string | number | boolean => {
 
 /**
  * It takes an array of arrays and returns a new array with all the elements flattened
- * @param {any[]} arr - The array to flatten.
+ * @param {unknown[]} arr - The array to flatten.
  * @returns [1, 2, 3, 4, 5, 6]
  */
-export const flattenDeep = (arr: any[]): any[] => {
+export const flattenDeep = (arr: unknown[]): unknown[] => {
   return arr.flat(Infinity);
 };
 
 /**
  * It returns an array of all the elements in the first array that are not in the second array
- * @param {any[]} a - any[] - The first array to compare
- * @param {any[]} b - any[]
+ * @param {unknown[]} a - unknown[] - The first array to compare
+ * @param {unknown[]} b - unknown[]
  * @returns The difference between two arrays.
  */
-export const difference = (a: any[], b: any[]): any[] => {
+export const difference = (a: unknown[], b: unknown[]): unknown[] => {
   return a.filter((c) => !b.includes(c));
 };
 
 /**
  * It takes two arrays and returns an array of the elements that are common to both
- * @param {any[]} a - any[] - The first array to compare
- * @param {any[]} b - any[]
+ * @param {unknown[]} a - unknown[] - The first array to compare
+ * @param {unknown[]} b - unknown[]
  * @returns The common elements of the two arrays.
  */
-export const common = (a: any[], b: any[]): any[] => {
+export const common = (a: unknown[], b: unknown[]): unknown[] => {
   return a.filter((c) => b.includes(c));
 };
 
@@ -243,28 +246,31 @@ export const capitalize = (str: string): string => {
 };
 
 /**
- * Returns a function, that, as long as it continues to be invoked, will not
- * be triggered. The function will be called after it stops being called for
- * N milliseconds. If `immediate` is passed, trigger the function on the
- * leading edge, instead of the trailing.
+ * "If the function is called again before the timeout is up, reset the timeout and return. Otherwise,
+ * call the function."
  *
- * @param func a function
- * @param wait time to wait
- * @param immediate should it be called immediately
+ * The function takes an options object with two properties:
+ *
+ * func: The function to be called
+ * wait: The number of milliseconds to wait before calling the function
+ * The function returns a function that can be called at any time. If the function is called again
+ * before the timeout is up, the timeout is reset. If the timeout is up, the function is called
+ * @param {IDebounceOptions} options - IDebounceOptions
+ * @returns A function that will be called later.
  */
-export const debounce = (func: Function, wait: number, immediate?: boolean) => {
+export const debounce = (options: IDebounceOptions) => {
   let timeout: any;
   return function (this: any) {
     const context = this;
     const args = arguments;
     const later = function () {
       timeout = null;
-      if (!immediate) func.apply(context, args);
+      if (!options.immediate) options.func.apply(context, args);
     };
-    const callNow = immediate && !timeout;
+    const callNow = options.immediate && !timeout;
     clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
+    timeout = setTimeout(later, options.wait);
+    if (callNow) options.func.apply(context, args);
   };
 };
 
@@ -402,25 +408,24 @@ export const isDate = (dateString: string): boolean => {
 
 /**
  * It returns a new array with the last n elements removed
- * @param {any[]} arr - The array to query.
+ * @param {unknown[]} arr - The array to query.
  * @param [n=1] - The number of elements to drop from the end of the array.
  * @returns [1, 2, 3, 4, 5]
  */
-export const dropRight = (arr: any[], n = 1): any[] => {
+export const dropRight = (arr: unknown[], n = 1): unknown[] => {
   return arr.slice(0, -n);
 };
 
 /**
- * It takes a string and an object with a key and iv property, and returns an encrypted string
- * @param {string} text - The text to be encrypted
- * @param config - {
+ * It takes a string, encrypts it, and returns the encrypted string
+ * @param {IEncryptOptions} options - IEncryptOptions
  * @returns The encrypted text
  */
-export const encrypt = (text: string, config: { key: string; iv: string }) => {
-  const ENC_KEY = Buffer.from(config.key, "hex"); // set random encryption key
-  const IV = Buffer.from(config.iv, "hex"); //
+export const encrypt = (options: IEncryptOptions) => {
+  const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
+  const IV = Buffer.from(options.config.iv, "hex"); //
   const cipher = crypto.createCipheriv("aes-256-cbc", ENC_KEY, IV);
-  let encrypted = cipher.update(text, "utf8", "base64");
+  let encrypted = cipher.update(options.text, "utf8", "base64");
   encrypted += cipher.final("base64");
   return encrypted;
 };
@@ -438,20 +443,16 @@ export const enumToString = (_enum: Record<any, any>) => {
 };
 
 /**
- * It decrypts a string using AES-256-CBC.
- * @param {string} encrypted - The encrypted string you want to decrypt.
- * @param config - {
- * @returns The decrypted string.
+ * It takes an object with a config property and a text property, and returns the decrypted text
+ * @param {IEncryptOptions} options - IEncryptOptions
+ * @returns The decrypted text.
  */
-export const decrypt = (
-  encrypted: string,
-  config: { key: string; iv: string }
-) => {
-  const ENC_KEY = Buffer.from(config.key, "hex"); // set random encryption key
-  const IV = Buffer.from(config.iv, "hex"); // set random initialization vector
+export const decrypt = (options: IEncryptOptions) => {
+  const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
+  const IV = Buffer.from(options.config.iv, "hex"); // set random initialization vector
 
   const decipher = crypto.createDecipheriv("aes-256-cbc", ENC_KEY, IV);
-  const decrypted = decipher.update(encrypted, "base64", "utf8");
+  const decrypted = decipher.update(options.text, "base64", "utf8");
   return decrypted + decipher.final("utf8");
 };
 
@@ -532,10 +533,10 @@ export const strBefore = (str: string, substr: string): string => {
 
 /**
  * If the value is not null, undefined, or an empty string, return true, otherwise return false.
- * @param {any} value - any - The value to check.
+ * @param {unknown} value - unknown - The value to check.
  * @returns A function that takes a value and returns a boolean
  */
-export const isNotEmpty = (value: any): boolean => {
+export const isNotEmpty = (value: unknown): boolean => {
   return !isEmpty(value);
 };
 
@@ -590,13 +591,12 @@ export const shuffle = <T>(array: T[]): T[] => {
 };
 
 /**
- *
- *
- * @export
- * @param {string} email
- * @return {*}
+ * Remove all dots from the email address, remove everything after the plus sign, and convert the email
+ * address to lowercase.
+ * @param {string} email - The email address to normalize.
+ * @returns A function that takes an email and returns a normalized email.
  */
-export const normalizeEmail = (email: string): any => {
+export const normalizeEmail = (email: string): string => {
   const [name, host] = email.split("@");
   let [beforePlus] = name.split("+");
   beforePlus = beforePlus.replace(DOT_REG, "");
@@ -613,10 +613,8 @@ export const normalizeEmail = (email: string): any => {
  * @param {ISlugifyOptions} [options={ lowercase: true, separator: '-', trim: true }]
  * @return {*}  {string}
  */
-export const slugify = (
-  str: string,
-  options: ISlugifyOptions = { lowercase: true, separator: "-", trim: true }
-): string => {
+export const slugify = (str: string, options: ISlugifyOptions): string => {
+  options = { lowercase: true, separator: "-", trim: true, ...options };
   const value = str
     .toString()
     .normalize("NFD") // split an accented letter in the base letter and the acent
@@ -725,28 +723,22 @@ export const template = (str: any, mix: Record<string, any>): any => {
 };
 
 /**
- * It takes in a length, and two optional parameters, symbols and numbers, and returns a random
- * string of the specified length
- * @param {number} length - number - The length of the string you want to generate.
- * @param {boolean} [symbols=false] - boolean = false
- * @param {boolean} [numbers=false] - boolean = false
- * @returns A random string of the length specified.
+ * It takes an object with three properties (length, numbers, and symbols) and returns a string of
+ * random characters
+ * @param {IRandomStringOptions} options - IRandomStringOptions
+ * @returns A random string of characters
  */
-export function randomString(
-  length: number,
-  symbols: boolean = false,
-  numbers: boolean = false
-): string {
+export function randomString(options: IRandomStringOptions): string {
   const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numbersList = "0123456789";
   const symbolsList = "!@#$%^&*_-+=";
 
   let characters = alpha;
-  numbers ? (characters += numbersList) : "";
-  symbols ? (characters += symbolsList) : "";
+  options.numbers ? (characters += numbersList) : "";
+  options.symbols ? (characters += symbolsList) : "";
 
   let password = "";
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < options.length; i++) {
     password += characters.charAt(
       Math.floor(Math.random() * characters.length)
     );
@@ -764,38 +756,37 @@ export const composeAsync =
   (input: any) =>
     fns.reduceRight((chain, func) => chain.then(func), Promise.resolve(input));
 
-
 /**
  * It returns the difference between two arrays.
  * @param {any[]} a - any[]
  * @param {any[]} b - any[]
  * @returns The difference between the two arrays.
  */
-    export const intersection = (a: any[], b: any[]) => {
-      return difference(a,b);
-    }
-
+export const intersection = (a: any[], b: any[]) => {
+  return difference(a, b);
+};
 
 /**
  * Given two dates, return true if they are the same date, false otherwise.
  * @param {Date} dateA - The first date to compare.
  * @param {Date} dateB - Date - The date to compare to.
  */
-  export const isSameDate = (dateA: Date, dateB: Date) => dateA.toISOString() === dateB.toISOString();
-
-
+export const isSameDate = (dateA: Date, dateB: Date) =>
+  dateA.toISOString() === dateB.toISOString();
 
 /**
  * Drop the first element of an array while the function returns true.
- * @param {string | any[]} arr - string | any[]
+ * @param {string | unknown[]} arr - string | any[]
  * @param func - (arg0: any) => any
  * @returns The array after the first element that does not pass the test.
  */
-  export const dropWhile = (arr: string | any[], func: (arg0: any) => any) => {
-    while (arr.length > 0 && !func(arr[0])) arr = arr.slice(1);
-    return arr;
-  };
-
+export const dropWhile = (
+  arr: string | unknown[],
+  func: (arg0: any) => any
+) => {
+  while (arr.length > 0 && !func(arr[0])) arr = arr.slice(1);
+  return arr;
+};
 
 /**
  * Drop() returns a copy of the array with n elements removed from the left.
@@ -803,6 +794,4 @@ export const composeAsync =
  * @param [n=1] - The number of elements to drop from the beginning of the array.
  * Also known as dropLeft.
  */
-  export const drop = (arr: string | any[], n = 1) => arr.slice(n);
-
-
+export const drop = (arr: string | unknown[], n = 1) => arr.slice(n);
