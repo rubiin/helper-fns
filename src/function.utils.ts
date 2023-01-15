@@ -613,7 +613,7 @@ export const normalizeEmail = (email: string): string => {
  * @param {ISlugifyOptions} [options={ lowercase: true, separator: '-', trim: true }]
  * @return {*}  {string}
  */
-export const slugify = (str: string, options: ISlugifyOptions): string => {
+export const slugify = (str: string, options?: ISlugifyOptions): string => {
   options = { lowercase: true, separator: "-", trim: true, ...options };
   const value = str
     .toString()
