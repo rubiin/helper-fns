@@ -93,7 +93,7 @@ describe("strAfter", () => {
 
 describe("randomNumber", () => {
   it("should generate random number between two numbers", () => {
-    expect(randomNumber(0, 6)).toBeGreaterThan(0);
+    expect(randomNumber(0, 6)).toBeGreaterThanOrEqual(0);
   });
 });
 
