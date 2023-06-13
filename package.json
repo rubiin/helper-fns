@@ -1,7 +1,7 @@
 {
   "name": "helper-fns",
   "type": "module",
-  "version": "2.5.28",
+  "version": "2.6.0",
   "packageManager": "pnpm@7.2.1",
   "description": "Some common utilities functions for everyday backend usage with zero dependencies",
   "author": "Rubin Bhandari <roobin.bhandari@gmail.com>",
@@ -12,13 +12,6 @@
     "url": "git+https://github.com/rubiin/helper-fns.git"
   },
   "bugs": "https://github.com/rubiin/helper-fns/issues",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
-  },
   "typesVersions": {
     "*": {
       "*": [
