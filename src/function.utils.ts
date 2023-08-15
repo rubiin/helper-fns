@@ -25,10 +25,10 @@ export function isEmpty(obj: any): boolean {
 
 /**
  * It takes an object and returns a new object with all the null values removed
- * @param {Record<string, any> | T[]} obj - Record<string, any> | T[]
+ * @param {Record<string, any>} obj - Record<string, any>
  * @returns An object with all the keys and values that are not null.
  */
-export function removeEmpty<T = unknown>(obj: Record<string, any> | T[]) {
+export function removeNull(obj: Record<string, any>) {
   return Object.entries(obj).reduce(
     (a, [k, v]) => (v === null ? a : { ...a, [k]: v }),
     {},
@@ -615,7 +615,7 @@ export function slugify(str: string, options?: ISlugifyOptions): string {
   options = { lowercase: true, separator: '-', trim: true, ...options }
   const value = str
     .toString()
-    .normalize('NFD') // split an accented letter in the base letter and the acent
+    .normalize('NFD') // split an accented letter in the base letter and the accent
     .replace(/[\u0300-\u036F]/g, '') // remove all previously split accents
   if (options.lowercase)
     value.toLowerCase()

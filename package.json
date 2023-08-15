@@ -12,6 +12,9 @@
     "url": "git+https://github.com/rubiin/helper-fns.git"
   },
   "bugs": "https://github.com/rubiin/helper-fns/issues",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
@@ -20,16 +23,13 @@
       ]
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "*.d.ts"
   ],
   "scripts": {
     "build": "tsup",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "prepublishOnly": "nr build",
     "release": "bumpp && clean-publish",
     "test": "jest",
