@@ -23,7 +23,7 @@ describe('enumToString', () => {
       Maybe,
     }
 
-    expect(enumToString(SomeEnum)).toEqual(['Yes', 'No', 'Maybe'])
+    expect(enumToString(SomeEnum)).toEqual('Yes,No,Maybe')
   })
 })
 

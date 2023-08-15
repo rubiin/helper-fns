@@ -418,10 +418,10 @@ export function encrypt(options: IEncryptOptions) {
  * @returns An array of strings
  */
 
-export function enumToString(_enum: Record<any, any>) {
+export function enumToString(_enum: Record<any, any>): string {
   return Object.keys(_enum)
     .map(key => _enum[key])
-    .filter(value => typeof value === 'string') as string[]
+    .filter(value => typeof value === 'string').join(',')
 }
 
 /**

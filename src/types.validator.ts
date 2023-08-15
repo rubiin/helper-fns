@@ -1,5 +1,6 @@
 import type { Buffer } from 'node:buffer'
 import { toString } from './base'
+import { isDate, isEmpty, isNotEmpty, isSameDate } from './function.utils'
 
 export type Class<T = unknown, Arguments extends any[] = any[]> = new (
   ...arguments_: Arguments
@@ -48,4 +49,8 @@ export const is = {
   isBigint,
   isBuffer,
   isClass,
+  isDate,
+  isEmpty,
+  isNotEmpty,
+  isSameDate,
 }
