@@ -1,15 +1,51 @@
-import { toString } from "./base";
+import type { Buffer } from 'node:buffer'
+import { toString } from './base'
 
-export const isDefined = <T = any>(val?: T): val is T => typeof val !== "undefined";
-export const isBoolean = (val: any): val is boolean => typeof val === "boolean";
-export const isFunction = <T extends Function>(val: any): val is T =>
-  typeof val === "function";
-export const isNumber = (val: any): val is number => typeof val === "number";
-export const isString = (val: unknown): val is string =>
-  typeof val === "string";
-export const isObject = (val: any): val is object =>
-  toString(val) === "[object Object]";
+export type Class<T = unknown, Arguments extends any[] = any[]> = new (
+  ...arguments_: Arguments
+) => T
 
-export const isNull = (value: unknown): value is null => value === null;
+export function isDefined<T = any>(val?: T): val is T {
+  return typeof val !== 'undefined'
+}
+export const isBoolean = (val: any): val is boolean => typeof val === 'boolean'
+export function isFunction<T extends Function>(val: any): val is T {
+  return typeof val === 'function'
+}
+export const isNumber = (val: any): val is number => typeof val === 'number'
+export function isString(val: unknown): val is string {
+  return typeof val === 'string'
+}
+export function isObject(val: any): val is object {
+  return toString(val) === '[object Object]'
+}
 
-export const isArray = <T>(value: unknown): value is T[] => Array.isArray(value)
+export const isNull = (value: unknown): value is null => value === null
+
+export function isArray<T>(value: unknown): value is T[] {
+  return Array.isArray(value)
+}
+export function isBigint(value: unknown): value is bigint {
+  return typeof value === 'bigint'
+}
+
+export function isBuffer(value: unknown): value is Buffer {
+  return (value as any)?.constructor?.isBuffer?.(value) ?? false
+}
+export function isClass(value: unknown): value is Class {
+  return isFunction(value) && value.toString().startsWith('class ')
+}
+
+export const is = {
+  isArray,
+  isBoolean,
+  isDefined,
+  isFunction,
+  isNull,
+  isNumber,
+  isObject,
+  isString,
+  isBigint,
+  isBuffer,
+  isClass,
+}
