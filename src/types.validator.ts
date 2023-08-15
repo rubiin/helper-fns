@@ -1,7 +1,7 @@
 import type { Buffer } from 'node:buffer'
+import type { Class } from './types'
 import { toString } from './base'
 import { isDate, isEmpty, isNotEmpty, isSameDate } from './function.utils'
-import { Class } from "./types"
 
 export function isDefined<T = any>(val?: T): val is T {
   return typeof val !== 'undefined'
@@ -34,6 +34,8 @@ export function isClass(value: unknown): value is Class {
   return isFunction(value) && value.toString().startsWith('class ')
 }
 
+export const isRegExp = (val: any): val is RegExp => toString(val) === '[object RegExp]'
+
 export const is = {
   isArray,
   isBoolean,
@@ -50,4 +52,5 @@ export const is = {
   isEmpty,
   isNotEmpty,
   isSameDate,
+  isRegExp,
 }

@@ -40,7 +40,7 @@ isEmpty(true) // false
 Generates token based on user defined format
 
 ```js
-orderedToken("RU-XXXXX") // RU-16891
+orderedToken('RU-XXXXX') // RU-16891
 ```
 
 

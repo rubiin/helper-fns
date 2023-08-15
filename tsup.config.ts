@@ -6,7 +6,7 @@ export default defineConfig({
   ],
   format: [
     'esm',
-    'cjs'
+    'cjs',
   ],
   dts: true,
   target: 'es2017',
