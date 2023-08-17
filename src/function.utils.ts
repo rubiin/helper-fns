@@ -167,7 +167,7 @@ export function renameKeys(
  * @param {string} attr - The attribute of the object you want to extract.
  * @returns An array of the values of the attribute passed in.
  */
-export function objectArrayToArray<T extends Record<string, any> >(
+export function objectArrayToArray<T extends Record<string, any>>(
   objectArray: T[],
   attr: string,
 ): T[] {
@@ -382,11 +382,7 @@ export function lowerFirst(str: string): string {
  * @param [duplicates=true] - boolean
  * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
-export function union<T = unknown>(
-  a: T[],
-  b: T[],
-  duplicates = true,
-): T[] {
+export function union<T = unknown>(a: T[], b: T[], duplicates = true): T[] {
   if (!duplicates)
     return Array.from(new Set([...a, ...b]))
 
@@ -435,7 +431,8 @@ export function encrypt(options: IEncryptOptions) {
 export function enumToString(_enum: Record<string | number, any>): string {
   return Object.keys(_enum)
     .map(key => _enum[key])
-    .filter(value => typeof value === 'string').join(',')
+    .filter(value => typeof value === 'string')
+    .join(',')
 }
 
 /**
@@ -611,20 +608,17 @@ export function normalizeEmail(email: string): string {
  * @param {ISlugifyOptions} [options={ lowercase: true, separator: '-', trim: true }]
  * @return {*}  {string}
  */
-export function slugify(str: string, options?: ISlugifyOptions): string {
-  options = { lowercase: true, separator: '-', trim: true, ...options }
-  const value = str
-    .toString()
-    .normalize('NFD') // split an accented letter in the base letter and the accent
-    .replace(/[\u0300-\u036F]/g, '') // remove all previously split accents
-  if (options.lowercase)
-    value.toLowerCase()
-  if (options.trim)
-    value.trim()
 
-  return value
-    .replace(/[^a-z0-9 -]/g, '') // remove all chars not letters, numbers and spaces (to be replaced)
-    .replace(/\s+/g, options.separator as string)
+export function slugify(str: string, options?: ISlugifyOptions): string {
+  const { separator = '-' } = options || {}
+
+  return str
+    .toString()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036F]/g, '')
+    .replace(/[^a-z0-9 -]/g, '')
+    .replace(/\s+/g, separator)
 }
 
 /**
@@ -735,9 +729,9 @@ export function randomString(options: IRandomStringOptions): string {
   const password: string[] = []
 
   for (let i = 0; i < options.length; i++) {
-    const selectedCharacterIndex = Math.random() * characters.length | 0
+    const selectedCharacterIndex = (Math.random() * characters.length) | 0
     const selectedCharacter = characters[selectedCharacterIndex]
-    const randomIndex = Math.random() * selectedCharacter.length | 0
+    const randomIndex = (Math.random() * selectedCharacter.length) | 0
 
     password.push(selectedCharacter.charAt(randomIndex))
   }
@@ -762,7 +756,8 @@ export function composeAsync(...fns: any[]) {
  * @returns The difference between the two arrays.
  */
 export function intersection(a: any[], b: any[]) {
-  return difference(a, b)
+  const s = new Set(b)
+  return a.filter(x => s.has(x))
 }
 
 /**
@@ -780,9 +775,9 @@ export function isSameDate(dateA: Date, dateB: Date) {
  * @param func - (arg0: any) => any
  * @returns The array after the first element that does not pass the test.
  */
-export function dropWhile<T = unknown>(arr: string | T[], func: (arg0: any) => any) {
-  while (arr.length > 0 && !func(arr[0])) arr = arr.slice(1)
-  return arr
+export function dropWhile<T>(arr: T[], func: (arg: T) => boolean): T[] {
+  const index = arr.findIndex(item => !func(item))
+  return index === -1 ? [] : arr.slice(index)
 }
 
 /**

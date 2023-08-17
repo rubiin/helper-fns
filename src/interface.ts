@@ -1,6 +1,4 @@
 export interface ISlugifyOptions {
-  lowercase?: boolean
-  trim?: boolean
   separator?: string
 }
 

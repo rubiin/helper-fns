@@ -7,9 +7,11 @@ import {
   difference,
   drop,
   dropRight,
+  dropWhile,
   ensurePrefix,
   enumToString, fixedDecimal,
   formatDuration,
+  intersection,
   invertObj,
   isDate,
   isEmpty,
@@ -18,7 +20,7 @@ import {
   lowerFirst,
   normalizeEmail,
   objectArrayToArray,
-  omit, orderedToken, pick, pipe, pluck, randomHex, randomNumber, randomString, removeNull, slash, strAfter,
+  omit, orderedToken, pick, pipe, pluck, randomHex, randomNumber, randomString, removeNull, slash, slugify, strAfter,
   strBefore,
   stringifyQueryParams,
   sumOfAnArray,
@@ -53,7 +55,6 @@ describe('Helpers', () => {
     expect(isNotEmpty('hello')).toBe(true) // String
     expect(isNotEmpty([1, 2, 3])).toBe(true) // Array
     expect(isNotEmpty({ a: 1, b: 2 })).toBe(true) // Object
-    // Add more test cases based on your data types
   })
 
   it('should remove dots and convert to lowercase', () => {
@@ -62,10 +63,10 @@ describe('Helpers', () => {
     expect(normalizedEmail).toBe('testemail@example.com')
   })
 
-  // it('should convert a string to slug format with default options', () => {
-  //   const result = slugify('Hello World')
-  //   expect(result).toBe('hello-world')
-  // })
+  it('should convert a string to slug format with default options', () => {
+    expect(slugify('Hello World')).toBe('hello-world')
+    expect(slugify('Hello World', { separator: '+' })).toBe('hello+world')
+  })
 
   test('should remove undefined properties from an object', () => {
     const obj = {
@@ -117,11 +118,12 @@ describe('Helpers', () => {
     expect(result).toBe(12)
   })
 
-  // it('returns an array with common elements between two arrays', () => {
-  //   const arr1 = [1, 2, 3, 4];
-  //   const arr2 = [3, 4, 5, 6];
-  //   expect(intersection(arr1, arr2)).toEqual([3, 4]);
-  // });
+  it('returns an array with common elements between two arrays', () => {
+    const arr1 = [1, 2, 3, 4]
+    const arr2 = [3, 4, 5, 6]
+    expect(intersection(arr1, arr2)).toEqual([3, 4])
+  })
+
   it('should remove empty from array', () => {
     const cases = {
       a: 1,
@@ -142,12 +144,12 @@ describe('Helpers', () => {
     expect(drop(['a', 'b', 'c'], 1)).toEqual(['b', 'c'])
   })
 
-  // test('should return an array with all elements after the predicate returns false', () => {
-  //   const arr = [1, 2, 3, 4, 5]
-  //   const func = (n: number) => n <= 3
+  test('should return an array with all elements after the predicate returns false', () => {
+    const arr = [1, 2, 3, 4, 5]
+    const func = (n: number) => n <= 3
 
-  //   expect(dropWhile(arr, func)).toEqual([4, 5])
-  // })
+    expect(dropWhile(arr, func)).toEqual([4, 5])
+  })
 
   it('should return an iterable with unique values', () => {
     const input = [1, 2, 3, 2, 4, 5, 1]
@@ -220,7 +222,6 @@ describe('Helpers', () => {
   it('should drop n elements from the end of the array', () => {
     expect(dropRight([1, 2, 3, 4, 5], 2)).toEqual([1, 2, 3]) // [1, 2, 3] is the result after dropping 2 elements from the right
     expect(dropRight(['a', 'b', 'c'], 1)).toEqual(['a', 'b']) // ['a', 'b'] is the result after dropping 1 element from the right
-    // expect(dropRight(['x', 'y', 'z'], 0)).toEqual(['x', 'y', 'z']) // When n is 0, it should return the original array
   })
 
   it('should return true for valid date strings', () => {

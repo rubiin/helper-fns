@@ -14,9 +14,11 @@ export type Primitive =
 export type Maybe<T> = T | null
 export type Nullable<T> = T | null
 export type OptionalRecord<T> = {
-  [key in keyof T]?: T[key]
+  [key in keyof T]?: T[key];
 }
-export type Constructor<T, Arguments extends unknown[] = any[]> = new(...arguments_: Arguments) => T
+export type Constructor<T, Arguments extends unknown[] = any[]> = new (
+  ...arguments_: Arguments
+) => T
 
 export type Fn<T = void> = () => T
 

@@ -34,7 +34,9 @@ export function isClass(value: unknown): value is Class {
   return isFunction(value) && value.toString().startsWith('class ')
 }
 
-export const isRegExp = (val: any): val is RegExp => toString(val) === '[object RegExp]'
+export function isRegExp(val: any): val is RegExp {
+  return toString(val) === '[object RegExp]'
+}
 
 export const is = {
   isArray,
