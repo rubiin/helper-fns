@@ -8,7 +8,7 @@
 <a href="https://img.shields.io/npm/v/helper-fns"><img src="https://img.shields.io/npm/v/helper-fns" alt="NPM Version" /></a>
 <a href="https://img.shields.io/npm/l/helper-fns"><img src="https://img.shields.io/npm/l/helper-fns" alt="Package License" /></a>
 <a href="https://www.npmjs.com/package/helper-fns"><img src="https://img.shields.io/npm/dm/helper-fns" alt="NPM Downloads" /></a>
-  
+
 
 # INSTALLAION
 
@@ -211,18 +211,6 @@ Get string before a substring
 strBefore('pineapple', 'apple') // pine
 ```
 
-# isNotEmpty
-
-Checks if the a value is not an empty object/collectiom
-
-```js
-isNotEmpty([]) // false
-isNotEmpty({}) // false
-isNotEmpty('') // false
-isNotEmpty([1, 2]) // true
-isNotEmpty({ a: 1, b: 2 }) // true
-isNotEmpty('text') // true
-```
 
 # isObject
 

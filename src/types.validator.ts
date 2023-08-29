@@ -1,41 +1,41 @@
-import type { Buffer } from 'node:buffer'
-import type { Class } from './types'
-import { toString } from './base'
-import { isDate, isEmpty, isNotEmpty, isSameDate } from './function.utils'
+import { Buffer } from "node:buffer";
+import type { Class, FunctionType } from "./types";
+import { toString } from "./base";
+import { isDate, isEmpty, isSameDate } from "./function.utils";
 
-export function isDefined<T = any>(val?: T): val is T {
-  return typeof val !== 'undefined'
+export function isDefined<T = any>(value?: T): value is T {
+  return value !== undefined;
 }
-export const isBoolean = (val: any): val is boolean => typeof val === 'boolean'
-export function isFunction<T extends Function>(val: any): val is T {
-  return typeof val === 'function'
+export const isBoolean = (value: any): value is boolean => typeof value === "boolean";
+export function isFunction<T extends FunctionType>(value: any): value is T {
+  return typeof value === "function";
 }
-export const isNumber = (val: any): val is number => typeof val === 'number'
-export function isString(val: unknown): val is string {
-  return typeof val === 'string'
+export const isNumber = (value: any): value is number => typeof value === "number";
+export function isString(value: unknown): value is string {
+  return typeof value === "string";
 }
-export function isObject(val: any): val is object {
-  return toString(val) === '[object Object]'
+export function isObject(value: any): value is object {
+  return toString(value) === "[object Object]";
 }
 
-export const isNull = (value: unknown): value is null => value === null
+export const isNull = (value: unknown): value is null => value === null;
 
 export function isArray<T>(value: unknown): value is T[] {
-  return Array.isArray(value)
+  return Array.isArray(value);
 }
 export function isBigint(value: unknown): value is bigint {
-  return typeof value === 'bigint'
+  return typeof value === "bigint";
 }
 
 export function isBuffer(value: unknown): value is Buffer {
-  return (value as any)?.constructor?.isBuffer?.(value) ?? false
+  return value instanceof Buffer;
 }
 export function isClass(value: unknown): value is Class {
-  return isFunction(value) && value.toString().startsWith('class ')
+  return isFunction(value) && value.toString().startsWith("class ");
 }
 
-export function isRegExp(val: any): val is RegExp {
-  return toString(val) === '[object RegExp]'
+export function isRegExp(value: any): value is RegExp {
+  return toString(value) === "[object RegExp]";
 }
 
 export const is = {
@@ -52,7 +52,6 @@ export const is = {
   isClass,
   isDate,
   isEmpty,
-  isNotEmpty,
   isSameDate,
   isRegExp,
-}
+};

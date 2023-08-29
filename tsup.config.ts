@@ -1,18 +1,18 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: [
-    'src/index.ts',
+    "src/index.ts",
   ],
   format: [
-    'esm',
-    'cjs',
+    "esm",
+    "cjs",
   ],
   dts: true,
-  target: 'es2017',
+  target: "es2017",
   clean: true,
   splitting: true,
   minifyWhitespace: true,
   minifyIdentifiers: true,
   minifySyntax: true,
-})
+});
