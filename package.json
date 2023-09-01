@@ -2,7 +2,7 @@
   "name": "helper-fns",
   "type": "module",
   "version": "2.6.12",
-  "packageManager": "pnpm@7.33.6",
+  "packageManager": "pnpm@8.7.1",
   "description": "Some common utilities functions for everyday backend usage with zero dependencies",
   "author": "Rubin Bhandari <roobin.bhandari@gmail.com>",
   "license": "MIT",
@@ -30,15 +30,14 @@
   "scripts": {
     "build": "tsup",
     "lint": "eslint . --cache --fix",
-    "prepublishOnly": "nr build",
+    "prepublishOnly": "npm run build",
     "prerelease": "npm run build",
     "release": "bumpp && clean-publish",
     "test": "jest",
-    "format": "prettier --write \"src/**/*.ts\" \"tests/*.ts\"",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rubiin/eslint-config-typescript": "^1.0.18",
+    "@rubiin/eslint-config-typescript": "^1.0.23",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.7",
     "bumpp": "^9.2.0",
@@ -46,8 +45,6 @@
     "eslint": "^8.48.0",
     "eslint-define-config": "^1.23.0",
     "jest": "29.6.4",
-    "prettier": "3.0.2",
-    "rimraf": "^5.0.1",
     "ts-jest": "29.1.1",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"
