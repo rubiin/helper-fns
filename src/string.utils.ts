@@ -255,11 +255,9 @@ export function slash(string_: string) {
  * @returns A function that takes a string and an identifier and returns a string with the identifier
  * replaced with a random number.
  */
-export function orderedToken(identifier = "X") {
-  return function (string_: string): string {
-    while (string_.includes(identifier))
-      string_ = string_.replace(identifier, String(randomNumber()));
+export function orderedToken(string_: string, identifier = "X") {
+  while (string_.includes(identifier))
+    string_ = string_.replace(identifier, String(randomNumber()));
 
-    return string_;
-  };
+  return string_;
 }
