@@ -6,11 +6,13 @@ import { isDate, isEmpty, isSameDate } from "./function.utils";
 export function isDefined<T = any>(value?: T): value is T {
   return value !== undefined;
 }
-export const isBoolean = (value: any): value is boolean => typeof value === "boolean";
+export const isBoolean = (value: any): value is boolean =>
+  typeof value === "boolean";
 export function isFunction<T extends FunctionType>(value: any): value is T {
   return typeof value === "function";
 }
-export const isNumber = (value: any): value is number => typeof value === "number";
+export const isNumber = (value: any): value is number =>
+  typeof value === "number";
 export function isString(value: unknown): value is string {
   return typeof value === "string";
 }

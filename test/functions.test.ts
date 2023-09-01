@@ -3,7 +3,6 @@
 import {
   capitalizeEveryWord,
   chop,
-  clearUndefined,
   common,
   composeAsync,
   difference,
@@ -14,16 +13,17 @@ import {
   enumToString, fixedDecimal,
   formatDuration,
   intersection,
-  invertObj as invertObject,
+  invertObject,
   isDate,
   isEmpty,
   isSameDate,
   lowerFirst,
   normalizeEmail,
   objectArrayToArray,
-  omit, orderedToken, pick, pipe, pluck, randomHex, randomNumber, randomString, removeNull, slash, slugify, strAfter as stringAfter,
-  strBefore as stringBefore,
-  stringifyQueryParams as stringifyQueryParameters,
+  omit, orderedToken, pick, pipe, pluck, randomHex, randomNumber, randomString, removeNull, removeUndefined, slash, slugify,
+  stringAfter,
+  stringBefore,
+  stringifyQueryParameters,
   sumOfAnArray,
   unescapeHTML,
   union,
@@ -70,7 +70,7 @@ describe("Helpers", () => {
       qux: undefined,
     };
 
-    const result = clearUndefined(object);
+    const result = removeUndefined(object);
 
     expect(result.foo).toBeDefined();
     expect(result.bar).toBeUndefined();
