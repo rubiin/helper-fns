@@ -2,58 +2,8 @@
 import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
 import fs from "node:fs";
+import { promisify } from "node:util";
 import type { IDebounceOptions, IEncryptOptions } from "./interface";
-
-/**
- * It returns true if the object is empty, false if it's not
- * @param {any} object - any
- * @returns A function that takes in an object and returns a boolean.
- */
-export function isEmpty(
-  object: { [s: string]: unknown } | ArrayLike<unknown>,
-): boolean {
-  return (
-    (typeof object === "object" || Array.isArray(object))
-    && Object.entries(object || {}).length === 0
-  );
-}
-
-/**
- * It takes any number of arguments, and returns a stringified version of those arguments
- * @param {any[]} arguments_ - The arguments passed to the resolver.
- * @returns A stringified version of the arguments passed in.
- */
-export function resolverArgs(...arguments_: any[]): string {
-  return JSON.stringify(arguments_);
-}
-
-export const timestamp = () => +Date.now();
-
-/**
- * Pipe takes a list of functions and returns a function that takes an input and returns the input
- * after it has been passed through all the functions in the list.
- * @param {any[]} fns - any[] - an array of functions
- */
-export function pipe<T>(...fns: ((input: T) => T)[]): (input: T) => T {
-  return (input: T) => {
-    let result = input;
-    for (const fn of fns) result = fn(result);
-
-    return result;
-  };
-}
-
-/**
- * It takes a number and returns a number with a fixed number of decimal places
- * @param {number} number_ - The number to be fixed.
- * @param [fixed] - The number of decimal places to round to.
- * @returns A function that takes a number and a fixed number and returns a number.
- */
-export function fixedDecimal(number_: number, fixed = 2): number {
-  const re = new RegExp(`^-?\\d+(?:.\\d{0,${fixed || -1}})?`);
-
-  return Number.parseFloat(number_.toString().match(re)![0]);
-}
 
 /**
  * It takes a string and returns a string, number, or boolean
@@ -66,6 +16,42 @@ export function autoParseValues(value: string): any {
 
   // Return a default value when no conditions are met
   return value;
+}
+
+/* The line `export const awaitTimeout = promisify(setTimeout);` is exporting a function called
+`awaitTimeout` that wraps the `setTimeout` function and returns a promise that resolves after a
+specified delay time. This allows you to use `await` with `setTimeout` instead of using callbacks. */
+export const awaitTimeout = promisify(setTimeout);
+
+/**
+ * ComposeAsync takes a list of functions and returns a function that takes an input and returns a
+ * promise that resolves to the result of applying the input to the list of functions in reverse order
+ * promise that resolves to the result of applying the input to the list of functions in reverse order
+ * @param {any[]} fns - an array of functions
+ */
+export function composeAsync(...fns: unknown[]) {
+  return (input: any) => {
+    let result = Promise.resolve(input);
+    for (let i = fns.length - 1; i >= 0; i--) {
+      const fn = fns[i] as (value: any) => any; // Type assertion
+      result = result.then(fn);
+    }
+    return result;
+  };
+}
+
+/**
+ * The `clamp` function takes a value and ensures it falls within a specified range.
+ * @param {number} val - The `val` parameter represents the value that you want to clamp.
+ * @param {number} min - The `min` parameter represents the minimum value that `val` can be. If `val`
+ * is less than `min`, the function will return `min`.
+ * @param {number} max - The `max` parameter is the maximum value that `val` can be. If `val` is
+ * greater than `max`, the function will return `max`.
+ * @returns the value of `val` if it is within the range of `min` and `max`. If `val` is less than
+ * `min`, then `min` is returned. If `val` is greater than `max`, then `max` is returned.
+ */
+export function clamp(val: number, min: number, max: number) {
+  return val < min ? min : (val > max ? max : val);
 }
 
 /**
@@ -103,15 +89,54 @@ export function debounce(options: IDebounceOptions) {
 }
 
 /**
- * It takes a callback function as an argument and returns the time taken to execute that function
- * @param {Function} callback - Function - The function to be executed.
- * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ * It takes an object with a config property and a text property, and returns the decrypted text
+ * @param options - IEncryptOptions
+ * @returns The decrypted text.
  */
-export function timeTaken<T>(callback: () => T): [T, number] {
-  console.time("timeTaken");
-  const result = callback();
-  console.timeEnd("timeTaken");
-  return [result, performance.now()];
+export function decrypt(options: IEncryptOptions): string {
+  const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
+  const IV = Buffer.from(options.config.iv, "hex"); // set random initialization vector
+
+  const decipher = crypto.createDecipheriv("aes-256-cbc", ENC_KEY, IV);
+  const decrypted = decipher.update(options.text, "base64", "utf8");
+  return decrypted + decipher.final("utf8");
+}
+
+/**
+ * The function exports a promise that resolves after a specified delay time.
+ * @param {number} time - The `time` parameter is a number representing the amount of time in
+ * milliseconds that the `delay` function will wait before resolving the promise.
+ */
+export function delay(time: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+}
+
+/**
+ * It takes a string, encrypts it, and returns the encrypted string
+ * @param options - IEncryptOptions
+ * @returns The encrypted text
+ */
+export function encrypt(options: IEncryptOptions): string {
+  const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
+  const IV = Buffer.from(options.config.iv, "hex"); //
+  const cipher = crypto.createCipheriv("aes-256-cbc", ENC_KEY, IV);
+  let encrypted = cipher.update(options.text, "utf8", "base64");
+  encrypted += cipher.final("base64");
+  return encrypted;
+}
+
+/**
+ * It takes a number and returns a number with a fixed number of decimal places
+ * @param {number} number_ - The number to be fixed.
+ * @param [fixed] - The number of decimal places to round to.
+ * @returns A function that takes a number and a fixed number and returns a number.
+ */
+export function fixedDecimal(number_: number, fixed = 2): number {
+  const re = new RegExp(`^-?\\d+(?:.\\d{0,${fixed || -1}})?`);
+
+  return Number.parseFloat(number_.toString().match(re)![0]);
 }
 
 /**
@@ -137,19 +162,17 @@ export function formatDuration(ms: number): string {
 }
 
 /**
+ * The `inRange` function checks if a number is within a specified range.
+ * @param {number} num - The number that you want to check if it is within the range of a and b.
+ * @param {number} a - The parameter "a" is a number that represents the lower bound of the range.
+ * @param [b=0] - The parameter "b" is an optional parameter with a default value of 0. If no value is
+ * provided for "b" when calling the function, it will default to 0.
+ */
+export const inRange = (num: number, a: number, b = 0) => (Math.min(a, b) <= num && num < Math.max(a, b));
+
+/**
  * It returns true if the dateString parameter is a valid date, and false if it's not
  * @param {string} dateString - The string to be tested.
-import crypto from 'crypto'
-import fs from 'fs'
-
-interface IEncryptOptions {
-  config: {
-    key: string
-    iv: string
-  }
-  text: string
-}
-
 /**
  * @returns A boolean value.
  */
@@ -158,31 +181,55 @@ export function isDate(dateString: string): boolean {
 }
 
 /**
- * It takes a string, encrypts it, and returns the encrypted string
- * @param options - IEncryptOptions
- * @returns The encrypted text
+ * It returns true if the object is empty, false if it's not
+ * @param {any} object - any
+ * @returns A function that takes in an object and returns a boolean.
  */
-export function encrypt(options: IEncryptOptions): string {
-  const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
-  const IV = Buffer.from(options.config.iv, "hex"); //
-  const cipher = crypto.createCipheriv("aes-256-cbc", ENC_KEY, IV);
-  let encrypted = cipher.update(options.text, "utf8", "base64");
-  encrypted += cipher.final("base64");
-  return encrypted;
+export function isEmpty(
+  object: { [s: string]: unknown } | ArrayLike<unknown>,
+): boolean {
+  return (
+    (typeof object === "object" || Array.isArray(object))
+    && Object.entries(object || {}).length === 0
+  );
 }
 
 /**
- * It takes an object with a config property and a text property, and returns the decrypted text
- * @param options - IEncryptOptions
- * @returns The decrypted text.
+ * Given two dates, return true if they are the same date, false otherwise.
+ * @param {Date} dateA - The first date to compare.
+ * @param {Date} dateB - Date - The date to compare to.
  */
-export function decrypt(options: IEncryptOptions): string {
-  const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
-  const IV = Buffer.from(options.config.iv, "hex"); // set random initialization vector
+export function isSameDate(dateA: Date, dateB: Date) {
+  return dateA.toISOString() === dateB.toISOString();
+}
 
-  const decipher = crypto.createDecipheriv("aes-256-cbc", ENC_KEY, IV);
-  const decrypted = decipher.update(options.text, "base64", "utf8");
-  return decrypted + decipher.final("utf8");
+/**
+ * The lerp function calculates a linear interpolation between two numbers based on a given ratio.
+ * @param {number} ratio - The ratio parameter represents the interpolation ratio between the start and
+ * end values. It is a number between 0 and 1, where 0 represents the start value and 1 represents the
+ * end value.
+ * @param {number} start - The start parameter represents the starting value of the range you want to
+ * interpolate between.
+ * @param {number} end - The "end" parameter represents the end value of the range you want to
+ * interpolate between.
+ * @returns the linear interpolation value between the start and end values based on the given ratio.
+ */
+export function lerp(ratio: number, start: number, end: number) {
+  return start + (end - start) * ratio;
+}
+
+/**
+ * Pipe takes a list of functions and returns a function that takes an input and returns the input
+ * after it has been passed through all the functions in the list.
+ * @param {any[]} fns - any[] - an array of functions
+ */
+export function pipe<T>(...fns: ((input: T) => T)[]): (input: T) => T {
+  return (input: T) => {
+    let result = input;
+    for (const fn of fns) result = fn(result);
+
+    return result;
+  };
 }
 
 /**
@@ -200,39 +247,29 @@ export function readFile(path: string): Promise<string> {
 }
 
 /**
- * ComposeAsync takes a list of functions and returns a function that takes an input and returns a
- * promise that resolves to the result of applying the input to the list of functions in reverse order
- * @param {any[]} fns - an array of functions
+ * It takes any number of arguments, and returns a stringified version of those arguments
+ * @param {any[]} arguments_ - The arguments passed to the resolver.
+ * @returns A stringified version of the arguments passed in.
  */
-export function composeAsync(...fns: unknown[]) {
-  return (input: any) => {
-    let result = Promise.resolve(input);
-    for (let i = fns.length - 1; i >= 0; i--) {
-      const fn = fns[i] as (value: any) => any; // Type assertion
-      result = result.then(fn);
-    }
-    return result;
-  };
+export function resolverArgs(...arguments_: any[]): string {
+  return JSON.stringify(arguments_);
 }
 
 /**
- * Given two dates, return true if they are the same date, false otherwise.
- * @param {Date} dateA - The first date to compare.
- * @param {Date} dateB - Date - The date to compare to.
+ * The `timestamp` function returns the current timestamp in milliseconds.
  */
-export function isSameDate(dateA: Date, dateB: Date) {
-  return dateA.toISOString() === dateB.toISOString();
-}
+export const timestamp = () => +Date.now();
 
 /**
- * The function exports a promise that resolves after a specified delay time.
- * @param {number} time - The `time` parameter is a number representing the amount of time in
- * milliseconds that the `delay` function will wait before resolving the promise.
+ * It takes a callback function as an argument and returns the time taken to execute that function
+ * @param {Function} callback - Function - The function to be executed.
+ * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
-export function delay(time: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
+export function timeTaken<T>(callback: () => T): [T, number] {
+  console.time("timeTaken");
+  const result = callback();
+  console.timeEnd("timeTaken");
+  return [result, performance.now()];
 }
 
 /**
