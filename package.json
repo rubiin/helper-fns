@@ -1,7 +1,7 @@
 {
   "name": "helper-fns",
   "type": "module",
-  "version": "2.6.17",
+  "version": "2.6.20",
   "packageManager": "pnpm@8.7.1",
   "description": "Some common utilities functions for everyday backend usage with zero dependencies",
   "author": "Rubin Bhandari <roobin.bhandari@gmail.com>",
@@ -33,7 +33,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rubiin/eslint-config-typescript": "^1.0.25",
+    "@rubiin/eslint-config-typescript": "^1.0.26",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.9",
     "bumpp": "^9.2.0",
