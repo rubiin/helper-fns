@@ -162,7 +162,6 @@ describe("removeNull", () => {
   it("should return a new object without null values", () => {
     const object = {
       key1: "value1",
-      // eslint-disable-next-line unicorn/no-null
       key2: null,
       key3: "value3"
     }

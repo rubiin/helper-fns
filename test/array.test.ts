@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/consistent-function-scoping */
 import { common, difference, drop, dropWhile, dropRight, flattenDeep, intersection, move, sample, sumOfAnArray, unique, compact, range, chunk, fill, equals, equalsIgnoreOrder, hasDuplicates, castArray } from "../src"
 
 describe("castArray", () => {
@@ -34,7 +33,6 @@ describe("chunk", () => {
 
 describe("compact", () => {
   it("should remove falsy values from the array", () => {
-    // eslint-disable-next-line unicorn/no-null
     const input = [0, 1, false, true, "", "hello", null, undefined]
     const result = compact(input)
 
@@ -49,7 +47,6 @@ describe("compact", () => {
   })
 
   it("should return an empty array if all values are falsy", () => {
-    // eslint-disable-next-line unicorn/no-null
     const input = [0, false, "", null, undefined]
     const result = compact(input)
 

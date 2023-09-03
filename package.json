@@ -33,7 +33,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rubiin/eslint-config-typescript": "^1.0.23",
+    "@rubiin/eslint-config-typescript": "^1.0.25",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.9",
     "bumpp": "^9.2.0",

@@ -39,7 +39,6 @@ export function isObject(value: any): value is object {
 }
 
 export function isPrimitive(value?: unknown): value is Primitive {
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   return [isNull, isUndefined, isString, isNumber, isBoolean, isSymbol, isBigint].some(function_ => function_(value));
 }
 

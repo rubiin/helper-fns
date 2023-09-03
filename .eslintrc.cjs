@@ -20,6 +20,9 @@ module.exports = defineConfig({
   rules: {
     'unicorn/prefer-module': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
+    "@typescript-eslint/no-use-before-define": "off",
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/no-null": "off",
     'no-useless-constructor': 'off', // optimize this
     '@typescript-eslint/require-await': 'off', // optimize this
     '@typescript-eslint/no-unsafe-assignment': 'off', // optimize this

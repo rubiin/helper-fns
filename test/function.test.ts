@@ -1,5 +1,4 @@
-/* eslint-disable unicorn/consistent-function-scoping */
-import { autoParseValues, awaitTimeout, composeAsync, delay, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArgs as resolverArguments, timeTaken, timestamp } from "../src"
+import { autoParseValues, awaitTimeout, composeAsync, delay, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, timeTaken, timestamp } from "../src"
 
 describe("awaitTimeout", () => {
   jest.useFakeTimers()
