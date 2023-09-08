@@ -6,7 +6,7 @@ import { isString } from "./types.validator";
  *
  * The first thing we do is use the replace() method to replace every word in the string with a
  * capitalized version of that word
- * @param {string} string_ - string - The string to be capitalized.
+ * @param string_ - string - The string to be capitalized.
  * @returns A const that takes a string as an argument and returns a string with every word
 capitalized.
  */
@@ -17,7 +17,7 @@ export const capitalizeEveryWord = (string_: string): string => {
 /**
  * If the string exists, return the first character capitalized and the rest of the string lowercase,
  * otherwise return an empty string.
- * @param {string} string_ - string - This is the string that we want to capitalize.
+ * @param string_ - string - This is the string that we want to capitalize.
  * @returns A const that takes a string and returns a string.
  */
 export const capitalize = (string_: string): string => {
@@ -29,7 +29,7 @@ export const capitalize = (string_: string): string => {
 /**
  * The const "chop" removes leading and trailing special characters, punctuation, and whitespace
  * from a string.
- * @param {unknown} string_ - The parameter `str` is of type `unknown`, which means it can be any type.
+ * @param string_ - The parameter `str` is of type `unknown`, which means it can be any type.
  * @returns a string.
  */
 export const chop = (string_: unknown): string => {
@@ -40,8 +40,9 @@ export const chop = (string_: unknown): string => {
 
 /**
  * Ensure suffix of a string
- *
- * @category String
+ * @param suffix - string
+ * @param string_ -
+ * @returns string
  */
 export const ensureSuffix = (suffix: string, string_: string): string => {
   if (!string_.endsWith(suffix)) return string_ + suffix;
@@ -49,8 +50,9 @@ export const ensureSuffix = (suffix: string, string_: string): string => {
 };
 /**
  * Ensure prefix of a string
- *
- * @category String
+ * @param prefix - string
+ * @param string_ - string
+ * @returns String
  */
 export const ensurePrefix = (prefix: string, string_: string): string => {
   if (!string_.startsWith(prefix)) return prefix + string_;
@@ -60,7 +62,7 @@ export const ensurePrefix = (prefix: string, string_: string): string => {
 /**
  * If the string exists, return the first character of the string in lowercase, followed by the rest of
  * the string. Otherwise, return an empty string.
- * @param {string} string_ - string - the string to be converted
+ * @param string_ - string - the string to be converted
  * @returns The first character of the string is being converted to lowercase and then concatenated
 with the rest of the string.
  */
@@ -71,7 +73,7 @@ export const lowerFirst = (string_: string): string => {
 /**
  * Remove all dots from the email address, remove everything after the plus sign, and convert the email
  * address to lowercase.
- * @param {string} email - The email address to normalize.
+ * @param email - The email address to normalize.
  * @returns A const that takes an email and returns a normalized email.
  */
 export const normalizeEmail = (email: string): string => {
@@ -86,7 +88,7 @@ export const normalizeEmail = (email: string): string => {
 
 /**
  * It takes a string and replaces all instances of a given identifier with a random number
- * @param str - The string to be replaced.
+ * @param string_ - The string to be replaced.
  * @param identifier - The string that will be replaced with a random number.
  * @returns A const that takes a string and an identifier and returns a string with the identifier
  * replaced with a random number.
@@ -102,6 +104,7 @@ export const orderedToken = (string_: string, identifier = "X"): string => {
  * It creates an array of size 'size' and then maps each element to a random hexadecimal number and
  * then joins them all together
  * @param size - The number of characters you want in your hex string.
+ * @returns A random hex string.
  */
 
 export const randomHex = (size: number): string => {
@@ -112,7 +115,7 @@ export const randomHex = (size: number): string => {
 /**
  * It takes an object with three properties (length, numbers, and symbols) and returns a string of
  * random characters
- * @param {IRandomStringOptions} options - IRandomStringOptions
+ * @param options - IRandomStringOptions
  * @returns A random string of characters
  */
 export const randomString = (options: IRandomStringOptions): string => {
@@ -158,7 +161,7 @@ export const randomNumber = (a = 1, b = 9): number => {
 
 /**
  * Return the string after the first occurrence of the given substring.
- * @param str - The string to search in
+ * @param string_ - The string to search in
  * @param substr - The substring to search for.
  * @returns The string after the first occurrence of the given substring.
  */
@@ -168,7 +171,7 @@ export const stringAfter = (string_: string, substr: string): string => {
 
 /**
  * Return the part of the string before the first occurrence of the given substring.
- * @param str - The string to search in
+ * @param string_ - The string to search in
  * @param substr - The substring to search for.
  * @returns The string before the first instance of the substring.
  */
@@ -179,9 +182,9 @@ export const stringBefore = (string_: string, substr: string): string => {
 /**
  * The `slugify` const converts a string into a URL-friendly slug by removing special characters,
  * converting to lowercase, and replacing spaces with a specified separator.
- * @param {string} string_ - The `string_` parameter is the input string that you want to slugify. It
+ * @param string_ - The `string_` parameter is the input string that you want to slugify. It
  * can be any string value.
- * @param {ISlugifyOptions} [options] - The `options` parameter is an optional object that allows you
+ * @param [options] - The `options` parameter is an optional object that allows you
  * to customize the behavior of the `slugify` const. It has the following properties:
  * @returns a slugified version of the input string.
  */
@@ -199,17 +202,16 @@ export const slugify = (string_: string, options?: ISlugifyOptions): string => {
 
 /**
  * Replace backslash to slash
- *
- * @category String
+ * @param string_ - String
+ * @returns String
  */
 export const slash = (string_: string): string => {
   return string_.replaceAll("\\", "/");
 };
 
 /**
- * @export
- * @param {*} [parameters]
- * @return {*} {string}
+ * @param [parameters] - Record<string, any> | string
+ * @returns string
  */
 export const stringifyQueryParameters = (
   parameters: Record<string, any> | string = {},
@@ -218,10 +220,9 @@ export const stringifyQueryParameters = (
 };
 
 /**
- * @export
- * @param {*} string_
- * @param {Record<string, any>} mix
- * @return {*}
+ * @param string_ - string
+ * @param mix - Record<string, any>
+ * @returns string
  */
 export const template = (string_: string, mix: Record<string, any>): string => {
   const RGX = /{{(.*?)}}/g;
@@ -247,9 +248,8 @@ export const template = (string_: string, mix: Record<string, any>): string => {
 
 /**
  * Replaces all instances of HTML entities in a string with their corresponding characters.
- *
- * @param {string} string_ - The string to unescape.
- * @returns {string} - The modified string with HTML entities replaced.
+ * @param string_ - The string to unescape.
+ * @returns - The modified string with HTML entities replaced.
  */
 export const unescapeHTML = (string_: string): string => {
   return string_.replaceAll(
@@ -265,16 +265,6 @@ export const unescapeHTML = (string_: string): string => {
   );
 };
 
-/**
- * The `uncapitalize` const takes a string and returns the same string with the first letter in
- * lowercase and the rest of the letters in either lowercase or uppercase based on the `upperRest`
- * parameter.
- * @param {string[]}  - The `uncapitalize` const takes in two parameters:
- * @param [upperRest=false] - The `upperRest` parameter is a boolean value that determines whether the
- * rest of the string should be converted to uppercase or lowercase. If `upperRest` is `true`, the rest
- * of the string will be converted to uppercase. If `upperRest` is `false` or not provided, the
- * @returns a string.
- */
 export const uncapitalize = ([first, ...rest]: string[], upperRest = false): string => {
   return `${first.toLowerCase()}${upperRest ? rest.join("").toUpperCase() : rest.join("").toLowerCase()}`;
 };
