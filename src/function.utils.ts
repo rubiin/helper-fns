@@ -6,7 +6,8 @@ import type { IDebounceOptions, IEncryptOptions } from "./interface";
 
 /**
  * It takes a string and returns a string, number, or boolean
- * @param {string} value - string - the value to be parsed
+ * @param value - string - the value to be parsed
+ * @returns A string, number, or boolean
  */
 export const autoParseValues = (value: string): any => {
   // check for boolean
@@ -25,7 +26,8 @@ export const awaitTimeout = promisify(setTimeout);
  * ComposeAsync takes a list of functions and returns a function that takes an input and returns a
  * promise that resolves to the result of applying the input to the list of functions in reverse order
  * promise that resolves to the result of applying the input to the list of functions in reverse order
- * @param {any[]} fns - an array of functions
+ * @param fns - an array of functions
+ * @returns A function that takes an input and returns a promise that resolves to the result of
  */
 export const composeAsync = (...fns: unknown[]) => {
   return (input: any) => {
@@ -40,10 +42,10 @@ export const composeAsync = (...fns: unknown[]) => {
 
 /**
  * The `clamp` function takes a value and ensures it falls within a specified range.
- * @param {number} val - The `val` parameter represents the value that you want to clamp.
- * @param {number} min - The `min` parameter represents the minimum value that `val` can be. If `val`
+ * @param value - The `val` parameter represents the value that you want to clamp.
+ * @param min - The `min` parameter represents the minimum value that `val` can be. If `val`
  * is less than `min`, the function will return `min`.
- * @param {number} max - The `max` parameter is the maximum value that `val` can be. If `val` is
+ * @param max - The `max` parameter is the maximum value that `val` can be. If `val` is
  * greater than `max`, the function will return `max`.
  * @returns the value of `val` if it is within the range of `min` and `max`. If `val` is less than
  * `min`, then `min` is returned. If `val` is greater than `max`, then `max` is returned.
@@ -62,7 +64,7 @@ export const clamp = (value: number, min: number, max: number) => {
  * wait: The number of milliseconds to wait before calling the function
  * The function returns a function that can be called at any time. If the function is called again
  * before the timeout is up, the timeout is reset. If the timeout is up, the function is called
- * @param {IDebounceOptions} options - IDebounceOptions
+ * @param options - IDebounceOptions
  * @returns A function that will be called later.
  */
 export const debounce = (options: IDebounceOptions) => {
@@ -102,8 +104,9 @@ export const decrypt = (options: IEncryptOptions) => {
 
 /**
  * The function exports a promise that resolves after a specified delay time.
- * @param {number} time - The `time` parameter is a number representing the amount of time in
+ * @param time - The `time` parameter is a number representing the amount of time in
  * milliseconds that the `delay` function will wait before resolving the promise.
+ * @returns A promise that resolves after a specified delay time.
  */
 export const delay = (time: number) => {
   return new Promise((resolve) => {
@@ -127,8 +130,8 @@ export const encrypt = (options: IEncryptOptions) => {
 
 /**
  * It takes a number and returns a number with a fixed number of decimal places
- * @param {number} number_ - The number to be fixed.
- * @param [fixed] - The number of decimal places to round to.
+ * @param number_ - The number to be fixed.
+ * @param fixed - The number of decimal places to round to.
  * @returns A function that takes a number and a fixed number and returns a number.
  */
 export const fixedDecimal = (number_: number, fixed = 2) => {
@@ -141,7 +144,7 @@ export const fixedDecimal = (number_: number, fixed = 2) => {
  * It takes a number of milliseconds, converts it to an object with properties for days, hours,
  * minutes, seconds, and milliseconds, filters out any values which are zero, then formats each time
  * segment as a string
- * @param {number} ms - The number of milliseconds to be formatted as a human readable string.
+ * @param ms - The number of milliseconds to be formatted as a human readable string.
  * @returns A function that takes a number and returns a string.
  */
 export const formatDuration = (ms: number) => {
@@ -161,16 +164,17 @@ export const formatDuration = (ms: number) => {
 
 /**
  * The `inRange` function checks if a number is within a specified range.
- * @param {number} num - The number that you want to check if it is within the range of a and b.
- * @param {number} a - The parameter "a" is a number that represents the lower bound of the range.
- * @param [b=0] - The parameter "b" is an optional parameter with a default value of 0. If no value is
+ * @param number_ - The number that you want to check if it is within the range of a and b.
+ * @param a - The parameter "a" is a number that represents the lower bound of the range.
+ * @param b - The parameter "b" is an optional parameter with a default value of 0. If no value is
  * provided for "b" when calling the function, it will default to 0.
+ * @returns A boolean value.
  */
 export const inRange = (number_: number, a: number, b = 0) => (Math.min(a, b) <= number_ && number_ < Math.max(a, b));
 
 /**
  * It returns true if the dateString parameter is a valid date, and false if it's not
- * @param {string} dateString - The string to be tested.
+ * @param dateString - The string to be tested.
 /**
  * @returns A boolean value.
  */
@@ -180,7 +184,7 @@ export const isDate = (dateString: string) => {
 
 /**
  * It returns true if the object is empty, false if it's not
- * @param {any} object - any
+ * @param object - any
  * @returns A function that takes in an object and returns a boolean.
  */
 export function isEmpty(
@@ -194,8 +198,9 @@ export function isEmpty(
 
 /**
  * Given two dates, return true if they are the same date, false otherwise.
- * @param {Date} dateA - The first date to compare.
- * @param {Date} dateB - Date - The date to compare to.
+ * @param dateA - The first date to compare.
+ * @param dateB - Date - The date to compare to.
+ * @returns A boolean value.
  */
 export const isSameDate = (dateA: Date, dateB: Date) => {
   return dateA.toISOString() === dateB.toISOString();
@@ -203,12 +208,12 @@ export const isSameDate = (dateA: Date, dateB: Date) => {
 
 /**
  * The lerp function calculates a linear interpolation between two numbers based on a given ratio.
- * @param {number} ratio - The ratio parameter represents the interpolation ratio between the start and
+ * @param ratio - The ratio parameter represents the interpolation ratio between the start and
  * end values. It is a number between 0 and 1, where 0 represents the start value and 1 represents the
  * end value.
- * @param {number} start - The start parameter represents the starting value of the range you want to
+ * @param start - The start parameter represents the starting value of the range you want to
  * interpolate between.
- * @param {number} end - The "end" parameter represents the end value of the range you want to
+ * @param end - The "end" parameter represents the end value of the range you want to
  * interpolate between.
  * @returns the linear interpolation value between the start and end values based on the given ratio.
  */
@@ -219,7 +224,8 @@ export const lerp = (ratio: number, start: number, end: number) => {
 /**
  * Pipe takes a list of functions and returns a function that takes an input and returns the input
  * after it has been passed through all the functions in the list.
- * @param {any[]} fns - any[] - an array of functions
+ * @param fns - any[] - an array of functions
+ * @returns A function that takes an input and returns the input after it has been passed through all
  */
 export function pipe<T>(...fns: ((input: T) => T)[]): (input: T) => T {
   return (input: T) => {
@@ -246,7 +252,7 @@ export const readFile = (path: string): Promise<string> => {
 
 /**
  * It takes any number of arguments, and returns a stringified version of those arguments
- * @param {any[]} arguments_ - The arguments passed to the resolver.
+ * @param arguments_ - The arguments passed to the resolver.
  * @returns A stringified version of the arguments passed in.
  */
 export const resolverArguments = (...arguments_: any[]) => {
@@ -255,12 +261,13 @@ export const resolverArguments = (...arguments_: any[]) => {
 
 /**
  * The `timestamp` function returns the current timestamp in milliseconds.
+ * @returns A number representing the current timestamp in milliseconds.
  */
 export const timestamp = () => +Date.now();
 
 /**
  * It takes a callback function as an argument and returns the time taken to execute that function
- * @param {Function} callback - Function - The function to be executed.
+ * @param callback - Function - The function to be executed.
  * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
 export function timeTaken<T>(callback: () => T): [T, number] {
@@ -272,12 +279,13 @@ export function timeTaken<T>(callback: () => T): [T, number] {
 
 /**
  * The `throttler` function adds a delay of 1 second before calling the next middleware function.
- * @param {any} _response - The `req` parameter is an object that represents the incoming HTTP request. It
+ * @param _request - The `req` parameter is an object that represents the incoming HTTP request. It
 contains information about the request such as the request method, URL, headers, and body.
- * @param {any} _request - The `res` parameter in the `throttler` function is an object that represents the
+ * @param _response - The `res` parameter in the `throttler` function is an object that represents the
 HTTP response that will be sent back to the client. It contains methods and properties that allow
 the server to send data back to the client, such as `res.send()` or `res.status()`. In
  * @param next - `next` is a function that is called to pass control to the next middleware
+ * @returns A function that adds a delay of 1 second before calling the next middleware function.
  */
 export function throttler(_request: any, _response: any, next: () => void) {
   const date = process.env.DUE_DATE as string;
