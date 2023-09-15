@@ -89,6 +89,16 @@ export const debounce = (options: IDebounceOptions) => {
 };
 
 /**
+ * The `dynamicImport` function allows for dynamic importing of a package in TypeScript.
+ * @param packageName - The `packageName` parameter is a string that represents the name of
+ * the package that you want to dynamically import.
+ * @returns A promise that resolves to the imported package.
+ */
+export const dynamicImport = async (packageName: string) =>
+  // eslint-disable-next-line no-new-func, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-implied-eval
+  new Function(`return import('${packageName}')`)();
+
+/**
  * It takes an object with a config property and a text property, and returns the decrypted text
  * @param options - IEncryptOptions
  * @returns The decrypted text.
