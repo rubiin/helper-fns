@@ -200,7 +200,8 @@ export const inRange = (number_: number, a: number, b = 0) => (Math.min(a, b) <=
  * @returns A boolean value.
  */
 export const isDate = (dateString: string) => {
-  return new Date(dateString) instanceof Date;
+  const date = new Date(dateString);
+  return date instanceof Date && !Number.isNaN(date.getTime());
 };
 
 /**

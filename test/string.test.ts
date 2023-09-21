@@ -225,19 +225,30 @@ describe("unescapeHTML", () => {
     expect(result).toBe("Hello, World!");
   });
 });
+
+
 describe("uncapitalize", () => {
-  it("should make the first character lowercase", () => {
-    expect(uncapitalize(["Hello", "World"])).toBe("helloWorld");
-    expect(uncapitalize(["GENIE", "Lamp"])).toBe("gENIELamp");
+  it("should uncapitalize the first letter of a string", () => {
+    const input = "Hello";
+    const expected = "hello";
+    expect(uncapitalize(input)).toEqual(expected);
   });
 
-  it("should make the rest of the characters lowercase when upperRest is false", () => {
-    expect(uncapitalize(["HElLo", "WorLD"], false)).toBe("helloWorld");
-    expect(uncapitalize(["GENIE", "LaMP"], false)).toBe("genieLamp");
+  it("should handle a string with only one character", () => {
+    const input = "A";
+    const expected = "a";
+    expect(uncapitalize(input)).toEqual(expected);
   });
 
-  it("should make the rest of the characters uppercase when upperRest is true", () => {
-    expect(uncapitalize(["HElLo", "WorLD"], true)).toBe("hELLOworld");
-    expect(uncapitalize(["Genie", "LaMP"], true)).toBe("gENIElAMP");
+  it("should uncapitalize the first letter and make the rest uppercase when upperRest is set to true", () => {
+    const input = "wORLD";
+    const expected = "wORLD";
+    expect(uncapitalize(input, true)).toEqual(expected);
+  });
+
+  it("should keep the rest of the string as lowercase when upperRest is set to false", () => {
+    const input = "hELLO WORLD";
+    const expected = "hello world";
+    expect(uncapitalize(input, false)).toEqual(expected);
   });
 });

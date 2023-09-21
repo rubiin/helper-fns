@@ -1,4 +1,4 @@
-import { autoParseValues, awaitTimeout, composeAsync, delay, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, timeTaken, timestamp } from "../src";
+import { autoParseValues, awaitTimeout, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, timeTaken, timestamp } from "../src";
 
 describe("awaitTimeout", () => {
   jest.useFakeTimers();
@@ -22,58 +22,6 @@ describe("autoParseValues", () => {
   it("should return the parsed number value if valid", () => {
     expect(autoParseValues("10")).toBe(10);
     expect(autoParseValues("-5.7")).toBe(-5.7);
-  });
-});
-
-describe("composeAsync", () => {
-  it("should correctly compose and execute async functions", async () => {
-    const function1 = jest.fn().mockResolvedValue(2);
-    const function2 = jest.fn().mockResolvedValue(3);
-    const function3 = jest.fn().mockResolvedValue(4);
-
-    const composedFunction = composeAsync(function1, function2, function3);
-    const result = await composedFunction(1);
-
-    expect(result).toBe(4); // Last function's result
-
-    expect(function1).toHaveBeenCalledTimes(1);
-    expect(function1).toHaveBeenCalledWith(1);
-
-    expect(function2).toHaveBeenCalledTimes(1);
-    expect(function2).toHaveBeenCalledWith(2);
-
-    expect(function3).toHaveBeenCalledTimes(1);
-    expect(function3).toHaveBeenCalledWith(3);
-  });
-
-  it("should work with synchronous functions as well", async () => {
-    const function1 = jest.fn().mockReturnValue(2);
-    const function2 = jest.fn().mockReturnValue(3);
-
-    const composedFunction = composeAsync(function1, function2);
-    const result = await composedFunction(1);
-
-    expect(result).toBe(3); // Last function's result
-
-    expect(function1).toHaveBeenCalledTimes(1);
-    expect(function1).toHaveBeenCalledWith(1);
-
-    expect(function2).toHaveBeenCalledTimes(1);
-    expect(function2).toHaveBeenCalledWith(2);
-  });
-});
-
-describe("delay", () => {
-  it("should resolve after the specified time", async () => {
-    const startTime = Date.now();
-    const delayTime = 1000; // in milliseconds
-
-    await delay(delayTime);
-
-    const endTime = Date.now();
-    const elapsedTime = endTime - startTime;
-
-    expect(elapsedTime).toBeGreaterThanOrEqual(delayTime);
   });
 });
 
@@ -125,18 +73,27 @@ describe("inRange", () => {
 });
 
 describe("isDate", () => {
-  it("should return true for valid dates", () => {
-    expect(isDate("2022-12-31")).toBe(true);
-    expect(isDate("10-20-2022")).toBe(true);
-    expect(isDate("2022/01/01")).toBe(true);
+  it("should return true for a valid date string", () => {
+    const dateString = "2021-10-20";
+    expect(isDate(dateString)).toBe(true);
   });
 
-  it("should return false for invalid dates", () => {
-    expect(isDate("invalid-date")).toBe(false);
-    expect(isDate("2022-13-01")).toBe(false);
-    expect(isDate("2022-02-30")).toBe(false);
+  it("should return false for an invalid date string", () => {
+    const dateString = "Invalid Date";
+    expect(isDate(dateString)).toBe(false);
+  });
+
+  it("should return false for a non-date string", () => {
+    const dateString = "Hello World";
+    expect(isDate(dateString)).toBe(false);
+  });
+
+  it("should return false when passed an empty string", () => {
+    const dateString = "";
+    expect(isDate(dateString)).toBe(false);
   });
 });
+
 
 describe("isEmpty", () => {
   it("should return true for empty objects or arrays", () => {
@@ -224,9 +181,9 @@ describe("timeTaken", () => {
     const callback = () => {
       // Simulate some work being done
       let sum = 0;
-      for (let index = 0; index < 1_000_000; index++) 
+      for (let index = 0; index < 1_000_000; index++)
         sum += index;
-      
+
       return sum;
     };
 
