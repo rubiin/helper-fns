@@ -151,6 +151,17 @@ export const fixedDecimal = (number_: number, fixed = 2) => {
 };
 
 /**
+ * The function `formatSearch` takes a string as input, trims leading and trailing whitespace, replaces
+ * newline characters with spaces, removes consecutive spaces, and converts the string to lowercase. It
+ * then returns the formatted string enclosed in `%` symbols.
+ * @param  search - The `search` parameter is a string that represents the search query.
+ * @returns The function `formatSearch` returns a formatted search string.
+ */
+export const formatSearch = (search: string) => {
+  return `%${search.trim().replaceAll("\n", " ").replaceAll(/\s\s+/g, " ").toLowerCase()}%`;
+};
+
+/**
  * It takes a number of milliseconds, converts it to an object with properties for days, hours,
  * minutes, seconds, and milliseconds, filters out any values which are zero, then formats each time
  * segment as a string

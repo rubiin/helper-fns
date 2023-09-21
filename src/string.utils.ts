@@ -259,7 +259,7 @@ export const unescapeHTML = (string_: string): string => {
         "&lt;": "<",
         "&gt;": ">",
         "&#39;": "'",
-        "&quot;": '"',
+        "&quot;": "\"",
       })[tag] || tag,
   );
 };

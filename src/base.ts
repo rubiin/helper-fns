@@ -14,7 +14,7 @@ export const assert = (condition: boolean, message: string): asserts condition =
  * The const `noop` does nothing and serves as a placeholder.
  */
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+ 
 export const noop = () => {};
 
 /**
