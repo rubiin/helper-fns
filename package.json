@@ -24,7 +24,9 @@
     "dist"
   ],
   "scripts": {
+    "docs": "npx typedoc src/index.ts --out docs",
     "build": "unbuild",
+    "postbuild": "npm run docs",
     "lint": "eslint '{src,test}/**/*.ts' --cache",
     "lint:fix": "eslint '{src,test}/**/*.ts' --fix",
     "prepublishOnly": "npm run build",
