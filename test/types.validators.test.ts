@@ -35,7 +35,6 @@ describe("isBoolean", () => {
 
 describe("isFunction", () => {
   test("should return true if value is a function", () => {
-     
     expect(isFunction(() => {})).toBe(true);
     expect(isFunction({})).toBe(false);
   });
@@ -92,7 +91,6 @@ describe("isSymbol", () => {
     expect(isSymbol("")).toBe(false);
     expect(isSymbol(false)).toBe(false);
     expect(isSymbol({})).toBe(false);
-    // Add more test cases for different types/values that are not symbols
   });
 });
 
@@ -100,8 +98,7 @@ describe("isArray", () => {
   test("should return true if value is an array", () => {
     expect(isArray([])).toBe(true);
     expect(isArray([1, 2, 3])).toBe(true);
-    // eslint-disable-next-line @typescript-eslint/no-array-constructor
-    expect(isArray(new Array())).toBe(true); // Array constructor
+    expect(isArray([])).toBe(true); // Array constructor
     expect(isArray({})).toBe(false);
     expect(isArray(null)).toBe(false);
     expect(isArray("")).toBe(false);

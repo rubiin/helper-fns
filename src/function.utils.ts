@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import { promisify } from "node:util";
+import process from "node:process";
 import type { IDebounceOptions, IEncryptOptions } from "./interface";
 
 /**
@@ -79,8 +80,7 @@ export const debounce = (options: IDebounceOptions) => {
     };
 
     const callNow = immediate && !timeout;
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    // eslint-disable-next-line ts/no-unsafe-argument
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
 
@@ -95,7 +95,7 @@ export const debounce = (options: IDebounceOptions) => {
  * @returns A promise that resolves to the imported package.
  */
 export const dynamicImport = async (packageName: string) =>
-  // eslint-disable-next-line no-new-func, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-implied-eval
+  // eslint-disable-next-line no-new-func, ts/no-unsafe-return , ts/no-implied-eval
   new Function(`return import('${packageName}')`)();
 
 /**

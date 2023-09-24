@@ -34,8 +34,9 @@ export function isBigint(value: unknown): value is bigint {
  * @param value - The value to check.
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
-export const isBoolean = (value: unknown): value is boolean =>
-  typeof value === "boolean";
+export function isBoolean (value: unknown): value is boolean {
+  return typeof value === "boolean";
+}
 
 /**
  *
@@ -77,15 +78,18 @@ export function isNonPrimitive(value?: unknown): value is object {
  * @param value - The value to check.
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
-export const isNumber = (value: unknown): value is number =>
-  typeof value === "number";
+export function isNumber (value: unknown): value is number {
+  return typeof value === "number";
+}
 
 /**
  *
  * @param value - The value to check.
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
-export const isNull = (value: unknown): value is null => value === null;
+export function isNull (value: unknown): value is null {
+  return value === null;
+}
 
 /**
  *
@@ -103,13 +107,13 @@ export function isObject(value: unknown): value is object {
  */
 export function isPrimitive(value?: unknown): value is Primitive {
   return [
-    isNull,
-    isUndefined,
-    isString,
-    isNumber,
-    isBoolean,
-    isSymbol,
     isBigint,
+    isBoolean,
+    isNull,
+    isNumber,
+    isString,
+    isSymbol,
+    isUndefined,
   ].some(function_ => function_(value));
 }
 
@@ -136,7 +140,7 @@ export function isSymbol(value: unknown): value is symbol {
  * @param value - The value to check.
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
-export const isUndefined = (value: unknown): value is undefined => {
+export function isUndefined(value: unknown): value is undefined {
   return value === undefined;
 };
 

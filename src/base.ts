@@ -14,7 +14,6 @@ export const assert = (condition: boolean, message: string): asserts condition =
  * The const `noop` does nothing and serves as a placeholder.
  */
 
- 
 export const noop = () => {};
 
 /**

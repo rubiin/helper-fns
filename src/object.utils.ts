@@ -194,7 +194,7 @@ export const renameKeys = (
   const renamedObject: Record<string, any> = {};
 
   for (const key in object) {
-    const newKey = keysMap[key] || key;
+    const newKey = keysMap[key] ?? key;
     renamedObject[newKey] = object[key];
   }
 

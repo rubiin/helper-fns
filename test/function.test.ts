@@ -94,7 +94,6 @@ describe("isDate", () => {
   });
 });
 
-
 describe("isEmpty", () => {
   it("should return true for empty objects or arrays", () => {
     expect(isEmpty({})).toBe(true);

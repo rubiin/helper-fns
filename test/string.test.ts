@@ -226,7 +226,6 @@ describe("unescapeHTML", () => {
   });
 });
 
-
 describe("uncapitalize", () => {
   it("should uncapitalize the first letter of a string", () => {
     const input = "Hello";
