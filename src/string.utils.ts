@@ -10,9 +10,9 @@ import { isString } from "./types.validator";
  * @returns A const that takes a string as an argument and returns a string with every word
 capitalized.
  */
-export const capitalizeEveryWord = (string_: string): string => {
+export function capitalizeEveryWord(string_: string): string {
   return string_.replaceAll(/\b[a-z]/g, char => char.toUpperCase());
-};
+}
 
 /**
  * If the string exists, return the first character capitalized and the rest of the string lowercase,
@@ -20,11 +20,11 @@ export const capitalizeEveryWord = (string_: string): string => {
  * @param string_ - string - This is the string that we want to capitalize.
  * @returns A const that takes a string and returns a string.
  */
-export const capitalize = (string_: string): string => {
+export function capitalize(string_: string): string {
   return string_
     ? string_.charAt(0).toUpperCase() + string_.slice(1).toLowerCase()
     : "";
-};
+}
 
 /**
  * The const "chop" removes leading and trailing special characters, punctuation, and whitespace
@@ -32,11 +32,12 @@ export const capitalize = (string_: string): string => {
  * @param string_ - The parameter `str` is of type `unknown`, which means it can be any type.
  * @returns a string.
  */
-export const chop = (string_: unknown): string => {
-  if (!isString(string_)) return "";
+export function chop(string_: unknown): string {
+  if (!isString(string_))
+    return "";
   const re = /^[\W_]+|[\W_]+$/g;
   return string_.trim().replaceAll(re, "");
-};
+}
 
 /**
  * Ensure suffix of a string
@@ -44,20 +45,22 @@ export const chop = (string_: unknown): string => {
  * @param string_ - the string to ensure the suffix of it
  * @returns the string with the suffix ensured
  */
-export const ensureSuffix = (suffix: string, string_: string): string => {
-  if (!string_.endsWith(suffix)) return string_ + suffix;
+export function ensureSuffix(suffix: string, string_: string): string {
+  if (!string_.endsWith(suffix))
+    return string_ + suffix;
   return string_;
-};
+}
 /**
  * Ensure prefix of a string
  * @param prefix - the prefix to ensure
  * @param string_ - the string to ensure the prefix of it
  * @returns the string with the prefix ensured
  */
-export const ensurePrefix = (prefix: string, string_: string): string => {
-  if (!string_.startsWith(prefix)) return prefix + string_;
+export function ensurePrefix(prefix: string, string_: string): string {
+  if (!string_.startsWith(prefix))
+    return prefix + string_;
   return string_;
-};
+}
 
 /**
  * If the string exists, return the first character of the string in lowercase, followed by the rest of
@@ -66,9 +69,9 @@ export const ensurePrefix = (prefix: string, string_: string): string => {
  * @returns The first character of the string is being converted to lowercase and then concatenated
 with the rest of the string.
  */
-export const lowerFirst = (string_: string): string => {
+export function lowerFirst(string_: string): string {
   return string_ ? string_.charAt(0).toLowerCase() + string_.slice(1) : "";
-};
+}
 
 /**
  * Remove all dots from the email address, remove everything after the plus sign, and convert the email
@@ -76,7 +79,7 @@ export const lowerFirst = (string_: string): string => {
  * @param email - The email address to normalize.
  * @returns A const that takes an email and returns a normalized email.
  */
-export const normalizeEmail = (email: string): string => {
+export function normalizeEmail(email: string): string {
   const DOT_REG = /\./g;
   const [name, host] = email.split("@");
   let [beforePlus] = name.split("+");
@@ -84,7 +87,7 @@ export const normalizeEmail = (email: string): string => {
   const result = `${beforePlus.toLowerCase()}@${host.toLowerCase()}`;
   Number(result);
   return result;
-};
+}
 
 /**
  * It takes a string and replaces all instances of a given identifier with a random number
@@ -93,13 +96,13 @@ export const normalizeEmail = (email: string): string => {
  * @returns A const that takes a string and an identifier and returns a string with the identifier
  * replaced with a random number.
  */
-export const orderedToken = (string_: string, identifier = "X"): string => {
+export function orderedToken(string_: string, identifier = "X"): string {
   while (string_.includes(identifier))
   // eslint-disable-next-line ts/no-use-before-define
     string_ = string_.replace(identifier, String(randomNumber()));
 
   return string_;
-};
+}
 
 /**
  * It creates an array of size 'size' and then maps each element to a random hexadecimal number and
@@ -107,27 +110,29 @@ export const orderedToken = (string_: string, identifier = "X"): string => {
  * @param size - The number of characters you want in your hex string.
  */
 
-export const randomHex = (size: number): string => {
+export function randomHex(size: number): string {
   return Array.from({ length: size })
     .map(() => Math.floor(Math.random() * 16).toString(16))
     .join("");
-};
+}
 /**
  * It takes an object with three properties (length, numbers, and symbols) and returns a string of
  * random characters
  * @param options - IRandomStringOptions
  * @returns A random string of characters
  */
-export const randomString = (options: IRandomStringOptions): string => {
+export function randomString(options: IRandomStringOptions): string {
   const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numbersList = "0123456789";
   const symbolsList = "!@#$%^&*_-+=";
 
   const characters: string[] = [alpha];
 
-  if (options.numbers) characters.push(numbersList);
+  if (options.numbers)
+    characters.push(numbersList);
 
-  if (options.symbols) characters.push(symbolsList);
+  if (options.symbols)
+    characters.push(symbolsList);
 
   const password: string[] = [];
 
@@ -142,7 +147,7 @@ export const randomString = (options: IRandomStringOptions): string => {
   }
 
   return password.join("");
-};
+}
 
 /**
  * "Return a random number between a and b, inclusive."
@@ -153,11 +158,11 @@ export const randomString = (options: IRandomStringOptions): string => {
  * @param b - The upper bound of the random number to be generated.
  * @returns A random number between a and b.
  */
-export const randomNumber = (a = 1, b = 9): number => {
+export function randomNumber(a = 1, b = 9): number {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
+}
 
 /**
  * Return the string after the first occurrence of the given substring.
@@ -165,9 +170,9 @@ export const randomNumber = (a = 1, b = 9): number => {
  * @param substr - The substring to search for.
  * @returns The string after the first occurrence of the given substring.
  */
-export const stringAfter = (string_: string, substr: string): string => {
+export function stringAfter(string_: string, substr: string): string {
   return string_.split(substr)[1];
-};
+}
 
 /**
  * Return the part of the string before the first occurrence of the given substring.
@@ -175,9 +180,9 @@ export const stringAfter = (string_: string, substr: string): string => {
  * @param substr - The substring to search for.
  * @returns The string before the first instance of the substring.
  */
-export const stringBefore = (string_: string, substr: string): string => {
+export function stringBefore(string_: string, substr: string): string {
   return string_.split(substr)[0];
-};
+}
 
 /**
  * The `slugify` const converts a string into a URL-friendly slug by removing special characters,
@@ -188,7 +193,7 @@ export const stringBefore = (string_: string, substr: string): string => {
  * to customize the behavior of the `slugify` const. It has the following properties:
  * @returns a slugified version of the input string.
  */
-export const slugify = (string_: string, options?: ISlugifyOptions): string => {
+export function slugify(string_: string, options?: ISlugifyOptions): string {
   const { separator = "-" } = options ?? {};
 
   return string_
@@ -198,33 +203,31 @@ export const slugify = (string_: string, options?: ISlugifyOptions): string => {
     .replaceAll(/[\u0300-\u036F]/g, "")
     .replaceAll(/[^\d a-z-]/g, "")
     .replaceAll(/\s+/g, separator);
-};
+}
 
 /**
  * Replace backslash to slash
  * @param string_ - The string to be replaced.
  * @returns A const that takes a string and returns a string with the backslash replaced with a slash.
  */
-export const slash = (string_: string): string => {
+export function slash(string_: string): string {
   return string_.replaceAll("\\", "/");
-};
+}
 
 /**
  * @param [parameters] - The string to be replaced.
  * @returns A const that takes a string and returns a string with the backslash replaced with a slash.
  */
-export const stringifyQueryParameters = (
-  parameters: Record<string, any> | string = {},
-): string => {
+export function stringifyQueryParameters(parameters: Record<string, any> | string = {}): string {
   return new URLSearchParams(parameters).toString();
-};
+}
 
 /**
  * @param string_ - The string to be replaced.
  * @param mix - The string to be replaced.
  * @returns A const that takes a string and returns a string with the backslash replaced with a slash.
  */
-export const template = (string_: string, mix: Record<string, any>): string => {
+export function template(string_: string, mix: Record<string, any>): string {
   const RGX = /{{(.*?)}}/g;
 
   return string_.replaceAll(RGX, (_match, key: string) => {
@@ -234,6 +237,7 @@ export const template = (string_: string, mix: Record<string, any>): string => {
 
     for (const k of keys) {
       if (value && k in value) {
+        // eslint-disable-next-line ts/no-unsafe-assignment
         value = value[k];
       }
       else {
@@ -244,14 +248,14 @@ export const template = (string_: string, mix: Record<string, any>): string => {
 
     return value === undefined ? "" : String(value);
   });
-};
+}
 
 /**
  * Replaces all instances of HTML entities in a string with their corresponding characters.
  * @param string_ - The string to unescape.
  * @returns - The modified string with HTML entities replaced.
  */
-export const unescapeHTML = (string_: string): string => {
+export function unescapeHTML(string_: string): string {
   return string_.replaceAll(
     /&amp;|&lt;|&gt;|&#39;|&quot;/g,
     tag =>
@@ -263,7 +267,7 @@ export const unescapeHTML = (string_: string): string => {
         "&quot;": "\"",
       })[tag] || tag,
   );
-};
+}
 
 /**
  * The `uncapitalize` function takes a string and returns a new string with the first letter in
@@ -275,8 +279,8 @@ export const unescapeHTML = (string_: string): string => {
  * the rest of the string will be converted to uppercase. If `upperRest` is set to `false` or
  * @returns The function `uncapitalize` returns a string.
  */
-export const uncapitalize = (string_: string, upperRest = false): string => {
+export function uncapitalize(string_: string, upperRest = false): string {
   const first = string_[0].toLowerCase();
   const rest = string_.slice(1);
   return `${first}${upperRest ? rest.toUpperCase() : rest.toLowerCase()}`;
-};
+}

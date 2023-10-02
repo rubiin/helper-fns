@@ -4,51 +4,51 @@
  * @param instance - The instance to clone.
  * @returns A new instance of the same class as the instance passed in.
  */
-export const copyObject = (instance: object): object => {
+export function copyObject(instance: object): object {
   const copy = {};
 
   Object.assign(copy, instance);
 
   return copy;
-};
+}
 /**
  * It takes an enum and returns an array of strings
  * @param _enum - The enum you want to convert to a string array.
  * @returns An array of strings
  */
 
-export const enumToString = <T extends Record<string, string>> (
-  _enum: T,
-): string => {
+export function enumToString<T extends Record<string, string>>(_enum: T): string {
   return Object.keys(_enum)
     .map(key => _enum[key])
     .join(",");
-};
+}
 
 /**
  * @param array - The array to query.
  * @param property - The property to group by.
  * @returns any[] - An array of objects grouped by the property.
  */
-export const groupBy = (array: any[], property: string): Record<string, any[]> => {
+export function groupBy(array: any[], property: string): Record<string, any[]> {
   const groups: Record<string, any[]> = {};
 
   for (const item of array) {
+    // eslint-disable-next-line ts/no-unsafe-assignment
     const propertyValue = item[property];
 
-    if (!groups[propertyValue]) groups[propertyValue] = [];
+    if (!groups[propertyValue])
+      groups[propertyValue] = [];
 
     groups[propertyValue].push(item);
   }
 
   return groups;
-};
+}
 
 /**
  * @param object - The object to query.
  * @returns string[] - An array of the keys of the object.
  */
-export const invertObject = (object: Record<string, any>): Record<string, any> => {
+export function invertObject(object: Record<string, any>): Record<string, any> {
   const newObject: Record<string, any> = {};
 
   for (const property in object) {
@@ -57,7 +57,7 @@ export const invertObject = (object: Record<string, any>): Record<string, any> =
   }
 
   return newObject;
-};
+}
 
 /**
  * Type guard for any key, `k`.
@@ -66,12 +66,9 @@ export const invertObject = (object: Record<string, any>): Record<string, any> =
  * @param k key to check existence in `obj`
  * @returns `k` is a key of `T`
  */
-export const isKeyOf = <T extends object>(
-  object: T,
-  k: keyof any,
-): k is keyof T => {
+export function isKeyOf<T extends object>(object: T, k: keyof any): k is keyof T {
   return k in object;
-};
+}
 
 /**
  * "It takes an array of objects and returns an array of the values of a specific attribute of those
@@ -82,12 +79,9 @@ export const isKeyOf = <T extends object>(
  * @param attribute - The attribute of the object you want to extract.
  * @returns An array of the values of the attribute passed in.
  */
-export const objectArrayToArray = <T>(
-  objectArray: T[],
-  attribute: keyof T,
-): T[keyof T][] => {
+export function objectArrayToArray<T>(objectArray: T[], attribute: keyof T): T[keyof T][] {
   return objectArray.map(element => element[attribute]);
-};
+}
 
 /**
  * It takes an object and an array of keys, and returns a new object with the keys omitted
@@ -95,14 +89,11 @@ export const objectArrayToArray = <T>(
  * @param keys - K[]
  * @returns : 1, b: 2 }
  */
-export const omit = <T extends object, K extends keyof T>(
-  object: T,
-  keys: K[],
-): Omit<T, K> => {
+export function omit<T extends object, K extends keyof T>(object: T, keys: K[]): Omit<T, K> {
   const omitted = { ...object };
   for (const key of keys) delete omitted[key];
   return omitted;
-};
+}
 
 /**
  * It takes an object and an array of keys, and returns a new object with only those keys
@@ -110,13 +101,13 @@ export const omit = <T extends object, K extends keyof T>(
  * @param keys - K[]
  * @returns Pick<T, K>
  */
-export const pick = <T, K extends keyof T>(object: T, keys: K[]): Pick<T, K> => {
+export function pick<T, K extends keyof T>(object: T, keys: K[]): Pick<T, K> {
   const returnValue: Pick<T, K> = {} as Pick<T, K>; // Initialize with an empty object
 
   for (const key of keys) returnValue[key] = object[key];
 
   return returnValue;
-};
+}
 /**
  * Pluck takes an array of objects and returns an array of the values of a certain property in each
  * object
@@ -124,9 +115,9 @@ export const pick = <T, K extends keyof T>(object: T, keys: K[]): Pick<T, K> => 
  * @param key - string | number
  * @returns [1, 2, 3]
  */
-export const pluck = <T, K extends keyof T>(array: T[], key: K): T[K][] => {
+export function pluck<T, K extends keyof T>(array: T[], key: K): T[K][] {
   return array.map(item => item[key]);
-};
+}
 
 /**
  * It sorts an array of objects by a list of properties, in the order specified
@@ -134,11 +125,7 @@ export const pluck = <T, K extends keyof T>(array: T[], key: K): T[K][] => {
  * @param properties - The properties to sort by.
  * @param orders - An array of strings that specifies the order of sorting.
  */
-export const orderBy = <T extends object, K extends keyof T>(
-  array: T[],
-  properties: K[],
-  orders: "asc" | "desc",
-) => {
+export function orderBy<T extends object, K extends keyof T>(array: T[], properties: K[], orders: "asc" | "desc") {
   array.sort((a, b) => {
     for (const [index, property] of properties.entries()) {
       const order = orders[index] || "asc";
@@ -151,21 +138,23 @@ export const orderBy = <T extends object, K extends keyof T>(
     }
     return 0;
   });
-};
+}
 
 /**
  * It takes an object and returns a new object with all the null values removed
  * @param object - Record<string, any>
  * @returns An object with all the keys and values that are not null.
  */
-export const removeNull = (object: Record<string, any>) => {
-  const newObject: Record<string, any> = {};
+export function removeNull(object: Record<string, any>) {
+  const newObject: Record<string, unknown> = {};
 
-  for (const [k, v] of Object.entries(object))
-    if (v !== null) newObject[k] = v;
+  for (const [k, v] of Object.entries(object)) {
+    if (v !== null)
+      newObject[k] = v;
+  }
 
   return newObject;
-};
+}
 
 /**
  *
@@ -173,12 +162,14 @@ export const removeNull = (object: Record<string, any>) => {
  * @param object - T - the object to remove undefined fields from
  * @returns the object with all the undefined fields removed
  */
-export const removeUndefined = <T extends Record<string, any>>(object: T): T => {
-  for (const key in object)
-    if (object[key] === undefined) delete object[key];
+export function removeUndefined<T extends Record<string, any>>(object: T): T {
+  for (const key in object) {
+    if (object[key] === undefined)
+      delete object[key];
+  }
 
   return object;
-};
+}
 
 /**
  * It takes an object and a map of keys to new keys, and returns a new object with the keys renamed
@@ -187,16 +178,14 @@ export const removeUndefined = <T extends Record<string, any>>(object: T): T => 
  * @param object - The object to be renamed
  * @returns A new object with the keys renamed according to the map, while keeping the values intact
  */
-export const renameKeys = (
-  keysMap: Record<string, any>,
-  object: Record<string, any>,
-): Record<string, any> => {
-  const renamedObject: Record<string, any> = {};
+export function renameKeys(keysMap: Record<string, any>, object: Record<string, any>): Record<string, any> {
+  const renamedObject: Record<string, unknown> = {};
 
   for (const key in object) {
+    // eslint-disable-next-line ts/no-unsafe-assignment
     const newKey = keysMap[key] ?? key;
     renamedObject[newKey] = object[key];
   }
 
   return renamedObject;
-};
+}

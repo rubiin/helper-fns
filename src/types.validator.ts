@@ -34,7 +34,7 @@ export function isBigint(value: unknown): value is bigint {
  * @param value - The value to check.
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
-export function isBoolean (value: unknown): value is boolean {
+export function isBoolean(value: unknown): value is boolean {
   return typeof value === "boolean";
 }
 
@@ -78,7 +78,7 @@ export function isNonPrimitive(value?: unknown): value is object {
  * @param value - The value to check.
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
-export function isNumber (value: unknown): value is number {
+export function isNumber(value: unknown): value is number {
   return typeof value === "number";
 }
 
@@ -87,7 +87,7 @@ export function isNumber (value: unknown): value is number {
  * @param value - The value to check.
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
-export function isNull (value: unknown): value is null {
+export function isNull(value: unknown): value is null {
   return value === null;
 }
 

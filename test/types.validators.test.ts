@@ -25,7 +25,7 @@ describe("isDefined", () => {
 });
 
 describe("isBoolean", () => {
-  test("should return true if value is a boolean", () => {
+  it("should return true if value is a boolean", () => {
     expect(isBoolean(true)).toBe(true);
     expect(isBoolean(false)).toBe(true);
     expect(isBoolean(0)).toBe(false);
@@ -34,14 +34,14 @@ describe("isBoolean", () => {
 });
 
 describe("isFunction", () => {
-  test("should return true if value is a function", () => {
+  it("should return true if value is a function", () => {
     expect(isFunction(() => {})).toBe(true);
     expect(isFunction({})).toBe(false);
   });
 });
 
 describe("isNumber", () => {
-  test("should return true if value is a number", () => {
+  it("should return true if value is a number", () => {
     expect(isNumber(1)).toBe(true);
     expect(isNumber(0)).toBe(true);
     expect(isNumber(-1)).toBe(true);
@@ -52,7 +52,7 @@ describe("isNumber", () => {
 });
 
 describe("isString", () => {
-  test("should return true if value is a string", () => {
+  it("should return true if value is a string", () => {
     expect(isString("abc")).toBe(true);
     expect(isString("")).toBe(true);
     expect(isString(123)).toBe(false);
@@ -62,7 +62,7 @@ describe("isString", () => {
 });
 
 describe("isObject", () => {
-  test("should return true if value is an object", () => {
+  it("should return true if value is an object", () => {
     expect(isObject({})).toBe(true);
     expect(isObject({ key: "value" })).toBe(true);
     expect(isObject([])).toBe(false);
@@ -72,7 +72,7 @@ describe("isObject", () => {
 });
 
 describe("isNull", () => {
-  test("should return true if value is null", () => {
+  it("should return true if value is null", () => {
     expect(isNull(null)).toBe(true);
     expect(isNull("null")).toBe(false);
     expect(isNull({})).toBe(false);
@@ -95,7 +95,7 @@ describe("isSymbol", () => {
 });
 
 describe("isArray", () => {
-  test("should return true if value is an array", () => {
+  it("should return true if value is an array", () => {
     expect(isArray([])).toBe(true);
     expect(isArray([1, 2, 3])).toBe(true);
     expect(isArray([])).toBe(true); // Array constructor
@@ -105,7 +105,7 @@ describe("isArray", () => {
     expect(isArray(123)).toBe(false);
   });
 
-  test("should return true if value is an array of specific type", () => {
+  it("should return true if value is an array of specific type", () => {
     expect(isArray<number>([1, 2, 3])).toBe(true);
     expect(isArray<string>(["a", "b", "c"])).toBe(true);
     expect(isArray<boolean>([true, false])).toBe(true);
@@ -115,7 +115,7 @@ describe("isArray", () => {
 });
 
 describe("isBigint", () => {
-  test("should return true if value is a bigint", () => {
+  it("should return true if value is a bigint", () => {
     expect(isBigint(BigInt(123))).toBe(true);
     expect(isBigint(BigInt(0))).toBe(true);
     expect(isBigint(BigInt(-123))).toBe(true);

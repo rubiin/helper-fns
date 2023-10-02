@@ -6,15 +6,16 @@
  * @param message - The `message` parameter is a string that represents the error message that
  * will be thrown if the `condition` is not met.
  */
-export const assert = (condition: boolean, message: string): asserts condition => {
-  if (!condition) throw new Error(message);
-};
+export function assert(condition: boolean, message: string): asserts condition {
+  if (!condition)
+    throw new Error(message);
+}
 
 /**
  * The const `noop` does nothing and serves as a placeholder.
  */
 
-export const noop = () => {};
+export function noop() {}
 
 /**
  * The const "toString" returns the string representation of the type of the input value.

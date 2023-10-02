@@ -10,13 +10,15 @@ import type { IDebounceOptions, IEncryptOptions } from "./interface";
  * @param value - string - the value to be parsed
  * @returns A string, number, or boolean
  */
-export const autoParseValues = (value: string): any => {
+export function autoParseValues(value: string): any {
   // check for boolean
-  if (!!JSON.parse(value) === JSON.parse(value)) return JSON.parse(value);
-  else if (!Number.isNaN(Number(value))) return Number.parseFloat(value);
+  if (!!JSON.parse(value) === JSON.parse(value))
+    return JSON.parse(value);
+  else if (!Number.isNaN(Number(value)))
+    return Number.parseFloat(value);
   // Return a default value when no conditions are met
   return value;
-};
+}
 
 /* The line `export const awaitTimeout = promisify(setTimeout);` is exporting a function called
 `awaitTimeout` that wraps the `setTimeout` function and returns a promise that resolves after a
@@ -30,7 +32,7 @@ export const awaitTimeout = promisify(setTimeout);
  * @param fns - an array of functions
  * @returns A function that takes an input and returns a promise that resolves to the result of
  */
-export const composeAsync = (...fns: unknown[]) => {
+export function composeAsync(...fns: unknown[]) {
   return (input: any) => {
     let result = Promise.resolve(input);
     for (let index = fns.length - 1; index >= 0; index--) {
@@ -39,7 +41,7 @@ export const composeAsync = (...fns: unknown[]) => {
     }
     return result;
   };
-};
+}
 
 /**
  * The `clamp` function takes a value and ensures it falls within a specified range.
@@ -51,9 +53,9 @@ export const composeAsync = (...fns: unknown[]) => {
  * @returns the value of `val` if it is within the range of `min` and `max`. If `val` is less than
  * `min`, then `min` is returned. If `val` is greater than `max`, then `max` is returned.
  */
-export const clamp = (value: number, min: number, max: number) => {
+export function clamp(value: number, min: number, max: number) {
   return value < min ? min : (value > max ? max : value);
-};
+}
 
 /**
  * "If the function is called again before the timeout is up, reset the timeout and return. Otherwise,
@@ -68,7 +70,7 @@ export const clamp = (value: number, min: number, max: number) => {
  * @param options - IDebounceOptions
  * @returns A function that will be called later.
  */
-export const debounce = (options: IDebounceOptions) => {
+export function debounce(options: IDebounceOptions) {
   let timeout: any;
 
   return function (this: any, ...arguments_: any[]) {
@@ -76,7 +78,8 @@ export const debounce = (options: IDebounceOptions) => {
 
     const later = () => {
       timeout = undefined;
-      if (!immediate) func.apply(this, arguments_);
+      if (!immediate)
+        func.apply(this, arguments_);
     };
 
     const callNow = immediate && !timeout;
@@ -84,9 +87,10 @@ export const debounce = (options: IDebounceOptions) => {
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
 
-    if (callNow) func.apply(this, arguments_);
+    if (callNow)
+      func.apply(this, arguments_);
   };
-};
+}
 
 /**
  * The `dynamicImport` function allows for dynamic importing of a package in TypeScript.
@@ -94,23 +98,24 @@ export const debounce = (options: IDebounceOptions) => {
  * the package that you want to dynamically import.
  * @returns A promise that resolves to the imported package.
  */
-export const dynamicImport = async (packageName: string) =>
-  // eslint-disable-next-line no-new-func, ts/no-unsafe-return , ts/no-implied-eval
-  new Function(`return import('${packageName}')`)();
+export async function dynamicImport(packageName: string) {
+  // eslint-disable-next-line no-new-func, ts/no-implied-eval, ts/no-unsafe-return
+  return new Function(`return import('${packageName}')`)();
+}
 
 /**
  * It takes an object with a config property and a text property, and returns the decrypted text
  * @param options - IEncryptOptions
  * @returns The decrypted text.
  */
-export const decrypt = (options: IEncryptOptions) => {
+export function decrypt(options: IEncryptOptions) {
   const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
   const IV = Buffer.from(options.config.iv, "hex"); // set random initialization vector
 
   const decipher = crypto.createDecipheriv("aes-256-cbc", ENC_KEY, IV);
   const decrypted = decipher.update(options.text, "base64", "utf8");
   return decrypted + decipher.final("utf8");
-};
+}
 
 /**
  * The function exports a promise that resolves after a specified delay time.
@@ -118,25 +123,25 @@ export const decrypt = (options: IEncryptOptions) => {
  * milliseconds that the `delay` function will wait before resolving the promise.
  * @returns A promise that resolves after a specified delay time.
  */
-export const delay = (time: number) => {
+export function delay(time: number) {
   return new Promise((resolve) => {
     setTimeout(resolve, time);
   });
-};
+}
 
 /**
  * It takes a string, encrypts it, and returns the encrypted string
  * @param options - IEncryptOptions
  * @returns The encrypted text
  */
-export const encrypt = (options: IEncryptOptions) => {
+export function encrypt(options: IEncryptOptions) {
   const ENC_KEY = Buffer.from(options.config.key, "hex"); // set random encryption key
   const IV = Buffer.from(options.config.iv, "hex"); //
   const cipher = crypto.createCipheriv("aes-256-cbc", ENC_KEY, IV);
   let encrypted = cipher.update(options.text, "utf8", "base64");
   encrypted += cipher.final("base64");
   return encrypted;
-};
+}
 
 /**
  * It takes a number and returns a number with a fixed number of decimal places
@@ -144,11 +149,11 @@ export const encrypt = (options: IEncryptOptions) => {
  * @param fixed - The number of decimal places to round to.
  * @returns A function that takes a number and a fixed number and returns a number.
  */
-export const fixedDecimal = (number_: number, fixed = 2) => {
+export function fixedDecimal(number_: number, fixed = 2) {
   const re = new RegExp(`^-?\\d+(?:.\\d{0,${fixed || -1}})?`);
 
   return Number.parseFloat(number_.toString().match(re)![0]);
-};
+}
 
 /**
  * The function `formatSearch` takes a string as input, trims leading and trailing whitespace, replaces
@@ -157,9 +162,9 @@ export const fixedDecimal = (number_: number, fixed = 2) => {
  * @param  search - The `search` parameter is a string that represents the search query.
  * @returns The function `formatSearch` returns a formatted search string.
  */
-export const formatSearch = (search: string) => {
+export function formatSearch(search: string) {
   return `%${search.trim().replaceAll("\n", " ").replaceAll(/\s\s+/g, " ").toLowerCase()}%`;
-};
+}
 
 /**
  * It takes a number of milliseconds, converts it to an object with properties for days, hours,
@@ -168,8 +173,9 @@ export const formatSearch = (search: string) => {
  * @param ms - The number of milliseconds to be formatted as a human readable string.
  * @returns A function that takes a number and returns a string.
  */
-export const formatDuration = (ms: number) => {
-  if (ms < 0) ms = -ms;
+export function formatDuration(ms: number) {
+  if (ms < 0)
+    ms = -ms;
   const time = {
     day: Math.floor(ms / 86_400_000),
     hour: Math.floor(ms / 3_600_000) % 24,
@@ -181,7 +187,7 @@ export const formatDuration = (ms: number) => {
     .filter(value => value[1] !== 0)
     .map(([key, value]) => `${value} ${key}${value === 1 ? "" : "s"}`)
     .join(", ");
-};
+}
 
 /**
  * The `inRange` function checks if a number is within a specified range.
@@ -199,10 +205,10 @@ export const inRange = (number_: number, a: number, b = 0) => (Math.min(a, b) <=
 /**
  * @returns A boolean value.
  */
-export const isDate = (dateString: string) => {
+export function isDate(dateString: string) {
   const date = new Date(dateString);
   return date instanceof Date && !Number.isNaN(date.getTime());
-};
+}
 
 /**
  * It returns true if the object is empty, false if it's not
@@ -224,9 +230,9 @@ export function isEmpty(
  * @param dateB - Date - The date to compare to.
  * @returns A boolean value.
  */
-export const isSameDate = (dateA: Date, dateB: Date) => {
+export function isSameDate(dateA: Date, dateB: Date) {
   return dateA.toISOString() === dateB.toISOString();
-};
+}
 
 /**
  * The lerp function calculates a linear interpolation between two numbers based on a given ratio.
@@ -239,9 +245,9 @@ export const isSameDate = (dateA: Date, dateB: Date) => {
  * interpolate between.
  * @returns the linear interpolation value between the start and end values based on the given ratio.
  */
-export const lerp = (ratio: number, start: number, end: number) => {
+export function lerp(ratio: number, start: number, end: number) {
   return start + (end - start) * ratio;
-};
+}
 
 /**
  * Pipe takes a list of functions and returns a function that takes an input and returns the input
@@ -263,23 +269,24 @@ export function pipe<T>(...fns: ((input: T) => T)[]): (input: T) => T {
  * @param path - The path to the file you want to read.
  * @returns A promise that resolves to the contents of the file at the given path.
  */
-export const readFile = (path: string): Promise<string> => {
+export function readFile(path: string): Promise<string> {
   return new Promise((resolve, reject) => {
     fs.readFile(path, { encoding: "utf8" }, (error, html) => {
-      if (error) reject(error);
+      if (error)
+        reject(error);
       else resolve(html);
     });
   });
-};
+}
 
 /**
  * It takes any number of arguments, and returns a stringified version of those arguments
  * @param arguments_ - The arguments passed to the resolver.
  * @returns A stringified version of the arguments passed in.
  */
-export const resolverArguments = (...arguments_: any[]) => {
+export function resolverArguments(...arguments_: any[]) {
   return JSON.stringify(arguments_);
-};
+}
 
 /**
  * The `timestamp` function returns the current timestamp in milliseconds.
@@ -330,7 +337,8 @@ export function throttler(_request: any, _response: any, next: () => void) {
   if (days > 0) {
     let ms = days * 200;
 
-    if (ms < 0) ms = 0;
+    if (ms < 0)
+      ms = 0;
 
     return setTimeout(next, ms);
   }

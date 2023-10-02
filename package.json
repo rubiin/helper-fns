@@ -36,9 +36,9 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rubiin/eslint-config": "^1.7.0",
+    "@rubiin/eslint-config": "^1.8.7",
     "@types/jest": "^29.5.5",
-    "@types/node": "^20.6.4",
+    "@types/node": "^20.8.0",
     "bumpp": "^9.2.0",
     "clean-publish": "^4.2.0",
     "eslint": "^8.50.0",

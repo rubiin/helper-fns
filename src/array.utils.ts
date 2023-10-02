@@ -5,9 +5,9 @@
  * either be a single value of type `T` or an array of values of type `T`.
  * @returns The const `castArray` returns an array.
  */
-export const castArray = <T>(value: T | T[]) => {
+export function castArray<T>(value: T | T[]) {
   return Array.isArray(value) ? value : [value];
-};
+}
 
 /**
  * The `chunk` const takes an array and a size, and returns a new array with subarrays of the
@@ -19,11 +19,9 @@ export const castArray = <T>(value: T | T[]) => {
  * splitting the original array.
  * @returns an array of arrays, where each inner array contains a chunk of the original array.
  */
-export const chunk = <T = unknown>(array: T[], size: number): T[][] => {
-  return Array.from({ length: Math.ceil(array.length / size) }, (_, index) =>
-    array.slice(index * size, index * size + size),
-  );
-};
+export function chunk<T = unknown>(array: T[], size: number): T[][] {
+  return Array.from({ length: Math.ceil(array.length / size) }, (_, index) => array.slice(index * size, index * size + size));
+}
 
 /**
  * It takes two arrays and returns an array of the elements that are common to both
@@ -31,9 +29,9 @@ export const chunk = <T = unknown>(array: T[], size: number): T[][] => {
  * @param b - T[]
  * @returns The common elements of the two arrays.
  */
-export const common = <T = unknown>(a: T[], b: T[]): T[] => {
+export function common<T = unknown>(a: T[], b: T[]): T[] {
   return a.filter(c => b.includes(c));
-};
+}
 
 /**
  * The `compact` const removes falsy values from an array.
@@ -41,9 +39,9 @@ export const common = <T = unknown>(a: T[], b: T[]): T[] => {
  * @returns The `compact` const returns a new array that contains only the truthy values from the
  * input array.
  */
-export const compact = <T>(array: T[]): T[] => {
+export function compact<T>(array: T[]): T[] {
   return array.filter(Boolean);
-};
+}
 
 /**
  * It returns an array of all the elements in the first array that are not in the second array
@@ -51,9 +49,9 @@ export const compact = <T>(array: T[]): T[] => {
  * @param b - T[]
  * @returns The difference between two arrays.
  */
-export const difference = <T = unknown>(a: T[], b: T[]): T[] => {
+export function difference<T = unknown>(a: T[], b: T[]): T[] {
   return a.filter(c => !b.includes(c));
-};
+}
 
 /**
  * Drop() returns a copy of the array with n elements removed from the left.
@@ -70,13 +68,10 @@ export const drop = <T = unknown>(array: string | T[], n = 1) => array.slice(n);
  * @param const_ - : (argument: T) => boolean - The function invoked per iteration.
  * @returns The array after the first element that does not pass the test.
  */
-export const dropWhile = <T>(
-  array: T[],
-  const_: (argument: T) => boolean,
-): T[] => {
+export function dropWhile<T>(array: T[], const_: (argument: T) => boolean): T[] {
   const index = array.findIndex(item => !const_(item));
   return index === -1 ? [] : array.slice(index);
-};
+}
 
 /**
  * It returns a new array with the last n elements removed
@@ -84,9 +79,9 @@ export const dropWhile = <T>(
  * @param n - The number of elements to drop from the end of the array.
  * @returns [1, 2, 3, 4, 5]
  */
-export const dropRight = <T = unknown>(array: T[], n = 1): T[] => {
+export function dropRight<T = unknown>(array: T[], n = 1): T[] {
   return array.slice(0, -n);
-};
+}
 
 /**
  * The `equals` const checks if two arrays are equal by comparing their lengths and elements.
@@ -94,9 +89,9 @@ export const dropRight = <T = unknown>(array: T[], n = 1): T[] => {
  * @param b - The parameter `b` is an array of type `T`.
  * @returns a boolean value.
  */
-export const equals = <T = unknown>(a: T[], b: T[]): boolean => {
+export function equals<T = unknown>(a: T[], b: T[]): boolean {
   return a.length === b.length && a.every((v, index) => v === b[index]);
-};
+}
 
 /**
  * The const `equalsIgnoreOrder` checks if two arrays have the same elements, regardless of their
@@ -107,16 +102,18 @@ export const equals = <T = unknown>(a: T[], b: T[]): boolean => {
  * `a` and `b` are equal in terms of their elements, ignoring the order of the elements. It returns
  * `false` if the arrays have different lengths or if they have different counts of any element.
  */
-export const equalsIgnoreOrder = <T>(a: T[], b: T[]) => {
-  if (a.length !== b.length) return false;
+export function equalsIgnoreOrder<T>(a: T[], b: T[]) {
+  if (a.length !== b.length)
+    return false;
   const uniqueValues = new Set([...a, ...b]);
   for (const v of uniqueValues) {
     const aCount = a.filter(element => element === v).length;
     const bCount = b.filter(element => element === v).length;
-    if (aCount !== bCount) return false;
+    if (aCount !== bCount)
+      return false;
   }
   return true;
-};
+}
 
 /**
  * The const checks if an array has any duplicate elements.
@@ -124,9 +121,9 @@ export const equalsIgnoreOrder = <T>(a: T[], b: T[]) => {
  * @returns a boolean value. It returns `true` if the input array `a` contains any duplicate elements,
  * and `false` otherwise.
  */
-export const hasDuplicates = <T>(a: T[]): boolean => {
+export function hasDuplicates<T>(a: T[]): boolean {
   return new Set(a).size !== a.length;
-};
+}
 
 /**
  * The `fill` const takes an array, a value, a start index, and an end index, and returns a new
@@ -145,25 +142,19 @@ export const hasDuplicates = <T>(a: T[]): boolean => {
  * elements between the `start` and `end` indices (inclusive), which are replaced with the `value`
  * parameter.
  */
-export const fill = <T = unknown>(
-  array: T[],
-  value: T,
-  start = 0,
-  end = array.length,
-): T[] => {
-  return array.map((item, index) =>
-    index >= start && index < end ? value : item,
+export function fill<T = unknown>(array: T[], value: T, start = 0, end = array.length): T[] {
+  return array.map((item, index) => index >= start && index < end ? value : item,
   );
-};
+}
 
 /**
  * It takes an array of arrays and returns a new array with all the elements flattened
  * @param array - The array to flatten.
  * @returns [1, 2, 3, 4, 5, 6]
  */
-export const flattenDeep = (array: unknown[]): unknown[] => {
+export function flattenDeep(array: unknown[]): unknown[] {
   return array.flat(Number.POSITIVE_INFINITY);
-};
+}
 
 /**
  * It returns the difference between two arrays.
@@ -171,10 +162,10 @@ export const flattenDeep = (array: unknown[]): unknown[] => {
  * @param b - unknown[]
  * @returns The difference between the two arrays.
  */
-export const intersection = (a: unknown[], b: unknown[]): unknown[] => {
+export function intersection(a: unknown[], b: unknown[]): unknown[] {
   const s = new Set(b);
   return a.filter(x => s.has(x));
-};
+}
 
 /**
  * Move element in an Array
@@ -183,10 +174,10 @@ export const intersection = (a: unknown[], b: unknown[]): unknown[] => {
  * @param to - number
  * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
-export const move = <T>(array: T[], from: number, to: number): T[] => {
+export function move<T>(array: T[], from: number, to: number): T[] {
   array.splice(to, 0, array.splice(from, 1)[0]);
   return array;
-};
+}
 
 /**
  * Get random item(s) from an array
@@ -194,19 +185,19 @@ export const move = <T>(array: T[], from: number, to: number): T[] => {
  * @param quantity - quantity of random items which will be returned
  * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
-export const sample = <T>(array: T[], quantity: number): T[] => {
+export function sample<T>(array: T[], quantity: number): T[] {
   return Array.from(
     { length: quantity },
     _ => array[Math.round(Math.random() * (array.length - 1))],
   );
-};
+}
 
 /**
  * Shuffle the elements array and return it. (mutative)
  * @param array - T[]
  * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
-export const shuffle = <T>(array: T[]): T[] => {
+export function shuffle<T>(array: T[]): T[] {
   let m = array.length;
   // While there remain elements to shuffle…
   while (m > 0) {
@@ -218,7 +209,7 @@ export const shuffle = <T>(array: T[]): T[] => {
     array[index] = t;
   }
   return array;
-};
+}
 
 /**
  * It takes an array of numbers and an optional initial value, and returns the sum of the array
@@ -226,18 +217,18 @@ export const shuffle = <T>(array: T[]): T[] => {
  * @param initialValue - The initial value of the accumulator.
  * @returns [1, 2, 3, 4, 5]
  */
-export const sumOfAnArray = (array: number[], initialValue = 0): number => {
+export function sumOfAnArray(array: number[], initialValue = 0): number {
   return array.reduce((a, b) => a + b, initialValue);
-};
+}
 
 /**
  * Return an iterable of unique values from the given iterable.
  * @param values - Iterable<T>
  * @returns [...new Set(values)]
  */
-export const unique = <T = unknown>(values: Iterable<T>): Iterable<T> => {
+export function unique<T = unknown>(values: Iterable<T>): Iterable<T> {
   return [...new Set(values)];
-};
+}
 
 /**
  * It returns an array of unique values from two arrays.
@@ -246,11 +237,12 @@ export const unique = <T = unknown>(values: Iterable<T>): Iterable<T> => {
  * @param [duplicates] - boolean
  * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
-export const union = <T = unknown>(a: T[], b: T[], duplicates = true): T[] => {
-  if (!duplicates) return [...new Set([...a, ...b])];
+export function union<T = unknown>(a: T[], b: T[], duplicates = true): T[] {
+  if (!duplicates)
+    return [...new Set([...a, ...b])];
 
   return [...a, ...b];
-};
+}
 
 /**
  * The `range` const in TypeScript returns an array of numbers from 0 to the specified length.
@@ -258,6 +250,6 @@ export const union = <T = unknown>(a: T[], b: T[], duplicates = true): T[] => {
  * the range.
  * @returns an array of numbers from 0 to `length - 1`.
  */
-export const range = (length: number): number[] => {
+export function range(length: number): number[] {
   return [...Array.from({ length }).keys()];
-};
+}

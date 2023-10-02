@@ -8,7 +8,8 @@ export default rubiin({
 },
 {
   rules: {
-    "no-console": ["error", { allow: ["time", "timeEnd"] }]
+    "no-console": ["error", { allow: ["time", "timeEnd"] }],
+    "ts/no-unsafe-member-access": "off",
   },
 },
 )

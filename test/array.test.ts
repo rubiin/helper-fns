@@ -1,13 +1,13 @@
 import { castArray, chunk, common, compact, difference, drop, dropRight, dropWhile, equals, equalsIgnoreOrder, fill, flattenDeep, hasDuplicates, intersection, move, range, sample, sumOfAnArray, unique } from "../src";
 
 describe("castArray", () => {
-  test("should return an array with a single value when a non-array value is passed", () => {
+  it("should return an array with a single value when a non-array value is passed", () => {
     expect(castArray(5)).toEqual([5]);
     expect(castArray("test")).toEqual(["test"]);
     expect(castArray({ key: "value" })).toEqual([{ key: "value" }]);
   });
 
-  test("should return the same array when an array value is passed", () => {
+  it("should return the same array when an array value is passed", () => {
     const array = [1, 2, 3];
     expect(castArray(array)).toBe(array);
   });
