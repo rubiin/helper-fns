@@ -264,6 +264,43 @@ export function pipe<T>(...fns: ((input: T) => T)[]): (input: T) => T {
   };
 }
 
+export const randomAvatar = (gender?: "male" | "female"): string => {
+  const baseUrl = "https://api.dicebear.com/7.x/adventurer/svg?seed=";
+  // Female pet names
+  const femaleNames = [
+    "Princess",
+    "Sophie",
+    "Lola",
+    "Abby",
+    "Callie",
+    "Sassy",
+    "Angel",
+    "Pepper",
+    "Cali",
+  ];
+
+  // Male pet names
+  const maleNames = [
+    "Snuggles",
+    "Toby",
+    "Scooter",
+    "Oreo",
+    "Socks",
+    "Chester",
+    "Midnight",
+    "Milo",
+    "Garfield",
+    "Tiger",
+  ];
+
+  if (gender && gender === "male") {
+    // return a random male name
+    return `${baseUrl}${maleNames[Math.floor(Math.random() * maleNames.length)]}`;
+  }
+
+  return `${baseUrl}${femaleNames[Math.floor(Math.random() * femaleNames.length)]}`;
+};
+
 /**
  * It reads a file and returns a promise that resolves to the file's contents
  * @param path - The path to the file you want to read.
