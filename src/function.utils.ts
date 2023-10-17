@@ -363,6 +363,23 @@ export function findRootPath(start:  string | string[] = module.filename, check 
   return findRootPath(start, check);
 }
 
+
+/**
+ * The function `getPackageJson` returns the contents of the `package.json` file located in the
+ * specified directory or in the root directory of the project.
+ * @param {string} [dir] - The `dir` parameter is an optional string that represents the directory path
+ * where the `package.json` file is located. If `dir` is provided, the function will use that directory
+ * path to find the `package.json` file. If `dir` is not provided, the function will use the
+ * @returns the contents of the `package.json` file as an object.
+ */
+export function getPackageJson(dir?: string) {
+  const rootPath = dir ? path.resolve(dir) : findRootPath();
+  const packageJsonPath = path.join(rootPath, 'package.json');
+  const packageJson = require(packageJsonPath);
+  return packageJson;
+
+}
+
 /**
  * The `timestamp` function returns the current timestamp in milliseconds.
  * @returns A number representing the current timestamp in milliseconds.
