@@ -4,6 +4,8 @@ import fs from "node:fs";
 import { promisify } from "node:util";
 import process from "node:process";
 import type { IDebounceOptions, IEncryptOptions } from "./interface";
+import path from "node:path";
+import { isString } from "./types.validator";
 
 /**
  * It takes a string and returns a string, number, or boolean
@@ -323,6 +325,42 @@ export function readFile(path: string): Promise<string> {
  */
 export function resolverArguments(...arguments_: any[]) {
   return JSON.stringify(arguments_);
+}
+
+const defaultCheck  = (dir: string) =>{
+  return fs.existsSync(path.join(dir, 'package.json'))
+}
+
+/**
+ * The `findRootPath` function recursively searches for the root path of a project by checking if a
+ * given directory contains a specific file.
+ * @param {string | string[]} start - The `start` parameter is the starting path to search for the root
+ * directory. It can be either a string representing a single path or an array of strings representing
+ * multiple paths. If no value is provided, it defaults to `module.filename`, which is the filename of
+ * the current module.
+ * @param check - The `check` parameter is a function that takes a directory path as input and returns
+ * a boolean value indicating whether the directory meets certain criteria. This function is used to
+ * determine if a directory is the root path or if the search for the root path should continue.
+ * @returns a string, which is the root path.
+ */
+export function findRootPath(start:  string | string[] = module.filename, check = defaultCheck): string {
+  if (isString(start)) {
+    start = start.endsWith(path.sep) ? start : start + path.sep;
+    start = start.split(path.sep);
+  }
+
+  if (!start.length) {
+    throw new Error('package.json not found in path');
+  }
+
+  start.pop();
+  const dir = start.join(path.sep);
+
+  if (check(dir)) {
+    return dir;
+  }
+
+  return findRootPath(start, check);
 }
 
 /**

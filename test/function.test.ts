@@ -1,4 +1,4 @@
-import { autoParseValues, awaitTimeout, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, timeTaken, timestamp } from "../src";
+import { autoParseValues, awaitTimeout, findRootPath, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, timeTaken, timestamp } from "../src";
 
 describe("awaitTimeout", () => {
   jest.useFakeTimers();
@@ -24,6 +24,22 @@ describe("autoParseValues", () => {
     expect(autoParseValues("-5.7")).toBe(-5.7);
   });
 });
+
+describe('findRootPath', () => {
+  it('should return the root path when package.json is found in the path', () => {
+    const rootPath = findRootPath();
+    expect(rootPath).toBe('/home/rubin/helper-fns');
+  });
+
+  it('should handle both string and string[] inputs correctly', () => {
+    const rootPath1 = findRootPath('/path/to/package.json');
+    const rootPath2 = findRootPath(['/path/to/', 'package.json']);
+
+    expect(rootPath1).toBe(rootPath2);
+
+  });
+});
+
 
 describe("fixedDecimal", () => {
   it("should return the number with the specified decimal places", () => {
