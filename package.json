@@ -27,8 +27,8 @@
     "docs": "npx typedoc src/index.ts --out docs",
     "build": "unbuild",
     "postbuild": "npm run docs",
-    "lint": "eslint '{src,test}/**/*.ts' --cache",
-    "lint:fix": "eslint '{src,test}/**/*.ts' --fix",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint '{src,test}/**/*.ts' --cache",
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint '{src,test}/**/*.ts' --cache --fix",
     "prepublish": "npm run build",
     "prerelease": "npm run build",
     "release": "bumpp && clean-publish",
@@ -36,9 +36,9 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rubiin/eslint-config": "^1.8.23",
+    "@rubiin/eslint-config": "^1.8.27",
     "@types/jest": "^29.5.5",
-    "@types/node": "^20.8.4",
+    "@types/node": "^20.8.6",
     "bumpp": "^9.2.0",
     "clean-publish": "^4.2.0",
     "eslint": "^8.51.0",

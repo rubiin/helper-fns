@@ -5,6 +5,7 @@ export * from "./base";
 export * from "./function.utils";
 export * from "./interface";
 export * from "./object.utils";
+export * from "./semaphore";
 export * from "./string.utils";
 export * from "./types";
 export * from "./types.validator";
