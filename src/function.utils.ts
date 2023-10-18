@@ -1,10 +1,11 @@
 import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
 import fs from "node:fs";
-import { promisify } from "node:util";
-import process from "node:process";
-import type { IDebounceOptions, IEncryptOptions } from "./interface";
 import path from "node:path";
+import process from "node:process";
+import { promisify } from "node:util";
+import type { IDebounceOptions, IEncryptOptions } from "./interface";
+import { IPackageJson } from "./types";
 import { isString } from "./types.validator";
 
 /**
@@ -372,7 +373,7 @@ export function findRootPath(start:  string | string[] = module.filename, check 
  * path to find the `package.json` file. If `dir` is not provided, the function will use the
  * @returns the contents of the `package.json` file as an object.
  */
-export function getPackageJson(dir?: string) {
+export function getPackageJson(dir?: string): IPackageJson{
   const rootPath = dir ? path.resolve(dir) : findRootPath();
   const packageJsonPath = path.join(rootPath, 'package.json');
   const packageJson = require(packageJsonPath);

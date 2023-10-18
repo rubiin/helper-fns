@@ -37,8 +37,8 @@
   },
   "devDependencies": {
     "@rubiin/eslint-config": "^1.8.27",
-    "@types/jest": "^29.5.5",
-    "@types/node": "^20.8.6",
+    "@types/jest": "^29.5.6",
+    "@types/node": "^20.8.7",
     "bumpp": "^9.2.0",
     "clean-publish": "^4.2.0",
     "eslint": "^8.51.0",
