@@ -24,6 +24,16 @@ export function enumToString<T extends Record<string, string>>(_enum: T): string
 }
 
 /**
+ * The function `getType` returns the type of the given payload as a string.
+ * @param {unknown} payload - The `payload` parameter is of type `unknown`, which means it can be any
+ * type.
+ * @returns a string that represents the type of the payload.
+ */
+export function getType(payload: unknown): string {
+  return Object.prototype.toString.call(payload).slice(8, -1)
+}
+
+/**
  * @param array - The array to query.
  * @param property - The property to group by.
  * @returns any[] - An array of objects grouped by the property.
