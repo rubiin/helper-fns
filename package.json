@@ -1,7 +1,7 @@
 {
   "name": "helper-fns",
   "type": "module",
-  "version": "2.6.41",
+  "version": "2.6.42",
   "packageManager": "pnpm@8.11.0",
   "description": "Some common utilities functions for everyday backend usage with zero dependencies",
   "author": "Rubin Bhandari <roobin.bhandari@gmail.com>",
