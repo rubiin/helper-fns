@@ -10,6 +10,11 @@ export type Constructor<T, Arguments extends unknown[] = any[]> = new (
   ...arguments_: Arguments
 ) => T;
 
+
+
+export interface NestedObject {
+  [key: string]: Primitive | Primitive[] | NestedObject;
+}
 export type FunctionType<T = void> = (...arguments_: any) => T;
 
 export type Maybe<T> = T | null;
