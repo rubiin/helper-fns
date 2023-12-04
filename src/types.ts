@@ -12,8 +12,8 @@ export type Constructor<T, Arguments extends unknown[] = any[]> = new (
 
 
 
-export interface NestedObject {
-  [key: string]: Primitive | Primitive[] | NestedObject;
+export interface SimpleObjectType {
+  [key: string]: Primitive | Primitive[] | SimpleObjectType;
 }
 export type FunctionType<T = void> = (...arguments_: any) => T;
 
