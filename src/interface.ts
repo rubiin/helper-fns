@@ -8,7 +8,7 @@ export interface IDebounceOptions {
 
 export interface IEncryptOptions {
   text: string
-  config: { key: string; iv: string }
+  config: { key: string, iv: string }
 }
 
 export interface IRandomStringOptions {

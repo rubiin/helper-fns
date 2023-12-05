@@ -30,7 +30,7 @@ export function enumToString<T extends Record<string, string>>(_enum: T): string
  * @returns a string that represents the type of the payload.
  */
 export function getType(payload: unknown): string {
-  return Object.prototype.toString.call(payload).slice(8, -1)
+  return Object.prototype.toString.call(payload).slice(8, -1);
 }
 
 /**

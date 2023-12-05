@@ -98,7 +98,7 @@ export function normalizeEmail(email: string): string {
  */
 export function orderedToken(string_: string, identifier = "X"): string {
   while (string_.includes(identifier))
-  // eslint-disable-next-line ts/no-use-before-define
+
     string_ = string_.replace(identifier, String(randomNumber()));
 
   return string_;

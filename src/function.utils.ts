@@ -5,7 +5,7 @@ import path from "node:path";
 import process from "node:process";
 import { promisify } from "node:util";
 import type { IDebounceOptions, IEncryptOptions } from "./interface";
-import { IPackageJson } from "./types";
+import type { IPackageJson } from "./types";
 import { isString } from "./types.validator";
 
 /**
@@ -267,7 +267,7 @@ export function pipe<T>(...fns: ((input: T) => T)[]): (input: T) => T {
   };
 }
 
-export const randomAvatar = (gender?: "male" | "female"): string => {
+export function randomAvatar(gender?: "male" | "female"): string {
   const baseUrl = "https://api.dicebear.com/7.x/adventurer/svg?seed=";
   // Female pet names
   const femaleNames = [
@@ -302,7 +302,7 @@ export const randomAvatar = (gender?: "male" | "female"): string => {
   }
 
   return `${baseUrl}${femaleNames[Math.floor(Math.random() * femaleNames.length)]}`;
-};
+}
 
 /**
  * It reads a file and returns a promise that resolves to the file's contents
@@ -328,8 +328,8 @@ export function resolverArguments(...arguments_: any[]) {
   return JSON.stringify(arguments_);
 }
 
-const defaultCheck  = (dir: string) =>{
-  return fs.existsSync(path.join(dir, 'package.json'))
+function defaultCheck(directory: string) {
+  return fs.existsSync(path.join(directory, "package.json"));
 }
 
 /**
@@ -344,41 +344,37 @@ const defaultCheck  = (dir: string) =>{
  * determine if a directory is the root path or if the search for the root path should continue.
  * @returns a string, which is the root path.
  */
-export function findRootPath(start:  string | string[] = module.filename, check = defaultCheck): string {
+export function findRootPath(start: string | string[] = module.filename, check = defaultCheck): string {
   if (isString(start)) {
     start = start.endsWith(path.sep) ? start : start + path.sep;
     start = start.split(path.sep);
   }
 
-  if (!start.length) {
-    throw new Error('package.json not found in path');
-  }
+  if (!start.length)
+    throw new Error("package.json not found in path");
 
   start.pop();
-  const dir = start.join(path.sep);
+  const directory = start.join(path.sep);
 
-  if (check(dir)) {
-    return dir;
-  }
+  if (check(directory))
+    return directory;
 
   return findRootPath(start, check);
 }
 
-
 /**
  * The function `getPackageJson` returns the contents of the `package.json` file located in the
  * specified directory or in the root directory of the project.
- * @param {string} [dir] - The `dir` parameter is an optional string that represents the directory path
+ * @param {string} [directory] - The `dir` parameter is an optional string that represents the directory path
  * where the `package.json` file is located. If `dir` is provided, the function will use that directory
  * path to find the `package.json` file. If `dir` is not provided, the function will use the
  * @returns the contents of the `package.json` file as an object.
  */
-export function getPackageJson(dir?: string): IPackageJson{
-  const rootPath = dir ? path.resolve(dir) : findRootPath();
-  const packageJsonPath = path.join(rootPath, 'package.json');
-  const packageJson = require(packageJsonPath);
+export function getPackageJson(directory?: string): IPackageJson {
+  const rootPath = directory ? path.resolve(directory) : findRootPath();
+  const packageJsonPath = path.join(rootPath, "package.json");
+  const packageJson = require(packageJsonPath) as IPackageJson;
   return packageJson;
-
 }
 
 /**

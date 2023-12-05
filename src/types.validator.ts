@@ -1,4 +1,5 @@
-import { Buffer, File } from "node:buffer";
+import type { File } from "node:buffer";
+import { Buffer } from "node:buffer";
 import type { Class, FunctionType, Primitive } from "./types";
 import { toString } from "./base";
 import { isDate, isEmpty, isSameDate } from "./function.utils";
@@ -22,7 +23,6 @@ export function isError(value: unknown): value is Error {
   return value instanceof Error;
 }
 
-
 /**
  * The function `isFile` checks if a given payload is of type `File`.
  * @param {unknown} payload - The `payload` parameter is of type `unknown`, which means it can be any
@@ -30,7 +30,7 @@ export function isError(value: unknown): value is Error {
  * @returns a boolean value.
  */
 export function isFile(payload: unknown): payload is File {
-  return getType(payload) === 'File'
+  return getType(payload) === "File";
 }
 
 /**
@@ -41,7 +41,7 @@ export function isFile(payload: unknown): payload is File {
  * otherwise.
  */
 export function isBlob(payload: unknown): payload is Blob {
-  return  getType(payload) === 'Blob'
+  return getType(payload) === "Blob";
 }
 
 /**
@@ -166,7 +166,7 @@ export function isSymbol(value: unknown): value is symbol {
  * payload is a Promise and returning true if it is, and false otherwise.
  */
 export function isPromise(payload: any): payload is Promise<any> {
-  return getType(payload) === 'Promise'
+  return getType(payload) === "Promise";
 }
 
 /**

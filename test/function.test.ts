@@ -25,21 +25,19 @@ describe("autoParseValues", () => {
   });
 });
 
-describe('findRootPath', () => {
-  it('should return the root path when package.json is found in the path', () => {
+describe("findRootPath", () => {
+  it("should return the root path when package.json is found in the path", () => {
     const rootPath = findRootPath();
-    expect(rootPath).toBe('/home/rubin/helper-fns');
+    expect(rootPath).toBe("/home/rubin/helper-fns");
   });
 
-  it('should handle both string and string[] inputs correctly', () => {
-    const rootPath1 = findRootPath('/path/to/package.json');
-    const rootPath2 = findRootPath(['/path/to/', 'package.json']);
+  it("should handle both string and string[] inputs correctly", () => {
+    const rootPath1 = findRootPath("/path/to/package.json");
+    const rootPath2 = findRootPath(["/path/to/", "package.json"]);
 
     expect(rootPath1).toBe(rootPath2);
-
   });
 });
-
 
 describe("fixedDecimal", () => {
   it("should return the number with the specified decimal places", () => {
