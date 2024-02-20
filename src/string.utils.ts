@@ -122,11 +122,12 @@ export function randomHex(size: number): string {
  * @returns A random string of characters
  */
 export function randomString(options: IRandomStringOptions): string {
-  const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const alpha = "abcdefghijklmnopqrstuvwxyz";
+  const Alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numbersList = "0123456789";
   const symbolsList = "!@#$%^&*_-+=";
 
-  const characters: string[] = [alpha];
+  const characters: string[] = [alpha, Alpha];
 
   if (options.numbers)
     characters.push(numbersList);
