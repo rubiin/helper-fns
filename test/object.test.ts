@@ -71,8 +71,8 @@ describe("invertObject", () => {
 
 describe("isKeyOf", () => {
   interface TestInterface {
-    key1: string
-    key2: number
+    key1: string;
+    key2: number;
   }
 
   it("should return true if the specified key exists in the object", () => {
@@ -92,8 +92,8 @@ describe("isKeyOf", () => {
 
 describe("objectArrayToArray", () => {
   interface TestInterface {
-    id: number
-    name: string
+    id: number;
+    name: string;
   }
 
   it("should extract values of a specific attribute from an array of objects", () => {
