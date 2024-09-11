@@ -1,4 +1,4 @@
-import { autoParseValues, awaitTimeout, findRootPath, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, timeTaken, timestamp } from "../src";
+import { autoParseValues, awaitTimeout, findRootPath, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, safeNumber, timeTaken, timestamp } from "../src";
 
 describe("awaitTimeout", () => {
   jest.useFakeTimers();
@@ -67,6 +67,19 @@ describe("formatDuration", () => {
     expect(formatDuration(5000)).toBe("5 seconds");
     expect(formatDuration(123)).toBe("123 milliseconds");
     // expect(formatDuration(0)).toBe("0 milliseconds")
+  });
+});
+
+
+describe("safeNumber", () => {
+  it("return 0 for NaN values", () => {
+    expect(safeNumber(NaN)).toBe(0);
+    expect(safeNumber(parseInt("NotANumber"))).toBe(0);
+  });
+
+  it("return same number for number values", () => {
+    expect(safeNumber(5)).toBe(5);
+    expect(safeNumber(parseInt("10"))).toBe(10);
   });
 });
 

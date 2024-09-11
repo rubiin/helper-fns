@@ -238,6 +238,15 @@ export function isSameDate(dateA: Date, dateB: Date) {
 }
 
 /**
+ * Checks if number is NaN, returns 0 if true or the same number
+ * @param value - The number value.
+ * @returns A number value.
+ */
+export function safeNumber(value: number){
+  return Number.isNaN(value) ? 0: value;
+}
+
+/**
  * The lerp function calculates a linear interpolation between two numbers based on a given ratio.
  * @param ratio - The ratio parameter represents the interpolation ratio between the start and
  * end values. It is a number between 0 and 1, where 0 represents the start value and 1 represents the
