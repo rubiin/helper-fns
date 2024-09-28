@@ -126,7 +126,7 @@ export function decrypt(options: IEncryptOptions) {
  * milliseconds that the `delay` function will wait before resolving the promise.
  * @returns A promise that resolves after a specified delay time.
  */
-export function delay(time: number) {
+export async function delay(time: number) {
   return new Promise((resolve) => {
     setTimeout(resolve, time);
   });
@@ -166,7 +166,7 @@ export function fixedDecimal(number_: number, fixed = 2) {
  * @returns The function `formatSearch` returns a formatted search string.
  */
 export function formatSearch(search: string) {
-  return `%${search.trim().replaceAll("\n", " ").replaceAll(/\s\s+/g, " ").toLowerCase()}%`;
+  return `%${search.trim().replaceAll("\n", " ").replaceAll(/\s{2,}/g, " ").toLowerCase()}%`;
 }
 
 /**
@@ -237,13 +237,33 @@ export function isSameDate(dateA: Date, dateB: Date) {
   return dateA.toISOString() === dateB.toISOString();
 }
 
+
+/**
+ * The function `isValidTimeZone` checks if a given string is a valid time zone identifier.
+ * @param {string} tz - The `isValidTimeZone` function takes a timezone string `tz` as a parameter.
+ * This function checks if the provided timezone string is a valid timezone identifier that can be used
+ * with the `Intl.DateTimeFormat` constructor. It returns `true` if the timezone is valid and `false`
+ * if it is
+ * @returns The function `isValidTimeZone` returns a boolean value - `true` if the provided timezone
+ * string is valid, and `false` if it is not valid.
+ */
+export function isValidTimeZone(tz: string) {
+  try {
+    Intl.DateTimeFormat(undefined, { timeZone: tz });
+    return true;
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  } catch (_error) {
+    return false;
+  }
+}
+
 /**
  * Checks if number is NaN, returns 0 if true or the same number
  * @param value - The number value.
  * @returns A number value.
  */
-export function safeNumber(value: number){
-  return Number.isNaN(value) ? 0: value;
+export function safeNumber(value: number) {
+  return Number.isNaN(value) ? 0 : value;
 }
 
 /**
@@ -318,7 +338,7 @@ export function randomAvatar(gender?: "male" | "female"): string {
  * @param path - The path to the file you want to read.
  * @returns A promise that resolves to the contents of the file at the given path.
  */
-export function readFile(path: string): Promise<string> {
+export async function readFile(path: string): Promise<string> {
   return new Promise((resolve, reject) => {
     fs.readFile(path, { encoding: "utf8" }, (error, html) => {
       if (error)

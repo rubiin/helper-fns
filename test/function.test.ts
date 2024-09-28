@@ -1,4 +1,4 @@
-import { autoParseValues, awaitTimeout, findRootPath, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, lerp, pipe, resolverArguments, safeNumber, timeTaken, timestamp } from "../src";
+import { autoParseValues, awaitTimeout, findRootPath, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, isValidTimeZone, lerp, pipe, resolverArguments, safeNumber, timeTaken, timestamp } from "../src";
 
 describe("awaitTimeout", () => {
   jest.useFakeTimers();
@@ -80,6 +80,19 @@ describe("safeNumber", () => {
   it("return same number for number values", () => {
     expect(safeNumber(5)).toBe(5);
     expect(safeNumber(parseInt("10"))).toBe(10);
+  });
+});
+
+describe("isValidTimeZone", () => {
+  it("return false for invalid", () => {
+    expect(isValidTimeZone("")).toBe(false);
+    expect(isValidTimeZone("1")).toBe(false);
+
+  });
+
+  it("return same number for number values", () => {
+    expect(isValidTimeZone("asia/kathmandu")).toBe(true);
+    expect(isValidTimeZone("America/Los_Angeles")).toBe(true);
   });
 });
 
