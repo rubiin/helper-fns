@@ -8,6 +8,7 @@
 <a href="https://img.shields.io/npm/v/helper-fns"><img src="https://img.shields.io/npm/v/helper-fns" alt="NPM Version" /></a>
 <a href="https://img.shields.io/npm/l/helper-fns"><img src="https://img.shields.io/npm/l/helper-fns" alt="Package License" /></a>
 <a href="https://www.npmjs.com/package/helper-fns"><img src="https://img.shields.io/npm/dm/helper-fns" alt="NPM Downloads" /></a>
+<a href="https://hypercommit.com/helper-fns"><img src="https://img.shields.io/badge/Hypercommit-DB2475" alt="Hypercommit" /></a>
 
 
 # INSTALLAION
