@@ -31,9 +31,7 @@ class Semaphore {
       const resolve = this.queue.shift();
       resolve();
     }
-    else {
-      this.currentConcurrency--;
-    }
+    this.currentConcurrency--;
   }
 }
 
