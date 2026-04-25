@@ -1,7 +1,6 @@
 {
-  "cSpell.words": [
-    "Ffunction",
-    "slugified",
-    "uncapitalize"
-  ]
+  "cSpell.words": ["Ffunction", "slugified", "uncapitalize"],
+  "chat.tools.terminal.autoApprove": {
+    "pnpm": true
+  }
 }

@@ -1,4 +1,25 @@
-import { castArray, chunk, common, compact, difference, drop, dropRight, dropWhile, equals, equalsIgnoreOrder, fill, flattenDeep, hasDuplicates, intersection, move, range, sample, sumOfAnArray, unique } from "../src";
+import { describe, expect, it } from "vitest";
+import {
+  castArray,
+  chunk,
+  common,
+  compact,
+  difference,
+  drop,
+  dropRight,
+  dropWhile,
+  equals,
+  equalsIgnoreOrder,
+  fill,
+  flattenDeep,
+  hasDuplicates,
+  intersection,
+  move,
+  range,
+  sample,
+  sumOfAnArray,
+  unique,
+} from "../src";
 
 describe("castArray", () => {
   it("should return an array with a single value when a non-array value is passed", () => {
@@ -17,7 +38,13 @@ describe("chunk", () => {
   it("should split an array into chunks of the specified size", () => {
     expect(chunk([1, 2, 3, 4, 5], 2)).toEqual([[1, 2], [3, 4], [5]]);
     expect(chunk(["a", "b", "c", "d"], 3)).toEqual([["a", "b", "c"], ["d"]]);
-    expect(chunk([true, false, true, false, true], 1)).toEqual([[true], [false], [true], [false], [true]]);
+    expect(chunk([true, false, true, false, true], 1)).toEqual([
+      [true],
+      [false],
+      [true],
+      [false],
+      [true],
+    ]);
   });
 
   it("should return an empty array if the input array is empty", () => {
@@ -195,7 +222,10 @@ describe("hasDuplicates", () => {
 
 describe("flattenDeep", () => {
   it("flattens an array of arrays into a single array", () => {
-    const array = [[1, 2, 3], [4, 5, 6]];
+    const array = [
+      [1, 2, 3],
+      [4, 5, 6],
+    ];
     expect(flattenDeep(array)).toEqual([1, 2, 3, 4, 5, 6]);
   });
 

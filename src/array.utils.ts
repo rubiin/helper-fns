@@ -20,7 +20,9 @@ export function castArray<T>(value: T | T[]) {
  * @returns an array of arrays, where each inner array contains a chunk of the original array.
  */
 export function chunk<T = unknown>(array: T[], size: number): T[][] {
-  return Array.from({ length: Math.ceil(array.length / size) }, (_, index) => array.slice(index * size, index * size + size));
+  return Array.from({ length: Math.ceil(array.length / size) }, (_, index) =>
+    array.slice(index * size, index * size + size),
+  );
 }
 
 /**
@@ -30,7 +32,7 @@ export function chunk<T = unknown>(array: T[], size: number): T[][] {
  * @returns The common elements of the two arrays.
  */
 export function common<T = unknown>(a: T[], b: T[]): T[] {
-  return a.filter(c => b.includes(c));
+  return a.filter((c) => b.includes(c));
 }
 
 /**
@@ -50,7 +52,7 @@ export function compact<T>(array: T[]): T[] {
  * @returns The difference between two arrays.
  */
 export function difference<T = unknown>(a: T[], b: T[]): T[] {
-  return a.filter(c => !b.includes(c));
+  return a.filter((c) => !b.includes(c));
 }
 
 /**
@@ -69,7 +71,7 @@ export const drop = <T = unknown>(array: string | T[], n = 1) => array.slice(n);
  * @returns The array after the first element that does not pass the test.
  */
 export function dropWhile<T>(array: T[], const_: (argument: T) => boolean): T[] {
-  const index = array.findIndex(item => !const_(item));
+  const index = array.findIndex((item) => !const_(item));
   return index === -1 ? [] : array.slice(index);
 }
 
@@ -103,14 +105,12 @@ export function equals<T = unknown>(a: T[], b: T[]): boolean {
  * `false` if the arrays have different lengths or if they have different counts of any element.
  */
 export function equalsIgnoreOrder<T>(a: T[], b: T[]) {
-  if (a.length !== b.length)
-    return false;
+  if (a.length !== b.length) return false;
   const uniqueValues = new Set([...a, ...b]);
   for (const v of uniqueValues) {
-    const aCount = a.filter(element => element === v).length;
-    const bCount = b.filter(element => element === v).length;
-    if (aCount !== bCount)
-      return false;
+    const aCount = a.filter((element) => element === v).length;
+    const bCount = b.filter((element) => element === v).length;
+    if (aCount !== bCount) return false;
   }
   return true;
 }
@@ -143,8 +143,7 @@ export function hasDuplicates<T>(a: T[]): boolean {
  * parameter.
  */
 export function fill<T = unknown>(array: T[], value: T, start = 0, end = array.length): T[] {
-  return array.map((item, index) => index >= start && index < end ? value : item,
-  );
+  return array.map((item, index) => (index >= start && index < end ? value : item));
 }
 
 /**
@@ -164,7 +163,7 @@ export function flattenDeep(array: unknown[]): unknown[] {
  */
 export function intersection(a: unknown[], b: unknown[]): unknown[] {
   const s = new Set(b);
-  return a.filter(x => s.has(x));
+  return a.filter((x) => s.has(x));
 }
 
 /**
@@ -188,7 +187,7 @@ export function move<T>(array: T[], from: number, to: number): T[] {
 export function sample<T>(array: T[], quantity: number): T[] {
   return Array.from(
     { length: quantity },
-    _ => array[Math.round(Math.random() * (array.length - 1))],
+    (_) => array[Math.round(Math.random() * (array.length - 1))],
   );
 }
 
@@ -238,8 +237,7 @@ export function unique<T = unknown>(values: Iterable<T>): Iterable<T> {
  * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
  */
 export function union<T = unknown>(a: T[], b: T[], duplicates = true): T[] {
-  if (!duplicates)
-    return [...new Set([...a, ...b])];
+  if (!duplicates) return [...new Set([...a, ...b])];
 
   return [...a, ...b];
 }

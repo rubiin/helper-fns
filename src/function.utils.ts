@@ -15,10 +15,8 @@ import { isString } from "./types.validator";
  */
 export function autoParseValues(value: string): any {
   // check for boolean
-  if (!!JSON.parse(value) === JSON.parse(value))
-    return JSON.parse(value);
-  else if (!Number.isNaN(Number(value)))
-    return Number.parseFloat(value);
+  if (!!JSON.parse(value) === JSON.parse(value)) return JSON.parse(value);
+  else if (!Number.isNaN(Number(value))) return Number.parseFloat(value);
   // Return a default value when no conditions are met
   return value;
 }
@@ -57,7 +55,7 @@ export function composeAsync(...fns: unknown[]) {
  * `min`, then `min` is returned. If `val` is greater than `max`, then `max` is returned.
  */
 export function clamp(value: number, min: number, max: number) {
-  return value < min ? min : (value > max ? max : value);
+  return value < min ? min : value > max ? max : value;
 }
 
 /**
@@ -81,8 +79,7 @@ export function debounce(options: IDebounceOptions) {
 
     const later = () => {
       timeout = undefined;
-      if (!immediate)
-        func.apply(this, arguments_);
+      if (!immediate) func.apply(this, arguments_);
     };
 
     const callNow = immediate && !timeout;
@@ -90,8 +87,7 @@ export function debounce(options: IDebounceOptions) {
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
 
-    if (callNow)
-      func.apply(this, arguments_);
+    if (callNow) func.apply(this, arguments_);
   };
 }
 
@@ -166,7 +162,11 @@ export function fixedDecimal(number_: number, fixed = 2) {
  * @returns The function `formatSearch` returns a formatted search string.
  */
 export function formatSearch(search: string) {
-  return `%${search.trim().replaceAll("\n", " ").replaceAll(/\s{2,}/g, " ").toLowerCase()}%`;
+  return `%${search
+    .trim()
+    .replaceAll("\n", " ")
+    .replaceAll(/\s{2,}/g, " ")
+    .toLowerCase()}%`;
 }
 
 /**
@@ -177,8 +177,7 @@ export function formatSearch(search: string) {
  * @returns A function that takes a number and returns a string.
  */
 export function formatDuration(ms: number) {
-  if (ms < 0)
-    ms = -ms;
+  if (ms < 0) ms = -ms;
   const time = {
     day: Math.floor(ms / 86_400_000),
     hour: Math.floor(ms / 3_600_000) % 24,
@@ -187,7 +186,7 @@ export function formatDuration(ms: number) {
     millisecond: Math.floor(ms) % 1000,
   };
   return Object.entries(time)
-    .filter(value => value[1] !== 0)
+    .filter((value) => value[1] !== 0)
     .map(([key, value]) => `${value} ${key}${value === 1 ? "" : "s"}`)
     .join(", ");
 }
@@ -200,7 +199,8 @@ export function formatDuration(ms: number) {
  * provided for "b" when calling the function, it will default to 0.
  * @returns A boolean value.
  */
-export const inRange = (number_: number, a: number, b = 0) => (Math.min(a, b) <= number_ && number_ < Math.max(a, b));
+export const inRange = (number_: number, a: number, b = 0) =>
+  Math.min(a, b) <= number_ && number_ < Math.max(a, b);
 
 /**
  * It returns true if the dateString parameter is a valid date, and false if it's not
@@ -218,12 +218,10 @@ export function isDate(dateString: string) {
  * @param object - any
  * @returns A function that takes in an object and returns a boolean.
  */
-export function isEmpty(
-  object: { [s: string]: unknown } | ArrayLike<unknown>,
-) {
+export function isEmpty(object: { [s: string]: unknown } | ArrayLike<unknown>) {
   return (
-    (typeof object === "object" || Array.isArray(object))
-    && Object.entries(object || {}).length === 0
+    (typeof object === "object" || Array.isArray(object)) &&
+    Object.entries(object || {}).length === 0
   );
 }
 
@@ -236,7 +234,6 @@ export function isEmpty(
 export function isSameDate(dateA: Date, dateB: Date) {
   return dateA.toISOString() === dateB.toISOString();
 }
-
 
 /**
  * The function `isValidTimeZone` checks if a given string is a valid time zone identifier.
@@ -251,7 +248,7 @@ export function isValidTimeZone(tz: string) {
   try {
     Intl.DateTimeFormat(undefined, { timeZone: tz });
     return true;
-  // eslint-disable-next-line unused-imports/no-unused-vars
+    // eslint-disable-next-line unused-imports/no-unused-vars
   } catch (_error) {
     return false;
   }
@@ -341,8 +338,7 @@ export function randomAvatar(gender?: "male" | "female"): string {
 export async function readFile(path: string): Promise<string> {
   return new Promise((resolve, reject) => {
     fs.readFile(path, { encoding: "utf8" }, (error, html) => {
-      if (error)
-        reject(error);
+      if (error) reject(error);
       else resolve(html);
     });
   });
@@ -373,20 +369,21 @@ function defaultCheck(directory: string) {
  * determine if a directory is the root path or if the search for the root path should continue.
  * @returns a string, which is the root path.
  */
-export function findRootPath(start: string | string[] = module.filename, check = defaultCheck): string {
+export function findRootPath(
+  start: string | string[] = module.filename,
+  check = defaultCheck,
+): string {
   if (isString(start)) {
     start = start.endsWith(path.sep) ? start : start + path.sep;
     start = start.split(path.sep);
   }
 
-  if (!start.length)
-    throw new Error("package.json not found in path");
+  if (!start.length) throw new Error("package.json not found in path");
 
   start.pop();
   const directory = start.join(path.sep);
 
-  if (check(directory))
-    return directory;
+  if (check(directory)) return directory;
 
   return findRootPath(start, check);
 }
@@ -440,23 +437,14 @@ export function throttler(_request: any, _response: any, next: () => void) {
   const dueDate = new Date(date);
   const currentDate = new Date();
 
-  const utc1 = Date.UTC(
-    dueDate.getFullYear(),
-    dueDate.getMonth(),
-    dueDate.getDate(),
-  );
-  const utc2 = Date.UTC(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate(),
-  );
+  const utc1 = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+  const utc2 = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
   const days = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
 
   if (days > 0) {
     let ms = days * 200;
 
-    if (ms < 0)
-      ms = 0;
+    if (ms < 0) ms = 0;
 
     return setTimeout(next, ms);
   }

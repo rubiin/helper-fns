@@ -1,4 +1,18 @@
-import { copyObject, enumToString, groupBy, invertObject, isKeyOf, objectArrayToArray, omit, pick, pluck, removeNull, removeUndefined, renameKeys } from "../src";
+import { describe, expect, it } from "vitest";
+import {
+  copyObject,
+  enumToString,
+  groupBy,
+  invertObject,
+  isKeyOf,
+  objectArrayToArray,
+  omit,
+  pick,
+  pluck,
+  removeNull,
+  removeUndefined,
+  renameKeys,
+} from "../src";
 
 describe("copyObject", () => {
   it("should return a copy of the input object", () => {
@@ -40,12 +54,8 @@ describe("groupBy", () => {
         { id: 1, category: "A" },
         { id: 3, category: "A" },
       ],
-      B: [
-        { id: 2, category: "B" },
-      ],
-      C: [
-        { id: 4, category: "C" },
-      ],
+      B: [{ id: 2, category: "B" }],
+      C: [{ id: 4, category: "C" }],
     };
 
     expect(result).toEqual(expected); // Check if the returned groups match the expected groups

@@ -19,7 +19,7 @@ export function copyObject(instance: object): object {
 
 export function enumToString<T extends Record<string, string>>(_enum: T): string {
   return Object.keys(_enum)
-    .map(key => _enum[key])
+    .map((key) => _enum[key])
     .join(",");
 }
 
@@ -45,8 +45,7 @@ export function groupBy(array: any[], property: string): Record<string, any[]> {
     // eslint-disable-next-line ts/no-unsafe-assignment
     const propertyValue = item[property];
 
-    if (!groups[propertyValue])
-      groups[propertyValue] = [];
+    if (!groups[propertyValue]) groups[propertyValue] = [];
 
     groups[propertyValue].push(item);
   }
@@ -90,7 +89,7 @@ export function isKeyOf<T extends object>(object: T, k: keyof any): k is keyof T
  * @returns An array of the values of the attribute passed in.
  */
 export function objectArrayToArray<T>(objectArray: T[], attribute: keyof T): T[keyof T][] {
-  return objectArray.map(element => element[attribute]);
+  return objectArray.map((element) => element[attribute]);
 }
 
 /**
@@ -126,7 +125,7 @@ export function pick<T, K extends keyof T>(object: T, keys: K[]): Pick<T, K> {
  * @returns [1, 2, 3]
  */
 export function pluck<T, K extends keyof T>(array: T[], key: K): T[K][] {
-  return array.map(item => item[key]);
+  return array.map((item) => item[key]);
 }
 
 /**
@@ -135,7 +134,11 @@ export function pluck<T, K extends keyof T>(array: T[], key: K): T[K][] {
  * @param properties - The properties to sort by.
  * @param orders - An array of strings that specifies the order of sorting.
  */
-export function orderBy<T extends object, K extends keyof T>(array: T[], properties: K[], orders: "asc" | "desc") {
+export function orderBy<T extends object, K extends keyof T>(
+  array: T[],
+  properties: K[],
+  orders: "asc" | "desc",
+) {
   array.sort((a, b) => {
     for (const [index, property] of properties.entries()) {
       const order = orders[index] || "asc";
@@ -143,8 +146,7 @@ export function orderBy<T extends object, K extends keyof T>(array: T[], propert
       const p1 = a[property];
       const p2 = b[property];
 
-      if (p1 !== p2)
-        return order === "asc" ? (p1 > p2 ? 1 : -1) : (p1 < p2 ? 1 : -1);
+      if (p1 !== p2) return order === "asc" ? (p1 > p2 ? 1 : -1) : p1 < p2 ? 1 : -1;
     }
     return 0;
   });
@@ -159,8 +161,7 @@ export function removeNull(object: Record<string, any>) {
   const newObject: Record<string, unknown> = {};
 
   for (const [k, v] of Object.entries(object)) {
-    if (v !== null)
-      newObject[k] = v;
+    if (v !== null) newObject[k] = v;
   }
 
   return newObject;
@@ -174,8 +175,7 @@ export function removeNull(object: Record<string, any>) {
  */
 export function removeUndefined<T extends Record<string, any>>(object: T): T {
   for (const key in object) {
-    if (object[key] === undefined)
-      delete object[key];
+    if (object[key] === undefined) delete object[key];
   }
 
   return object;
@@ -188,7 +188,10 @@ export function removeUndefined<T extends Record<string, any>>(object: T): T {
  * @param object - The object to be renamed
  * @returns A new object with the keys renamed according to the map, while keeping the values intact
  */
-export function renameKeys(keysMap: Record<string, any>, object: Record<string, any>): Record<string, any> {
+export function renameKeys(
+  keysMap: Record<string, any>,
+  object: Record<string, any>,
+): Record<string, any> {
   const renamedObject: Record<string, unknown> = {};
 
   for (const key in object) {

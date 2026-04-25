@@ -129,15 +129,9 @@ export function isObject(value: unknown): value is object {
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
 export function isPrimitive(value?: unknown): value is Primitive {
-  return [
-    isBigint,
-    isBoolean,
-    isNull,
-    isNumber,
-    isString,
-    isSymbol,
-    isUndefined,
-  ].some(function_ => function_(value));
+  return [isBigint, isBoolean, isNull, isNumber, isString, isSymbol, isUndefined].some(
+    (function_) => function_(value),
+  );
 }
 
 /**
@@ -176,7 +170,7 @@ export function isPromise(payload: any): payload is Promise<any> {
  */
 export function isUndefined(value: unknown): value is undefined {
   return value === undefined;
-};
+}
 
 /**
  * The `isDecimal` function checks if a given value is a decimal number with a specified number of
@@ -189,10 +183,9 @@ export function isUndefined(value: unknown): value is undefined {
  * @returns a boolean value.
  */
 export function isDecimal(value: string | number, options?: { decimalPlaces?: string }): boolean {
-  if (typeof value === "number")
-    value = value.toString();
+  if (typeof value === "number") value = value.toString();
 
-  const decimalPlaces = (options?.decimalPlaces) || "1,";
+  const decimalPlaces = options?.decimalPlaces || "1,";
   return new RegExp(`^[-+]?([0-9]+)?(\\.[0-9]{${decimalPlaces}})$`).test(value);
 }
 
@@ -202,7 +195,7 @@ export function isDecimal(value: string | number, options?: { decimalPlaces?: st
  * @returns - Returns `true` if `value` is a class, else `false`.
  */
 export function isFloat(value: number): value is number {
-  return value !== (Math.trunc(value));
+  return value !== Math.trunc(value);
 }
 
 /**

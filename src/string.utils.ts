@@ -11,7 +11,7 @@ import { isString } from "./types.validator";
 capitalized.
  */
 export function capitalizeEveryWord(string_: string): string {
-  return string_.replaceAll(/\b[a-z]/g, char => char.toUpperCase());
+  return string_.replaceAll(/\b[a-z]/g, (char) => char.toUpperCase());
 }
 
 /**
@@ -21,9 +21,7 @@ export function capitalizeEveryWord(string_: string): string {
  * @returns A const that takes a string and returns a string.
  */
 export function capitalize(string_: string): string {
-  return string_
-    ? string_.charAt(0).toUpperCase() + string_.slice(1).toLowerCase()
-    : "";
+  return string_ ? string_.charAt(0).toUpperCase() + string_.slice(1).toLowerCase() : "";
 }
 
 /**
@@ -33,8 +31,7 @@ export function capitalize(string_: string): string {
  * @returns a string.
  */
 export function chop(string_: unknown): string {
-  if (!isString(string_))
-    return "";
+  if (!isString(string_)) return "";
   const re = /^[\W_]+|[\W_]+$/g;
   return string_.trim().replaceAll(re, "");
 }
@@ -46,8 +43,7 @@ export function chop(string_: unknown): string {
  * @returns the string with the suffix ensured
  */
 export function ensureSuffix(suffix: string, string_: string): string {
-  if (!string_.endsWith(suffix))
-    return string_ + suffix;
+  if (!string_.endsWith(suffix)) return string_ + suffix;
   return string_;
 }
 /**
@@ -57,8 +53,7 @@ export function ensureSuffix(suffix: string, string_: string): string {
  * @returns the string with the prefix ensured
  */
 export function ensurePrefix(prefix: string, string_: string): string {
-  if (!string_.startsWith(prefix))
-    return prefix + string_;
+  if (!string_.startsWith(prefix)) return prefix + string_;
   return string_;
 }
 
@@ -98,7 +93,6 @@ export function normalizeEmail(email: string): string {
  */
 export function orderedToken(string_: string, identifier = "X"): string {
   while (string_.includes(identifier))
-
     string_ = string_.replace(identifier, String(randomNumber()));
 
   return string_;
@@ -129,18 +123,14 @@ export function randomString(options: IRandomStringOptions): string {
 
   const characters: string[] = [alpha, Alpha];
 
-  if (options.numbers)
-    characters.push(numbersList);
+  if (options.numbers) characters.push(numbersList);
 
-  if (options.symbols)
-    characters.push(symbolsList);
+  if (options.symbols) characters.push(symbolsList);
 
   const password: string[] = [];
 
   for (let index = 0; index < options.length; index++) {
-    const selectedCharacterIndex = Math.trunc(
-      Math.random() * characters.length,
-    );
+    const selectedCharacterIndex = Math.trunc(Math.random() * characters.length);
     const selectedCharacter = characters[selectedCharacterIndex];
     const randomIndex = Math.trunc(Math.random() * selectedCharacter.length);
 
@@ -240,8 +230,7 @@ export function template(string_: string, mix: Record<string, any>): string {
       if (value && k in value) {
         // eslint-disable-next-line ts/no-unsafe-assignment
         value = value[k];
-      }
-      else {
+      } else {
         value = undefined;
         break;
       }
@@ -259,13 +248,13 @@ export function template(string_: string, mix: Record<string, any>): string {
 export function unescapeHTML(string_: string): string {
   return string_.replaceAll(
     /&amp;|&lt;|&gt;|&#39;|&quot;/g,
-    tag =>
+    (tag) =>
       ({
         "&amp;": "&",
         "&lt;": "<",
         "&gt;": ">",
         "&#39;": "'",
-        "&quot;": "\"",
+        "&quot;": '"',
       })[tag] || tag,
   );
 }

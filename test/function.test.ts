@@ -1,13 +1,31 @@
-import { autoParseValues, awaitTimeout, findRootPath, fixedDecimal, formatDuration, inRange, isDate, isEmpty, isSameDate, isValidTimeZone, lerp, pipe, resolverArguments, safeNumber, timeTaken, timestamp } from "../src";
+import { describe, expect, it, vi } from "vitest";
+import {
+  autoParseValues,
+  awaitTimeout,
+  findRootPath,
+  fixedDecimal,
+  formatDuration,
+  inRange,
+  isDate,
+  isEmpty,
+  isSameDate,
+  isValidTimeZone,
+  lerp,
+  pipe,
+  resolverArguments,
+  safeNumber,
+  timeTaken,
+  timestamp,
+} from "../src";
 
 describe("awaitTimeout", () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 
   it("should wait for the specified delay before resolving", async () => {
     const delay = 1000;
     const promise = awaitTimeout(delay);
 
-    jest.advanceTimersByTime(delay);
+    vi.advanceTimersByTime(delay);
 
     expect(await promise).toBeUndefined();
   });
@@ -70,7 +88,6 @@ describe("formatDuration", () => {
   });
 });
 
-
 describe("safeNumber", () => {
   it("return 0 for NaN values", () => {
     expect(safeNumber(NaN)).toBe(0);
@@ -87,7 +104,6 @@ describe("isValidTimeZone", () => {
   it("return false for invalid", () => {
     expect(isValidTimeZone("")).toBe(false);
     expect(isValidTimeZone("1")).toBe(false);
-
   });
 
   it("return same number for number values", () => {
@@ -220,8 +236,7 @@ describe("timeTaken", () => {
     const callback = () => {
       // Simulate some work being done
       let sum = 0;
-      for (let index = 0; index < 1_000_000; index++)
-        sum += index;
+      for (let index = 0; index < 1_000_000; index++) sum += index;
 
       return sum;
     };

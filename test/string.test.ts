@@ -1,4 +1,22 @@
-import { capitalize, capitalizeEveryWord, chop, ensurePrefix, ensureSuffix, lowerFirst, normalizeEmail, randomHex, randomNumber, slash, slugify, stringBefore, stringifyQueryParameters, template, uncapitalize, unescapeHTML } from "../src";
+import { describe, expect, it } from "vitest";
+import {
+  capitalize,
+  capitalizeEveryWord,
+  chop,
+  ensurePrefix,
+  ensureSuffix,
+  lowerFirst,
+  normalizeEmail,
+  randomHex,
+  randomNumber,
+  slash,
+  slugify,
+  stringBefore,
+  stringifyQueryParameters,
+  template,
+  uncapitalize,
+  unescapeHTML,
+} from "../src";
 
 describe("capitalizeEveryWord", () => {
   it("should capitalize the first letter of every word in a sentence", () => {

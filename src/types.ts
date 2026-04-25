@@ -21,14 +21,7 @@ export type OptionalRecord<T> = {
   [key in keyof T]?: T[key];
 };
 
-export type Primitive =
-  | null
-  | undefined
-  | string
-  | number
-  | boolean
-  | symbol
-  | bigint;
+export type Primitive = null | undefined | string | number | boolean | symbol | bigint;
 
 export interface IPackageJsonAddress {
   email?: string;
