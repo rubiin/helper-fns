@@ -1,16 +1,13 @@
 {
+  "extends": "@rubiin/tsconfig/tsconfig.json",
   "compilerOptions": {
     "target": "es2022",
     "module": "esnext",
     "lib": ["esnext"],
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
     "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "removeComments": true,
-    "types": ["node", "vitest/globals"]
+    "incremental": false,
+    "types": ["node", "vitest/globals"],
+    "rootDir": "./src"
   }
 }
