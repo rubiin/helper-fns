@@ -4,15 +4,15 @@ on:
     types: [created]
 jobs:
   publish:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
       id-token: write
     steps:
-      - name: Setup Node.js 20
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.x
           check-latest: true
           registry-url: https://registry.npmjs.org/
       - name: Checkout Repository
