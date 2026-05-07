@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@rubiin/tsconfig':
-        specifier: ^2.1.1
-        version: 2.1.1
+        specifier: ^2.1.5
+        version: 2.1.5
       '@types/node':
         specifier: ^24.12.2
         version: 24.12.2
@@ -704,8 +704,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rubiin/tsconfig@2.1.1':
-    resolution: {integrity: sha512-lrIxSp7SAytBJgGiNZL1l+DDcZ4kMl6eeYiRKEBrh3swAFHNaSvLB8ROPIntqLqrhHU+IDuBtEsIxYJnG87gHQ==}
+  '@rubiin/tsconfig@2.1.5':
+    resolution: {integrity: sha512-d5t1MrkqybW/q3ISKZlHAomBykqDj4+0q2wd+rciRMcXAtiqJJjFUQW9cQHVa2T/0F3xLQvjD9h2ELyy4ncXWg==}
     engines: {node: '>=22'}
 
   '@standard-schema/spec@1.1.0':
@@ -1505,7 +1505,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.50.1':
     optional: true
 
-  '@rubiin/tsconfig@2.1.1': {}
+  '@rubiin/tsconfig@2.1.5': {}
 
   '@standard-schema/spec@1.1.0': {}
 

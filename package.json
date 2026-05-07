@@ -36,7 +36,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rubiin/tsconfig": "^2.1.1",
+    "@rubiin/tsconfig": "^2.1.5",
     "@types/node": "^24.12.2",
     "bumpp": "^11.0.1",
     "oxfmt": "^0.48.0",
