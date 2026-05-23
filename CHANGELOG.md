@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.9.0](https://github.com/rubiin/helper-fns/compare/v2.8.0...v2.9.0) (2026-05-07)
+
+
+### Features
+
+* add timeZone validator ([a51c29f](https://github.com/rubiin/helper-fns/commit/a51c29f2d6fcf4a759d74c263b7261f81a6431dc))
+* add timeZone validator ([f0a2dab](https://github.com/rubiin/helper-fns/commit/f0a2dabc00111688cd16aa9ea825358d7649db1f))
+
+
+### Bug Fixes
+
+* add safeNumber method ([dcd51ca](https://github.com/rubiin/helper-fns/commit/dcd51caa6ceaf15940529da2d8199b3c617e9c56))
+* correct rootDir configuration in TypeScript settings ([469e448](https://github.com/rubiin/helper-fns/commit/469e448c8dd1c94d22d06db5ec11e875b5ec36cc))
+
 ## [2.8.0](https://github.com/rubiin/helper-fns/compare/v2.7.0...v2.8.0) (2024-05-17)
 
 ### Features
