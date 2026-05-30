@@ -1,3 +1,5 @@
+import { Arrayable, Nullable } from "./types";
+
 /**
  * The `castArray` const takes a value and returns it as an array, either by wrapping it in an array
  * if it is not already an array, or by returning the original array if it is already an array.
@@ -192,20 +194,14 @@ export function sample<T>(array: T[], quantity: number): T[] {
 }
 
 /**
- * Shuffle the elements array and return it. (mutative)
- * @param array - T[]
- * @returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ * Shuffle an array. This function mutates the array.
+ *
+ * @category Array
  */
 export function shuffle<T>(array: T[]): T[] {
-  let m = array.length;
-  // While there remain elements to shuffle…
-  while (m > 0) {
-    // Pick a remaining element…
-    const index = Math.floor(Math.random() * m--);
-    // And swap it with the current element.
-    const t = array[m];
-    array[m] = array[index];
-    array[index] = t;
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 }
@@ -221,12 +217,25 @@ export function sumOfAnArray(array: number[], initialValue = 0): number {
 }
 
 /**
- * Return an iterable of unique values from the given iterable.
- * @param values - Iterable<T>
- * @returns [...new Set(values)]
+ * Unique an Array
+ *
+ * @category Array
  */
-export function unique<T = unknown>(values: Iterable<T>): Iterable<T> {
-  return [...new Set(values)];
+export function uniq<T>(array: readonly T[]): T[] {
+  return Array.from(new Set(array));
+}
+
+/**
+ * Unique an Array by a custom equality function
+ *
+ * @category Array
+ */
+export function uniqueBy<T>(array: readonly T[], equalFn: (a: any, b: any) => boolean): T[] {
+  return array.reduce((acc: T[], cur: any) => {
+    const index = acc.findIndex((item: any) => equalFn(cur, item));
+    if (index === -1) acc.push(cur);
+    return acc;
+  }, []);
 }
 
 /**
@@ -250,4 +259,32 @@ export function union<T = unknown>(a: T[], b: T[], duplicates = true): T[] {
  */
 export function range(length: number): number[] {
   return [...Array.from({ length }).keys()];
+}
+
+/**
+ * Convert `Arrayable<T>` to `Array<T>`
+ *
+ * @category Array
+ */
+export function toArray<T>(array?: Nullable<Arrayable<T>>): Array<T> {
+  array = array ?? [];
+  return Array.isArray(array) ? array : [array];
+}
+
+/**
+ * Convert `Arrayable<T>` to `Array<T>` and flatten it
+ *
+ * @category Array
+ */
+export function flattenArrayable<T>(array?: Nullable<Arrayable<T | Array<T>>>): Array<T> {
+  return toArray(array).flat(1) as Array<T>;
+}
+
+/**
+ * Use rest arguments to merge arrays
+ *
+ * @category Array
+ */
+export function mergeArrayable<T>(...args: Nullable<Arrayable<T>>[]): Array<T> {
+  return args.flatMap((i) => toArray(i));
 }

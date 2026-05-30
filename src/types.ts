@@ -10,6 +10,31 @@ export type Constructor<T, Arguments extends unknown[] = any[]> = new (
   ...arguments_: Arguments
 ) => T;
 
+/**
+ * Infers the element type of an array
+ */
+export type ElementOf<T> = T extends (infer E)[] ? E : never;
+
+/**
+ * Defines an intersection type of all union items.
+ *
+ * @param U Union of any types that will be intersected.
+ * @returns U items intersected
+ * @see https://stackoverflow.com/a/50375286/9259330
+ */
+export type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never) extends (
+  k: infer I,
+) => void
+  ? I
+  : never;
+
+/**
+ * Infers the arguments type of a function
+ */
+export type ArgumentsType<T> = T extends (...args: infer A) => any ? A : never;
+
+export type MergeInsertions<T> = T extends object ? { [K in keyof T]: MergeInsertions<T[K]> } : T;
+
 export interface SimpleObjectType {
   [key: string]: Primitive | Primitive[] | SimpleObjectType;
 }

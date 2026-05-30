@@ -2,6 +2,7 @@
   "extends": "@rubiin/tsconfig/configs/tsconfig.bundler.json",
   "compilerOptions": {
     "types": ["node", "vitest/globals"],
-    "rootDir": "."
+    "rootDir": ".",
+    "strictNullChecks": false
   }
 }
