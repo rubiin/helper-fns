@@ -1,6 +1,11 @@
 # helper-fns
 
-> JavaScript Utilities
+
+<p align="center">
+<img width="250" height="200" alt="helper-fns" src="https://github.com/user-attachments/assets/6a54e0d7-05d4-4979-808a-5023d07dc91c" />
+</p>
+
+
 
 <p align="center">
 <a href="https://github.com/rubiin/js-utils/actions/workflows/release.yml"><img src="https://github.com/rubiin/js-utils/actions/workflows/release.yml/badge.svg" alt="Build" /></a>
