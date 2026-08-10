@@ -170,7 +170,7 @@ describe("pluck", () => {
 
 describe("removeNull", () => {
   it("should return a new object without null values", () => {
-    const object = {
+    const object: Record<string, string | null> = {
       key1: "value1",
       key2: null,
       key3: "value3",
@@ -188,7 +188,7 @@ describe("removeNull", () => {
 
 describe("removeUndefined", () => {
   it("should mutate the object and remove undefined fields", () => {
-    const object = {
+    const object: Record<string, string | undefined> = {
       key1: "value1",
       key2: undefined,
       key3: "value3",
