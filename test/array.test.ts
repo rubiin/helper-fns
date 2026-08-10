@@ -300,7 +300,7 @@ describe("sumOfAnArray", () => {
 });
 
 describe("unique", () => {
-  it("returns an iterable of unique values from the given iterable", () => {
+  it("returns an array of unique values from the given iterable", () => {
     const values = [1, 2, 2, 3, 4, 4, 5];
     const uniqueValues = unique(values);
     expect([...uniqueValues]).toEqual([1, 2, 3, 4, 5]);
@@ -310,6 +310,41 @@ describe("unique", () => {
     const values: number[] = [];
     const uniqueValues = unique(values);
     expect([...uniqueValues]).toEqual([]);
+  });
+
+  it("returns unique values from a Set", () => {
+    expect(unique(new Set([1, 2, 2, 3, 3, 3]))).toEqual([1, 2, 3]);
+  });
+
+  it("returns unique values from a generator", () => {
+    function* generate() {
+      yield "a";
+      yield "b";
+      yield "a";
+    }
+    expect(unique(generate())).toEqual(["a", "b"]);
+  });
+
+  it("returns unique values from a Map values iterator", () => {
+    const map = new Map([
+      ["a", 1],
+      ["b", 2],
+      ["c", 2],
+    ]);
+    expect(unique(map.values())).toEqual([1, 2]);
+  });
+
+  it("returns unique characters from a string", () => {
+    expect(unique("banana")).toEqual(["b", "a", "n"]);
+  });
+
+  it("returns unique values from a typed array", () => {
+    expect(unique(new Uint8Array([1, 1, 2, 3, 3]))).toEqual([1, 2, 3]);
+  });
+
+  it("uses reference equality for objects", () => {
+    const object = { id: 1 };
+    expect(unique([object, object, { id: 1 }])).toEqual([object, { id: 1 }]);
   });
 });
 

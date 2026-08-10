@@ -222,15 +222,18 @@ export function sumOfAnArray(array: number[], initialValue = 0): number {
  * @category Array
  */
 export function uniq<T>(array: readonly T[]): T[] {
-  return Array.from(new Set(array));
+  return unique(array);
 }
 
 /**
- * Returns an iterable of unique values from the given iterable.
+ * Returns an array of unique values from the given iterable, preserving the order of first
+ * occurrence.
  *
  * @category Array
  */
-export const unique = uniq;
+export function unique<T>(iterable: Iterable<T>): T[] {
+  return Array.from(new Set(iterable));
+}
 
 /**
  * Unique an Array by a custom equality function
