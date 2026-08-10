@@ -13,3 +13,5 @@ trustPolicy: no-downgrade
 
 allowBuilds:
   esbuild: true
+
+minimumReleaseAge: 0
