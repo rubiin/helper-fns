@@ -1,11 +1,8 @@
 # helper-fns
 
-
 <p align="center">
 <img width="250" height="200" alt="helper-fns" src="https://github.com/user-attachments/assets/6a54e0d7-05d4-4979-808a-5023d07dc91c" />
 </p>
-
-
 
 <p align="center">
 <a href="https://github.com/rubiin/js-utils/actions/workflows/release.yml"><img src="https://github.com/rubiin/js-utils/actions/workflows/release.yml/badge.svg" alt="Build" /></a>
@@ -128,10 +125,12 @@ union([1, 2, 3], [4, 3, 2]); // [1, 2, 3, 4]
 
 # unique
 
-Returns an array of unique values from the given array, preserving the order of first occurrence.
+Returns an array of unique values from the given iterable (arrays, Sets, generators, strings, etc.), preserving the order of first occurrence.
 
 ```js
 unique([1, 2, 2, 3, 4, 4, 5]); // [1, 2, 3, 4, 5]
+unique(new Set([1, 2, 2, 3])); // [1, 2, 3]
+unique("banana"); // ["b", "a", "n"]
 unique([]); // []
 ```
 
