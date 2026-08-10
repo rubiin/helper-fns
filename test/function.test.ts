@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   autoParseValues,
   awaitTimeout,
@@ -14,6 +14,7 @@ import {
   pipe,
   resolverArguments,
   safeNumber,
+  throttler,
   timeTaken,
   timestamp,
 } from "../src";
@@ -244,5 +245,34 @@ describe("timeTaken", () => {
     const [result, executionTime] = timeTaken(callback);
     expect(typeof result).toBe("number");
     expect(typeof executionTime).toBe("number");
+  });
+});
+
+describe("throttler", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+    delete process.env.DUE_DATE;
+  });
+
+  it("calls next immediately when not overdue", () => {
+    vi.useFakeTimers();
+    process.env.DUE_DATE = new Date(Date.now() + 86_400_000).toISOString(); // tomorrow
+
+    const next = vi.fn();
+    throttler({}, {}, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  it("delays next when overdue", () => {
+    vi.useFakeTimers();
+    process.env.DUE_DATE = new Date(Date.now() - 2 * 86_400_000).toISOString(); // 2 days overdue
+
+    const next = vi.fn();
+    throttler({}, {}, next);
+
+    expect(next).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(2 * 200);
+    expect(next).toHaveBeenCalledTimes(1);
   });
 });

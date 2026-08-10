@@ -472,4 +472,6 @@ export function throttler(_request: any, _response: any, next: () => void) {
 
     return setTimeout(next, ms);
   }
+
+  return next();
 }
