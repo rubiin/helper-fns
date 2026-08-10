@@ -126,6 +126,15 @@ Returns every element that exists in any of the two arrays at least once.
 union([1, 2, 3], [4, 3, 2]); // [1, 2, 3, 4]
 ```
 
+# unique
+
+Returns an array of unique values from the given array, preserving the order of first occurrence.
+
+```js
+unique([1, 2, 2, 3, 4, 4, 5]); // [1, 2, 3, 4, 5]
+unique([]); // []
+```
+
 # isDate
 
 Checks if gicen string is date

@@ -226,6 +226,13 @@ export function uniq<T>(array: readonly T[]): T[] {
 }
 
 /**
+ * Returns an iterable of unique values from the given iterable.
+ *
+ * @category Array
+ */
+export const unique = uniq;
+
+/**
  * Unique an Array by a custom equality function
  *
  * @category Array
